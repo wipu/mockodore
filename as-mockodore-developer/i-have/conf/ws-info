@@ -1,0 +1,5 @@
+# paths are relative to this file's directory
+WSNAME=mockodore
+WSROOT=../../..
+WSDEFDEF_MODULE=../wsdefdef
+WSDEFDEF_CLASS=org.fluentjava.mockodore.wsdefdef.MockodoreWorkspaceProvider
