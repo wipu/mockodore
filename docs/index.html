@@ -1,9 +1,26 @@
 <html>
+<html>
   <head>
-    <title>mockodore</title>
+    <title>mockodore - a Java DSL for TDDing Commodore 64 assembler</title>
+    <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
   </head>
   <body>
-    <h1>mockodore</h1>
+    <h1>mockodore - a Java DSL for TDDing Commodore 64 assembler</h1>
     <p>todo content</p>
+    <h2>History and credits</h2>
+    <p>
+      In 2013, my friend Jukka Pirinen published his <a href="https://github.com/jpirinen/c64dslj">c64dslj</a>, a project very similar to this. As I had just started learning 6502, in order to learn to make some SID sounds, I got immediately interested, and Jukka's tool helped me to get started.
+    </p>
+    <p>
+      Gradually I started making some facade code around c64dslj. First I wanted strongly typed labels, instead of raw strings, to shield against typos. Later I developed <a href="https://github.com/wipu/joulu/tree/master/unsigned-byte/src">unsigned-byte</a>, a library for easy handling of bytes (Java bytes are horribly difficult when trying to keep them unsigned!). That led to the possibility of using <i>overloading</i> of opcode methods: the <i>type</i> of the operand no more had to be defined in the method <i>name</i>. Instead of Strings and ints, the operands were now Labels, RawAddresses or UnsignedBytes, so the method name could be simply the opcode name for all addressing modes.
+    </p>
+    <p>
+      Finally, I started developing a <i>simulator</i> of a 6502 processor and RAM, to make it possible to use TDD to develop my SID routines. At that point I was already so deep in the details of the instruction set that generating the machine code became so trivial that I no more had any need for c64dslj.
+    </p>
+    <p>
+      So: the mockodore codebase is not directly based on c64dslj, but it was heavily inspired by it and probabaly wouldn't exist without it. Thank you, Jukka.
+    </p>
+
+    <p><center><small><code>mockodore.fluentjava.org</code> - maintained since 2019 by Ville Oikarinen</small></center></p>
   </body>
 </html>
