@@ -16,7 +16,7 @@ import org.fluentjava.mockodore.model.machine.Op;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ShortProgramTest {
+public class MockororeProgramTest {
 
 	private static final RawAddress address$1000 = RawAddress.named(0x1000);
 	private static final RawAddress address$2000 = RawAddress.named(0x2000);
