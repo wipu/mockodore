@@ -45,6 +45,7 @@ public class MidiTestAppsTest extends Widi64TestBase {
 	private static final Label START = Label.named("START");
 	private static final RawAddress RASTER_COUNTER = MidiAndRasterPoller.OVERRUN_INDICATOR
 			.plus(1);
+	private static final RawAddress VIC2_CONTROL = RawAddress.named(0xD011);
 
 	@Override
 	protected Memory mem() {
@@ -345,6 +346,7 @@ public class MidiTestAppsTest extends Widi64TestBase {
 
 			label(START);
 
+			blankScreen();
 			jsr(initShovel);
 
 			poller.def();
@@ -372,6 +374,14 @@ public class MidiTestAppsTest extends Widi64TestBase {
 					"And finally write RTS to end the sysex buffer shoveling routine:");
 			lda(Op.RTS).sta(SYSEX_BUF.plus(bufIdx++));
 			rts();
+		}
+
+		private void blankScreen() {
+			p.commentLine("Blank screen to get more CPU cycles");
+			// TODO library function for this
+			p.lda(UnsignedByte.$10.not());
+			p.and(VIC2_CONTROL);
+			p.sta(VIC2_CONTROL);
 		}
 
 		@Override
@@ -496,6 +506,17 @@ public class MidiTestAppsTest extends Widi64TestBase {
 		}
 
 		assertEquals(150, logger.time() - startTime);
+	}
+
+	@Test
+	public void sysexPlayerTurnsOffScreenToGetMoreCpuCycles() {
+		new SysexPlayer(p).def();
+		simLoadedWithPrg().simpleSys(START);
+		// write FF to make sure only the wanted bit gets cleared
+		simLoadedWithPrg().spontaneouslyWrite(VIC2_CONTROL, UnsignedByte.$FF);
+		timePasses(100);
+		assertEquals(UnsignedByte.$EF,
+				simLoadedWithPrg().valueIn(VIC2_CONTROL));
 	}
 
 	private boolean isSomeSidRegisterZero() {
