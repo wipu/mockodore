@@ -171,7 +171,7 @@ public class MockodoreModules extends JavaModules {
 							mockodoreUtilSysex)
 					.testDeps(junit).end();
 
-	final JavaSrcModule mockodoreAppWidi64 = srcModule("mockodore-app-widi64")
+	final JavaSrcModule mockodoreAppSidex = srcModule("mockodore-app-sidex")
 			.noMainResources().noTestResources()
 			.mainDeps(jouluMidievents(), jouluUnsignedByte(),
 					mockodoreApiAssylang, mockodoreLibBasicloader,
