@@ -8,8 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
-import org.fluentjava.mockodore.app.sidex.MidiDispatcher;
-import org.fluentjava.mockodore.app.sidex.SysexEventListener;
 import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.model.machine.Op;
