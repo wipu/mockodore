@@ -1,4 +1,4 @@
-package org.fluentjava.mockodore.app.widi64;
+package org.fluentjava.mockodore.app.sidex;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.model.addressing.RawAddress;

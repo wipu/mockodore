@@ -1,4 +1,4 @@
-package org.fluentjava.mockodore.app.widi64;
+package org.fluentjava.mockodore.app.sidex;
 
 public interface SysexEventListener {
 

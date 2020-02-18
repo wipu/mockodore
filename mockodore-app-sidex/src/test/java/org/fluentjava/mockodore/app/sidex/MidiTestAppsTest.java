@@ -1,4 +1,4 @@
-package org.fluentjava.mockodore.app.widi64;
+package org.fluentjava.mockodore.app.sidex;
 
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$00;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$0F;
@@ -19,6 +19,11 @@ import org.fluentjava.joulu.midievents.Midievents.MidieventsPlease;
 import org.fluentjava.joulu.midievents.Midiseq;
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.api.assylang.C64AssyLangOf;
+import org.fluentjava.mockodore.app.sidex.CLabMidi;
+import org.fluentjava.mockodore.app.sidex.MidiAndRasterPoller;
+import org.fluentjava.mockodore.app.sidex.MidiDispatcher;
+import org.fluentjava.mockodore.app.sidex.MidiPoller;
+import org.fluentjava.mockodore.app.sidex.SysexEventListener;
 import org.fluentjava.mockodore.lib.basicloader.BasicLoader;
 import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;

@@ -1,4 +1,4 @@
-package org.fluentjava.mockodore.app.widi64;
+package org.fluentjava.mockodore.app.sidex;
 
 import java.util.ArrayList;
 import java.util.List;

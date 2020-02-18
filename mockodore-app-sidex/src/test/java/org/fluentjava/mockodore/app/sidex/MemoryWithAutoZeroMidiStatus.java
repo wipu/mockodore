@@ -1,6 +1,7 @@
-package org.fluentjava.mockodore.app.widi64;
+package org.fluentjava.mockodore.app.sidex;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
+import org.fluentjava.mockodore.app.sidex.CLabMidi;
 import org.fluentjava.mockodore.simulator.Memory;
 
 public class MemoryWithAutoZeroMidiStatus implements Memory {

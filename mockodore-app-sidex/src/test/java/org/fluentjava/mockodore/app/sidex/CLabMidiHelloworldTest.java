@@ -1,4 +1,4 @@
-package org.fluentjava.mockodore.app.widi64;
+package org.fluentjava.mockodore.app.sidex;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
+import org.fluentjava.mockodore.app.sidex.CLabMidi;
 import org.fluentjava.mockodore.lib.basicloader.BasicLoader;
 import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
