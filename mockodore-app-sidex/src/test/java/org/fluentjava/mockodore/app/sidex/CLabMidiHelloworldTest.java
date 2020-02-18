@@ -13,7 +13,7 @@ import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
 import org.junit.Test;
 
-public class CLabMidiHelloworldTest extends Widi64TestBase {
+public class CLabMidiHelloworldTest extends SidexTestBase {
 
 	private static final RawAddress BGCOLOR_ADDR = RawAddress.named(0xD020);
 	private static final RawAddress SCREEN = RawAddress.named(0x400);

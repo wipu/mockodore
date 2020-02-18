@@ -16,7 +16,7 @@ import org.fluentjava.mockodore.model.machine.Op;
 import org.fluentjava.mockodore.util.sysex.SysexEncoder;
 import org.junit.Test;
 
-public class MidiDispatcherTest extends Widi64TestBase {
+public class MidiDispatcherTest extends SidexTestBase {
 
 	private static final UnsignedByte MANUFACTURER = MidiDispatcher.MANUFACTURER;
 	private static final UnsignedByte WRONG_MANUFACTURER = MANUFACTURER

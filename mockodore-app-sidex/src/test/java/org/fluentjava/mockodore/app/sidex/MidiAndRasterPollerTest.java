@@ -13,7 +13,7 @@ import org.fluentjava.mockodore.simulator.Memory;
 import org.fluentjava.mockodore.simulator.RawMemory;
 import org.junit.Test;
 
-public class MidiAndRasterPollerTest extends Widi64TestBase {
+public class MidiAndRasterPollerTest extends SidexTestBase {
 
 	private static final int RTRIG = MidiAndRasterPoller.RASTER_TRIGGER;
 	private static final RawAddress FRAMECOUNTER = RawAddress.named(0x400);

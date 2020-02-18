@@ -20,7 +20,7 @@ import org.junit.Test;
  * TODO let handler change background color so we don't waste cycles when they
  * matter.
  */
-public class MidiPollerTest extends Widi64TestBase {
+public class MidiPollerTest extends SidexTestBase {
 
 	private static final RawAddress MIDIBUF = RawAddress.named(0x401);
 	private MidiPoller poller;

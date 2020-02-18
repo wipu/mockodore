@@ -12,7 +12,7 @@ import org.fluentjava.mockodore.simulator.RawMemory;
 import org.fluentjava.mockodore.util.sidripper.SidWriteRipper;
 import org.junit.Before;
 
-public abstract class Widi64TestBase {
+public abstract class SidexTestBase {
 
 	protected static final RawAddress startAddress = RawAddress.named(0x1000);
 

@@ -40,7 +40,7 @@ import org.fluentjava.mockodore.util.sidripper.SidWritesToMidiSysex;
 import org.fluentjava.mockodore.util.sysex.SysexEncoder;
 import org.junit.Test;
 
-public class MidiTestAppsTest extends Widi64TestBase {
+public class MidiTestAppsTest extends SidexTestBase {
 
 	private static final RawAddress BGCOLOR_ADDR = RawAddress.named(0xD020);
 	private static final UnsignedByte LIGHT_RED = UnsignedByte.$0A;
