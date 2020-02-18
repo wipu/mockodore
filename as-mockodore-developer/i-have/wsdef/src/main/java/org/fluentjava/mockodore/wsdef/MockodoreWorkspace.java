@@ -2,8 +2,14 @@ package org.fluentjava.mockodore.wsdef;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.fluentjava.iwant.api.core.Concatenated;
+import org.fluentjava.iwant.api.core.Concatenated.ConcatenatedBuilder;
+import org.fluentjava.iwant.api.javamodules.JavaModule;
+import org.fluentjava.iwant.api.javamodules.JavaSrcModule;
 import org.fluentjava.iwant.api.model.SideEffect;
 import org.fluentjava.iwant.api.model.Target;
 import org.fluentjava.iwant.api.wsdef.SideEffectDefinitionContext;
@@ -22,7 +28,23 @@ public class MockodoreWorkspace implements Workspace {
 	public List<? extends Target> targets(TargetDefinitionContext ctx) {
 		List<Target> t = new ArrayList<>();
 		t.add(jacocoReport());
+		t.add(classpathStringOfAllModules());
 		return t;
+	}
+
+	private Target classpathStringOfAllModules() {
+		Set<JavaModule> cp = new LinkedHashSet<>();
+		for (JavaSrcModule m : modules.allSrcModules()) {
+			cp.addAll(m.effectivePathForMainRuntime());
+		}
+		ConcatenatedBuilder str = Concatenated
+				.named("classpath-of-all-modules");
+		str.string(".");
+		for (JavaModule m : cp) {
+			str.string(":");
+			str.unixPathTo(m.mainArtifact());
+		}
+		return str.end();
 	}
 
 	@Override

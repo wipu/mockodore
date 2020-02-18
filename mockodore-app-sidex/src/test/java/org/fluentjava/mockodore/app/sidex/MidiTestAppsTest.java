@@ -6,10 +6,13 @@ import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$11;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$81;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$F0;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$FF;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -327,6 +330,23 @@ public class MidiTestAppsTest extends SidexTestBase {
 		FileUtils.writeByteArrayToFile(new File(
 				"/tmp/" + SysexPlayer.class.getCanonicalName() + ".prg"),
 				p.end().asPrgBytes().allBytes());
+	}
+
+	@Test
+	public void sysexPlayerMainOutputsPrg() throws IOException {
+		PrintStream originalOut = System.out;
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(out));
+		try {
+			SysexPlayer.main(new String[0]);
+		} finally {
+			System.setOut(originalOut);
+		}
+
+		SysexPlayer app = new SysexPlayer(p);
+		app.def();
+		byte[] bytes = app.end().asPrgBytes().allBytes();
+		assertArrayEquals(bytes, out.toByteArray());
 	}
 
 	private void midiInAndTimePasses(List<UnsignedByte> bytes) {

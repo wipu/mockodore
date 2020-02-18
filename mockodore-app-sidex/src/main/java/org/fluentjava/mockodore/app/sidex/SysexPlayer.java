@@ -1,5 +1,7 @@
 package org.fluentjava.mockodore.app.sidex;
 
+import java.io.IOException;
+
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.lib.basicloader.BasicLoader;
 import org.fluentjava.mockodore.model.addressing.RawAddress;
@@ -27,6 +29,14 @@ public class SysexPlayer extends C64AssyLangProxy<SysexPlayer, MockodoreProgram>
 	public SysexPlayer(C64AssyLangForProgram out) {
 		super(out);
 		this.p = out;
+	}
+
+	public static void main(String[] args) throws IOException {
+		C64AssyLangForProgram mainOut = MockodoreProgram.with()
+				.startAddress(RawAddress.named(0x1000));
+		new SysexPlayer(mainOut).def();
+		byte[] bytes = mainOut.end().asPrgBytes().allBytes();
+		System.out.write(bytes);
 	}
 
 	void def() {
