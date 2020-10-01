@@ -2776,7 +2776,7 @@ public class C64SimulatorTest {
 		p.debug(new Debug() {
 			@Override
 			public void execute(DebugContext ctx) {
-				ctx.writeMem(label, UnsignedByte.$02);
+				ctx.writeMem(label, UnsignedByte.x02);
 			}
 		});
 		p.rts();

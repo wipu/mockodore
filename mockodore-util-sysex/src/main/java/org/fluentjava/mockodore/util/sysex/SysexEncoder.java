@@ -18,12 +18,12 @@ public class SysexEncoder {
 		}
 		List<UnsignedByte> result = new ArrayList<>();
 
-		UnsignedByte highBits = UnsignedByte.$00;
+		UnsignedByte highBits = UnsignedByte.x00;
 		for (int i = 0; i < bytes.size(); i++) {
 			int mod7 = i % 7;
 
 			UnsignedByte b = bytes.get(i);
-			result.add(b.and(UnsignedByte.$7F));
+			result.add(b.and(UnsignedByte.x7F));
 
 			if (b.isBit7()) {
 				UnsignedByte mask = UnsignedByte.from(MASKS.get(mod7));
@@ -33,7 +33,7 @@ public class SysexEncoder {
 			if (mod7 == 6) {
 				// end of group
 				result.add(highBits);
-				highBits = UnsignedByte.$00;
+				highBits = UnsignedByte.x00;
 			}
 		}
 

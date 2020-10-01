@@ -1,11 +1,11 @@
 package org.fluentjava.mockodore.app.sidex;
 
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$00;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$0F;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$11;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$81;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$F0;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$FF;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x00;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x0F;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x11;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x81;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xF0;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xFF;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -40,8 +40,8 @@ import org.junit.Test;
 public class MidiTestAppsTest extends SidexTestBase {
 
 	private static final RawAddress BGCOLOR_ADDR = RawAddress.named(0xD020);
-	private static final UnsignedByte LIGHT_RED = UnsignedByte.$0A;
-	private static final UnsignedByte LIGHT_GREEN = UnsignedByte.$0D;
+	private static final UnsignedByte LIGHT_RED = UnsignedByte.x0A;
+	private static final UnsignedByte LIGHT_GREEN = UnsignedByte.x0D;
 	private static final RawAddress DEFAULT_BUF = RawAddress.named(0x400);
 	private static final RawAddress SYSEX_BUF = DEFAULT_BUF.plus(256);
 	private static final Label START = Label.named("START");
@@ -170,9 +170,9 @@ public class MidiTestAppsTest extends SidexTestBase {
 
 	private MidiTestAppsTest midiIn(UnsignedByte data, boolean isInTime) {
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_RECV_DATA, data);
-		UnsignedByte status = UnsignedByte.$01;
+		UnsignedByte status = UnsignedByte.x01;
 		if (!isInTime) {
-			status = status.or(UnsignedByte.$20);
+			status = status.or(UnsignedByte.x20);
 		}
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS, status);
 		return this;
@@ -226,14 +226,14 @@ public class MidiTestAppsTest extends SidexTestBase {
 		new MidiAndSysexVisualizer(p).def();
 		simLoadedWithPrg().simpleSys(START);
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS,
-				UnsignedByte.$00);
+				UnsignedByte.x00);
 	}
 
 	private void sysexPlayerStartsAndTimePasses() {
 		new SysexPlayer(p).def();
 		simLoadedWithPrg().simpleSys(START);
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS,
-				UnsignedByte.$00);
+				UnsignedByte.x00);
 		timePasses(2000);
 	}
 
@@ -417,7 +417,7 @@ public class MidiTestAppsTest extends SidexTestBase {
 		// pretend buffer just got full:
 		for (int i = 0; i < SidRegisterAddress.all().size(); i++) {
 			simLoadedWithPrg().spontaneouslyWrite(SYSEX_BUF.plus(1 + i * 5),
-					$11);
+					x11);
 		}
 		// then measure cycles until all registers have been shoveled:
 		simLoadedWithPrg().simpleSys(SYSEX_BUF);
@@ -435,15 +435,15 @@ public class MidiTestAppsTest extends SidexTestBase {
 		new SysexPlayer(p).def();
 		simLoadedWithPrg().simpleSys(START);
 		// write FF to make sure only the wanted bit gets cleared
-		simLoadedWithPrg().spontaneouslyWrite(VIC2_CONTROL, UnsignedByte.$FF);
+		simLoadedWithPrg().spontaneouslyWrite(VIC2_CONTROL, UnsignedByte.xFF);
 		timePasses(100);
-		assertEquals(UnsignedByte.$EF,
+		assertEquals(UnsignedByte.xEF,
 				simLoadedWithPrg().valueIn(VIC2_CONTROL));
 	}
 
 	private boolean isSomeSidRegisterZero() {
 		for (SidRegisterAddress reg : SidRegisterAddress.all()) {
-			if (simLoadedWithPrg().valueIn(reg.address()).equals($00)) {
+			if (simLoadedWithPrg().valueIn(reg.address()).equals(x00)) {
 				return true;
 			}
 		}
@@ -503,7 +503,7 @@ public class MidiTestAppsTest extends SidexTestBase {
 			clc();
 			adc(SYSEX_BUF.plusX());
 			dex();
-			cpx($FF); // TODO optimize with proper branch instr
+			cpx(xFF); // TODO optimize with proper branch instr
 			bne(addThem);
 
 			commentLine("check the sum");
@@ -515,10 +515,10 @@ public class MidiTestAppsTest extends SidexTestBase {
 					.sta(SidRegisterAddress.FREQ_HI_1.address());
 			lda(freqs.lo(noiseNote))
 					.sta(SidRegisterAddress.FREQ_LO_1.address());
-			lda($00).sta(SidRegisterAddress.AD_1.address());
-			lda($F0).sta(SidRegisterAddress.SR_1.address());
-			lda($81).sta(SidRegisterAddress.CR_1.address());
-			lda($0F).sta(SidRegisterAddress.MODE_VOL.address());
+			lda(x00).sta(SidRegisterAddress.AD_1.address());
+			lda(xF0).sta(SidRegisterAddress.SR_1.address());
+			lda(x81).sta(SidRegisterAddress.CR_1.address());
+			lda(x0F).sta(SidRegisterAddress.MODE_VOL.address());
 			rts();
 
 			label(sumGood);
@@ -529,10 +529,10 @@ public class MidiTestAppsTest extends SidexTestBase {
 			Codebase64PalNote niceNote = Codebase64PalNote.A__4;
 			lda(freqs.hi(niceNote)).sta(SidRegisterAddress.FREQ_HI_1.address());
 			lda(freqs.lo(niceNote)).sta(SidRegisterAddress.FREQ_LO_1.address());
-			lda($00).sta(SidRegisterAddress.AD_1.address());
-			lda($F0).sta(SidRegisterAddress.SR_1.address());
-			lda($11).sta(SidRegisterAddress.CR_1.address());
-			lda($0F).sta(SidRegisterAddress.MODE_VOL.address());
+			lda(x00).sta(SidRegisterAddress.AD_1.address());
+			lda(xF0).sta(SidRegisterAddress.SR_1.address());
+			lda(x11).sta(SidRegisterAddress.CR_1.address());
+			lda(x0F).sta(SidRegisterAddress.MODE_VOL.address());
 			rts();
 
 			label(isEnd);
@@ -586,7 +586,7 @@ public class MidiTestAppsTest extends SidexTestBase {
 		new SysexChecker(p).def();
 		simLoadedWithPrg().simpleSys(START);
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS,
-				UnsignedByte.$00);
+				UnsignedByte.x00);
 	}
 
 	@Test
@@ -605,8 +605,8 @@ public class MidiTestAppsTest extends SidexTestBase {
 
 		for (int f = 0; f < frameCount; f++) {
 			List<UnsignedByte> msg = new ArrayList<>();
-			msg.add(UnsignedByte.$F0);
-			msg.add(UnsignedByte.$44); // Casio
+			msg.add(UnsignedByte.xF0);
+			msg.add(UnsignedByte.x44); // Casio
 			if (f == frameCount - 1) {
 				// end
 				msg.addAll(SysexEncoder.sysexEncoded(0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -623,7 +623,7 @@ public class MidiTestAppsTest extends SidexTestBase {
 						1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						-27));
 			}
-			msg.add(UnsignedByte.$F7);
+			msg.add(UnsignedByte.xF7);
 			// TODO make it easier to add sysex (this is copied from
 			// SidWritesToMidiSysex):
 			e.after(SidWritesToMidiSysex.TICKS_PER_FRAME);

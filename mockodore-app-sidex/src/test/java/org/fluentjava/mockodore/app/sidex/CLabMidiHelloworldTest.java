@@ -63,17 +63,17 @@ public class CLabMidiHelloworldTest extends SidexTestBase {
 
 		// ... until midi data arrives ...
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_RECV_DATA,
-				UnsignedByte.$77);
+				UnsignedByte.x77);
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS,
-				UnsignedByte.$01);
+				UnsignedByte.x01);
 		simLoadedWithPrg().tick(snapshotFreq);
 		assertEquals("77 FF 20", simLoadedWithPrg().hexDump(SCREEN, 3));
 
 		// ... and some more
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_RECV_DATA,
-				UnsignedByte.$78);
+				UnsignedByte.x78);
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS,
-				UnsignedByte.$01);
+				UnsignedByte.x01);
 		simLoadedWithPrg().tick(snapshotFreq);
 		assertEquals("77 78 FF", simLoadedWithPrg().hexDump(SCREEN, 3));
 

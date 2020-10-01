@@ -8,7 +8,7 @@ public class RawMemory implements Memory {
 
 	public RawMemory() {
 		for (int i = 0; i < mem.length; i++) {
-			mem[i] = UnsignedByte.$00;
+			mem[i] = UnsignedByte.x00;
 		}
 	}
 

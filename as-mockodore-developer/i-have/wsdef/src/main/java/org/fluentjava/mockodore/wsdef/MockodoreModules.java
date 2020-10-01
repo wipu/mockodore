@@ -49,7 +49,7 @@ public class MockodoreModules extends JavaModules {
 
 	private static Path jouluCode() {
 		return FromGithub.user("wipu").project("joulu")
-				.commit("9ea49d95e47f36f732d472fdd218155e595ca246");
+				.commit("4168e92d2f81ddd6cb286b4fb450736e7b4498ec");
 	}
 
 	private static JavaBinModule jouluModule(String name, JavaModule... deps) {

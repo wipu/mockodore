@@ -60,18 +60,18 @@ public class MidiPollerTest extends SidexTestBase {
 	}
 
 	private static ReceiveOverrun tooLate() {
-		return new ReceiveOverrun(UnsignedByte.$20);
+		return new ReceiveOverrun(UnsignedByte.x20);
 	}
 
 	private static ReceiveOverrun inTime() {
-		return new ReceiveOverrun(UnsignedByte.$00);
+		return new ReceiveOverrun(UnsignedByte.x00);
 	}
 
 	private MidiPollerTest newMidiData(int value, ReceiveOverrun overrun) {
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_RECV_DATA,
 				UnsignedByte.from(value));
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS,
-				UnsignedByte.$01.or(overrun.value));
+				UnsignedByte.x01.or(overrun.value));
 		return this;
 	}
 

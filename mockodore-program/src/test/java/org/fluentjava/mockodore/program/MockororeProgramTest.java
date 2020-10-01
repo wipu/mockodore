@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.program;
 
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$01;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x01;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -345,7 +345,7 @@ public class MockororeProgramTest {
 	@Test
 	public void cpxImmediate() {
 		p.startAddress(address$1000);
-		p.cpx($01);
+		p.cpx(x01);
 		assertBytes("E0 01");
 		assertAssy("cpx #$01\n");
 	}
@@ -763,7 +763,7 @@ public class MockororeProgramTest {
 		p.lda(data);
 		p.rts();
 		p.label(data);
-		p.data(UnsignedByte.$01, UnsignedByte.$02);
+		p.data(UnsignedByte.x01, UnsignedByte.x02);
 		p.nop();
 		assertBytes("AD 04 10 60 01 02 EA");
 		assertAssy("lda data\nrts\ndata:\n.b $01, $02\nnop\n");
@@ -834,7 +834,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void ldxImmediateUnsignedByte() {
-		p.ldx(UnsignedByte.$02);
+		p.ldx(UnsignedByte.x02);
 		assertBytes("A2 02");
 		assertAssy("ldx #$02\n");
 	}

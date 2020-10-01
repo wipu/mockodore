@@ -24,27 +24,27 @@ public class SidWritesToMidiSysex implements SidWriteListener {
 	public SidWritesToMidiSysex() {
 		e = Midievents.usingDefaults();
 		for (SidRegisterAddress reg : SidRegisterAddress.all()) {
-			regValues.put(reg, UnsignedByte.$00);
+			regValues.put(reg, UnsignedByte.x00);
 		}
 	}
 
 	@Override
 	public void playCallStarting() {
 		List<UnsignedByte> msg = new ArrayList<>();
-		msg.add(UnsignedByte.$F0);
-		msg.add(UnsignedByte.$44); // Casio
+		msg.add(UnsignedByte.xF0);
+		msg.add(UnsignedByte.x44); // Casio
 
 		List<UnsignedByte> rawValues = new ArrayList<>();
 		for (SidRegisterAddress reg : SidRegisterAddresses
 				.allInDefaultWritingOrder()) {
 			rawValues.add(regValues.get(reg));
 		}
-		rawValues.add(UnsignedByte.$00); // padding
-		rawValues.add(UnsignedByte.$00);
-		rawValues.add(UnsignedByte.$00); // padding
+		rawValues.add(UnsignedByte.x00); // padding
+		rawValues.add(UnsignedByte.x00);
+		rawValues.add(UnsignedByte.x00); // padding
 		msg.addAll(SysexEncoder.sysexEncoded(rawValues));
 
-		msg.add(UnsignedByte.$F7);
+		msg.add(UnsignedByte.xF7);
 
 		e.after(TICKS_PER_FRAME);
 		byte[] bytes = new byte[msg.size()];

@@ -30,7 +30,7 @@ public class ZeroPageTest {
 	@Test
 	public void fromLegalRawAddress() {
 		ZeroPage zp = ZeroPage.from(RawAddress.named(0xFB));
-		assertEquals(UnsignedByte.$FB, zp.value());
+		assertEquals(UnsignedByte.xFB, zp.value());
 	}
 
 	@Test

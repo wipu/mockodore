@@ -17,8 +17,8 @@ public class SysexPlayer extends C64AssyLangProxy<SysexPlayer, MockodoreProgram>
 		implements SysexEventListener {
 
 	private static final RawAddress BGCOLOR_ADDR = RawAddress.named(0xD020);
-	private static final UnsignedByte LIGHT_RED = UnsignedByte.$0A;
-	private static final UnsignedByte LIGHT_GREEN = UnsignedByte.$0D;
+	private static final UnsignedByte LIGHT_RED = UnsignedByte.x0A;
+	private static final UnsignedByte LIGHT_GREEN = UnsignedByte.x0D;
 	private static final RawAddress DEFAULT_BUF = RawAddress.named(0x400);
 	private static final RawAddress SYSEX_BUF = DEFAULT_BUF.plus(256);
 	private static final Label START = Label.named("START");
@@ -86,7 +86,7 @@ public class SysexPlayer extends C64AssyLangProxy<SysexPlayer, MockodoreProgram>
 	private void blankScreen() {
 		p.commentLine("Blank screen to get more CPU cycles");
 		// TODO library function for this
-		p.lda(UnsignedByte.$10.not());
+		p.lda(UnsignedByte.x10.not());
 		p.and(VIC2_CONTROL);
 		p.sta(VIC2_CONTROL);
 	}

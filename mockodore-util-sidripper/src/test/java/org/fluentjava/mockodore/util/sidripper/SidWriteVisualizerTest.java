@@ -1,21 +1,21 @@
 package org.fluentjava.mockodore.util.sidripper;
 
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$00;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$01;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$03;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$04;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$06;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$07;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$08;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$0E;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$0F;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$28;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$5A;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$A9;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$E1;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$E8;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$FE;
-import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.$FF;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x00;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x01;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x03;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x04;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x06;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x07;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x08;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x0E;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x0F;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x28;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x5A;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xA9;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xE1;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xE8;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xFE;
+import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xFF;
 import static org.junit.Assert.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
@@ -25,10 +25,10 @@ public class SidWriteVisualizerTest {
 
 	@Test
 	public void intFromLsbMsb() {
-		assertEquals(0, SidWriteVisualizer.intFromLsbMsb($00, $00));
-		assertEquals(254, SidWriteVisualizer.intFromLsbMsb($FE, $00));
-		assertEquals(256, SidWriteVisualizer.intFromLsbMsb($00, $01));
-		assertEquals(65535, SidWriteVisualizer.intFromLsbMsb($FF, $FF));
+		assertEquals(0, SidWriteVisualizer.intFromLsbMsb(x00, x00));
+		assertEquals(254, SidWriteVisualizer.intFromLsbMsb(xFE, x00));
+		assertEquals(256, SidWriteVisualizer.intFromLsbMsb(x00, x01));
+		assertEquals(65535, SidWriteVisualizer.intFromLsbMsb(xFF, xFF));
 	}
 
 	@Test
@@ -52,16 +52,16 @@ public class SidWriteVisualizerTest {
 
 	@Test
 	public void someXCoordsFromFreqsFromBytes() {
-		xCoordFromFreqFromBytes(0, 0, $00, $00);
-		xCoordFromFreqFromBytes(64, 1, $01, $00);
-		xCoordFromFreqFromBytes(512, 256, $00, $01);
+		xCoordFromFreqFromBytes(0, 0, x00, x00);
+		xCoordFromFreqFromBytes(64, 1, x01, x00);
+		xCoordFromFreqFromBytes(512, 256, x00, x01);
 
 		// ekakoe bassdrum:
-		xCoordFromFreqFromBytes(679, 1576, $28, $06);
-		xCoordFromFreqFromBytes(690, 1768, $E8, $06);
-		xCoordFromFreqFromBytes(631, 937, $A9, $03);
-		xCoordFromFreqFromBytes(647, 1114, $5A, $04);
-		xCoordFromFreqFromBytes(637, 993, $E1, $03);
+		xCoordFromFreqFromBytes(679, 1576, x28, x06);
+		xCoordFromFreqFromBytes(690, 1768, xE8, x06);
+		xCoordFromFreqFromBytes(631, 937, xA9, x03);
+		xCoordFromFreqFromBytes(647, 1114, x5A, x04);
+		xCoordFromFreqFromBytes(637, 993, xE1, x03);
 	}
 
 	@Test
@@ -89,12 +89,12 @@ public class SidWriteVisualizerTest {
 
 	@Test
 	public void signedPw() {
-		assertEquals(-1.0D, SidWriteVisualizer.signedPw($00, $00), 0.01D);
-		assertEquals(-0.88D, SidWriteVisualizer.signedPw($FE, $00), 0.01D);
-		assertEquals(-0.13D, SidWriteVisualizer.signedPw($00, $07), 0.01D);
-		assertEquals(0.0D, SidWriteVisualizer.signedPw($00, $08), 0.01D);
-		assertEquals(0.75D, SidWriteVisualizer.signedPw($00, $0E), 0.01D);
-		assertEquals(1.0D, SidWriteVisualizer.signedPw($FF, $0F), 0.01D);
+		assertEquals(-1.0D, SidWriteVisualizer.signedPw(x00, x00), 0.01D);
+		assertEquals(-0.88D, SidWriteVisualizer.signedPw(xFE, x00), 0.01D);
+		assertEquals(-0.13D, SidWriteVisualizer.signedPw(x00, x07), 0.01D);
+		assertEquals(0.0D, SidWriteVisualizer.signedPw(x00, x08), 0.01D);
+		assertEquals(0.75D, SidWriteVisualizer.signedPw(x00, x0E), 0.01D);
+		assertEquals(1.0D, SidWriteVisualizer.signedPw(xFF, x0F), 0.01D);
 	}
 
 }

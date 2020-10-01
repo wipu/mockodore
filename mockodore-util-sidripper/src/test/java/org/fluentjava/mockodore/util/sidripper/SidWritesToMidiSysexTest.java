@@ -31,7 +31,7 @@ public class SidWritesToMidiSysexTest {
 
 	@Test
 	public void frameWithOverwrittenValue() {
-		log.freqLo1().write(UnsignedByte.$01);
+		log.freqLo1().write(UnsignedByte.x01);
 
 		assertEquals("(seq\n" + " division:PPQ\n" + " resolution:96\n"
 				+ "  (track\n"
@@ -42,9 +42,9 @@ public class SidWritesToMidiSysexTest {
 
 	@Test
 	public void overwritesAreRememberedInNextFrameToo() {
-		log.freqLo1().write(UnsignedByte.$01);
+		log.freqLo1().write(UnsignedByte.x01);
 		log.playCallStarting();
-		log.freqHi1().write(UnsignedByte.$02);
+		log.freqHi1().write(UnsignedByte.x02);
 
 		assertEquals("(seq\n" + " division:PPQ\n" + " resolution:96\n"
 				+ "  (track\n"
@@ -56,34 +56,34 @@ public class SidWritesToMidiSysexTest {
 
 	@Test
 	public void frameWithOverwrittenValuesToAllRegisters() {
-		log.freqLo1().write(UnsignedByte.$01);
-		log.freqHi1().write(UnsignedByte.$02);
-		log.pwLo1().write(UnsignedByte.$03);
-		log.pwHi1().write(UnsignedByte.$04);
-		log.cr1().write(UnsignedByte.$05);
-		log.ad1().write(UnsignedByte.$06);
-		log.sr1().write(UnsignedByte.$07);
+		log.freqLo1().write(UnsignedByte.x01);
+		log.freqHi1().write(UnsignedByte.x02);
+		log.pwLo1().write(UnsignedByte.x03);
+		log.pwHi1().write(UnsignedByte.x04);
+		log.cr1().write(UnsignedByte.x05);
+		log.ad1().write(UnsignedByte.x06);
+		log.sr1().write(UnsignedByte.x07);
 
-		log.freqLo2().write(UnsignedByte.$08);
-		log.freqHi2().write(UnsignedByte.$09);
-		log.pwLo2().write(UnsignedByte.$0A);
-		log.pwHi2().write(UnsignedByte.$0B);
-		log.cr2().write(UnsignedByte.$0C);
-		log.ad2().write(UnsignedByte.$0D);
-		log.sr2().write(UnsignedByte.$0E);
+		log.freqLo2().write(UnsignedByte.x08);
+		log.freqHi2().write(UnsignedByte.x09);
+		log.pwLo2().write(UnsignedByte.x0A);
+		log.pwHi2().write(UnsignedByte.x0B);
+		log.cr2().write(UnsignedByte.x0C);
+		log.ad2().write(UnsignedByte.x0D);
+		log.sr2().write(UnsignedByte.x0E);
 
-		log.freqLo3().write(UnsignedByte.$0F);
-		log.freqHi3().write(UnsignedByte.$10);
-		log.pwLo3().write(UnsignedByte.$11);
-		log.pwHi3().write(UnsignedByte.$12);
-		log.cr3().write(UnsignedByte.$13);
-		log.ad3().write(UnsignedByte.$14);
-		log.sr3().write(UnsignedByte.$15);
+		log.freqLo3().write(UnsignedByte.x0F);
+		log.freqHi3().write(UnsignedByte.x10);
+		log.pwLo3().write(UnsignedByte.x11);
+		log.pwHi3().write(UnsignedByte.x12);
+		log.cr3().write(UnsignedByte.x13);
+		log.ad3().write(UnsignedByte.x14);
+		log.sr3().write(UnsignedByte.x15);
 
-		log.fcLo().write(UnsignedByte.$16);
-		log.fcHi().write(UnsignedByte.$17);
-		log.resFilt().write(UnsignedByte.$18);
-		log.modeVol().write(UnsignedByte.$19);
+		log.fcLo().write(UnsignedByte.x16);
+		log.fcHi().write(UnsignedByte.x17);
+		log.resFilt().write(UnsignedByte.x18);
+		log.modeVol().write(UnsignedByte.x19);
 
 		assertEquals("(seq\n" + " division:PPQ\n" + " resolution:96\n"
 				+ "  (track\n"

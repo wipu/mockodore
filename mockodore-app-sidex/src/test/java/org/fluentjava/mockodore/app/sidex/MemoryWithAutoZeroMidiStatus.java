@@ -20,7 +20,7 @@ public class MemoryWithAutoZeroMidiStatus implements Memory {
 	public UnsignedByte read(int addr) {
 		UnsignedByte v = m.read(addr);
 		if (addr == CLabMidi.MIDI_STATUS.value()) {
-			m.write(addr, UnsignedByte.$00);
+			m.write(addr, UnsignedByte.x00);
 		}
 		return v;
 	}

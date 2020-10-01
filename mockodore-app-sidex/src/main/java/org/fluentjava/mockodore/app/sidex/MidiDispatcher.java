@@ -14,9 +14,9 @@ import org.fluentjava.mockodore.program.MockodoreProgram;
 public class MidiDispatcher
 		extends C64AssyLangProxy<MidiDispatcher, MockodoreProgram> {
 
-	private static final UnsignedByte SYSEX_START = UnsignedByte.$F0;
-	public static final UnsignedByte MANUFACTURER = UnsignedByte.$44; // Casio
-	private static final UnsignedByte SYSEX_END = UnsignedByte.$F7;
+	private static final UnsignedByte SYSEX_START = UnsignedByte.xF0;
+	public static final UnsignedByte MANUFACTURER = UnsignedByte.x44; // Casio
+	private static final UnsignedByte SYSEX_END = UnsignedByte.xF7;
 	private final Label label = Label.named("midiDispatcher");
 	private final Label state = label.subLabel("_state");
 	private final Label bytesUntilHighBitsByte = label

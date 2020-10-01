@@ -52,7 +52,7 @@ public class SidWriteVisualizer implements SidWriteListener {
 
 	private static UnsignedByte[] zeroBytes(int length) {
 		UnsignedByte[] array = new UnsignedByte[length];
-		Arrays.fill(array, UnsignedByte.$00);
+		Arrays.fill(array, UnsignedByte.x00);
 		return array;
 	}
 

@@ -25,13 +25,13 @@ public class SidWriteDelegatorTest {
 	@Test
 	public void sidAndNonSidWritesAreDelegatedAsMemWrites() {
 		delegator.writeMem(SidRegisterAddress.first().address().value() - 1,
-				UnsignedByte.$01);
+				UnsignedByte.x01);
 		delegator.writeMem(SidRegisterAddress.first().address().value(),
-				UnsignedByte.$02);
+				UnsignedByte.x02);
 		delegator.writeMem(SidRegisterAddress.last().address().value(),
-				UnsignedByte.$03);
+				UnsignedByte.x03);
 		delegator.writeMem(SidRegisterAddress.last().address().value() + 1,
-				UnsignedByte.$04);
+				UnsignedByte.x04);
 
 		assertEquals(
 				"0:      ($D3FF [] <-#$01 (old:null)\n"
@@ -45,9 +45,9 @@ public class SidWriteDelegatorTest {
 	public void sidWritesAreDelegatedToSidWriteListener() {
 		// these don't affect the output:
 		delegator.writeMem(SidRegisterAddress.first().address().value() - 1,
-				UnsignedByte.$01);
+				UnsignedByte.x01);
 		delegator.writeMem(SidRegisterAddress.last().address().value() + 1,
-				UnsignedByte.$01);
+				UnsignedByte.x01);
 
 		int v = 10;
 		for (int a = SidRegisterAddress.first().address()

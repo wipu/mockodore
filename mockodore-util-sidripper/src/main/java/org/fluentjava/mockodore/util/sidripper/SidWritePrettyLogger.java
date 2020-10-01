@@ -77,8 +77,8 @@ public class SidWritePrettyLogger implements SidWriteListener {
 	}
 
 	private static String envByteString(UnsignedByte newValue) {
-		int attack = newValue.and(UnsignedByte.$F0).uInt() >> 4;
-		int decay = newValue.and(UnsignedByte.$0F).uInt();
+		int attack = newValue.and(UnsignedByte.xF0).uInt() >> 4;
+		int decay = newValue.and(UnsignedByte.x0F).uInt();
 		return ByteArrayPrettyPrinter.spaceSeparatedHex((byte) attack,
 				(byte) decay);
 	}
@@ -211,7 +211,7 @@ public class SidWritePrettyLogger implements SidWriteListener {
 			b.append("LOWPASS");
 		}
 		b.append("|");
-		UnsignedByte vol = newValue.and(UnsignedByte.$0F);
+		UnsignedByte vol = newValue.and(UnsignedByte.x0F);
 		b.append("vol=").append(vol);
 
 		return b.toString();
@@ -224,7 +224,7 @@ public class SidWritePrettyLogger implements SidWriteListener {
 
 	private static String resFiltString(UnsignedByte newValue) {
 		StringBuilder b = new StringBuilder();
-		int res = newValue.and(UnsignedByte.$F0).uInt() >> 4;
+		int res = newValue.and(UnsignedByte.xF0).uInt() >> 4;
 		b.append("res=").append(UnsignedByte.fromLsbOf(res));
 		b.append("|");
 

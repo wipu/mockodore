@@ -185,13 +185,13 @@ public class C64Simulator {
 		opImpl(new Tay());
 		opImpl(new Txa());
 		opImpl(new Tya());
-		sp.set(UnsignedByte.$FF);
+		sp.set(UnsignedByte.xFF);
 	}
 
 	private static void initScreenMemory(Memory mem) {
 		// simplified initial content:
 		for (int i = 0; i < 40 * 25; i++) {
-			mem.write(0x400 + i, UnsignedByte.$20); // space
+			mem.write(0x400 + i, UnsignedByte.x20); // space
 		}
 	}
 
@@ -1724,7 +1724,7 @@ public class C64Simulator {
 
 	private UnsignedByte lsr(UnsignedByte orig) {
 		UnsignedByte result = UnsignedByte.from(orig.uInt() / 2);
-		sr().setCarry(!orig.and(UnsignedByte.$01).isZero());
+		sr().setCarry(!orig.and(UnsignedByte.x01).isZero());
 		sr().setNegative(result.isNegative());
 		sr().setZero(result.isZero());
 		return result;
@@ -1869,7 +1869,7 @@ public class C64Simulator {
 		UnsignedByte newByte = UnsignedByte.fromLsbOf(newValue);
 		sr().setZero(newByte.isZero());
 		sr().setNegative(newByte.isNegative());
-		sr().setCarry(!value.and(UnsignedByte.$01).isZero());
+		sr().setCarry(!value.and(UnsignedByte.x01).isZero());
 		return newByte;
 	}
 
@@ -1976,7 +1976,7 @@ public class C64Simulator {
 		UnsignedByte shifted = UnsignedByte.fromLsbOf(src.uInt() << 1);
 		sr().setCarry(src.isBit7());
 		sr().setNegative(shifted.isBit7());
-		sr().setZero(shifted.equals(UnsignedByte.$00));
+		sr().setZero(shifted.equals(UnsignedByte.x00));
 		return shifted;
 	}
 
@@ -2283,7 +2283,7 @@ public class C64Simulator {
 	}
 
 	private void sbc(UnsignedByte termValue, Register reg, boolean updateV) {
-		addToReg(termValue.eor(UnsignedByte.$FF), reg, updateV);
+		addToReg(termValue.eor(UnsignedByte.xFF), reg, updateV);
 	}
 
 }

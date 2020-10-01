@@ -9,10 +9,10 @@ public class WaveformTest {
 
 	@Test
 	public void individualWaveformValues() {
-		assertEquals(UnsignedByte.$80, Waveform.NOISE.value());
-		assertEquals(UnsignedByte.$40, Waveform.PULSE.value());
-		assertEquals(UnsignedByte.$20, Waveform.SAW.value());
-		assertEquals(UnsignedByte.$10, Waveform.TRIANGLE.value());
+		assertEquals(UnsignedByte.x80, Waveform.NOISE.value());
+		assertEquals(UnsignedByte.x40, Waveform.PULSE.value());
+		assertEquals(UnsignedByte.x20, Waveform.SAW.value());
+		assertEquals(UnsignedByte.x10, Waveform.TRIANGLE.value());
 	}
 
 	@Test
@@ -25,7 +25,7 @@ public class WaveformTest {
 
 	@Test
 	public void orValue() {
-		assertEquals(UnsignedByte.$60, Waveform.PULSE.or(Waveform.SAW).value());
+		assertEquals(UnsignedByte.x60, Waveform.PULSE.or(Waveform.SAW).value());
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class WaveformTest {
 
 	@Test
 	public void allWaveformsValue() {
-		assertEquals(UnsignedByte.$F0, Waveform.ALL.value());
+		assertEquals(UnsignedByte.xF0, Waveform.ALL.value());
 	}
 
 	@Test

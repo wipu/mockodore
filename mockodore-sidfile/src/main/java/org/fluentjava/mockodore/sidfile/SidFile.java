@@ -50,12 +50,12 @@ public class SidFile {
 		private String title = "";
 		private String author = "";
 		private String copyright = "";
-		private UnsignedByte flagsMsb = UnsignedByte.$00;
-		private UnsignedByte flagsLsb = UnsignedByte.$14; // TODO why this?
-		private UnsignedByte songsMsb = UnsignedByte.$00;
-		private UnsignedByte songsLsb = UnsignedByte.$01;
-		private UnsignedByte startSongMsb = UnsignedByte.$00;
-		private UnsignedByte startSongLsb = UnsignedByte.$01;
+		private UnsignedByte flagsMsb = UnsignedByte.x00;
+		private UnsignedByte flagsLsb = UnsignedByte.x14; // TODO why this?
+		private UnsignedByte songsMsb = UnsignedByte.x00;
+		private UnsignedByte songsLsb = UnsignedByte.x01;
+		private UnsignedByte startSongMsb = UnsignedByte.x00;
+		private UnsignedByte startSongLsb = UnsignedByte.x01;
 
 		public SidFileSpex prg(MockodoreProgram prg) {
 			this.prg = prg;

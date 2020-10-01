@@ -59,7 +59,7 @@ public class MidiAndRasterPollerTest extends SidexTestBase {
 
 	private MidiAndRasterPollerTest frameCounterShallBe(int value) {
 		// the simulated initial value on screen is $20:
-		UnsignedByte expected = UnsignedByte.$20.plus(UnsignedByte.from(value));
+		UnsignedByte expected = UnsignedByte.x20.plus(UnsignedByte.from(value));
 		assertEquals(
 				ByteArrayPrettyPrinter.spaceSeparatedHex(expected.signedByte()),
 				simLoadedWithPrg().hexDump(FRAMECOUNTER, 1));
@@ -77,11 +77,11 @@ public class MidiAndRasterPollerTest extends SidexTestBase {
 	}
 
 	private static ReceiveOverrun tooLate() {
-		return new ReceiveOverrun(UnsignedByte.$20);
+		return new ReceiveOverrun(UnsignedByte.x20);
 	}
 
 	private static ReceiveOverrun inTime() {
-		return new ReceiveOverrun(UnsignedByte.$00);
+		return new ReceiveOverrun(UnsignedByte.x00);
 	}
 
 	private MidiAndRasterPollerTest newMidiData(int value,
@@ -89,7 +89,7 @@ public class MidiAndRasterPollerTest extends SidexTestBase {
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_RECV_DATA,
 				UnsignedByte.from(value));
 		simLoadedWithPrg().spontaneouslyWrite(CLabMidi.MIDI_STATUS,
-				UnsignedByte.$01.or(overrun.value));
+				UnsignedByte.x01.or(overrun.value));
 		return this;
 	}
 

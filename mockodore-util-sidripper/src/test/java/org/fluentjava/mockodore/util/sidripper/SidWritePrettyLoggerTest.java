@@ -17,13 +17,13 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void crWithDifferentCombinations() {
-		log.cr1().write(UnsignedByte.$09);
-		log.cr1().write(UnsignedByte.$11);
-		log.cr1().write(UnsignedByte.$41);
-		log.cr1().write(UnsignedByte.$81);
-		log.cr1().write(UnsignedByte.$83);
-		log.cr1().write(UnsignedByte.$85);
-		log.cr1().write(UnsignedByte.$FF);
+		log.cr1().write(UnsignedByte.x09);
+		log.cr1().write(UnsignedByte.x11);
+		log.cr1().write(UnsignedByte.x41);
+		log.cr1().write(UnsignedByte.x81);
+		log.cr1().write(UnsignedByte.x83);
+		log.cr1().write(UnsignedByte.x85);
+		log.cr1().write(UnsignedByte.xFF);
 
 		assertEquals(" 1   | CR1=||||TEST|||GATE ($D404=#$09)\n"
 				+ " 1   | CR1=|||TRI||||GATE ($D404=#$11)\n"
@@ -37,7 +37,7 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void cr2IsIndented() {
-		log.cr2().write(UnsignedByte.$11);
+		log.cr2().write(UnsignedByte.x11);
 
 		assertEquals("  2  | CR2=|||TRI||||GATE ($D40B=#$11)\n" + "",
 				log.toString());
@@ -45,7 +45,7 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void cr3IsIndented() {
-		log.cr3().write(UnsignedByte.$11);
+		log.cr3().write(UnsignedByte.x11);
 
 		assertEquals("   3 | CR3=|||TRI||||GATE ($D412=#$11)\n" + "",
 				log.toString());
@@ -53,9 +53,9 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void freqLo() {
-		log.freqLo1().write(UnsignedByte.$11);
-		log.freqLo2().write(UnsignedByte.$22);
-		log.freqLo3().write(UnsignedByte.$33);
+		log.freqLo1().write(UnsignedByte.x11);
+		log.freqLo2().write(UnsignedByte.x22);
+		log.freqLo3().write(UnsignedByte.x33);
 
 		assertEquals(
 				" 1   | FreqLo1=#$11 ($D400=#$11)\n"
@@ -66,9 +66,9 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void freqHi() {
-		log.freqHi1().write(UnsignedByte.$11);
-		log.freqHi2().write(UnsignedByte.$22);
-		log.freqHi3().write(UnsignedByte.$33);
+		log.freqHi1().write(UnsignedByte.x11);
+		log.freqHi2().write(UnsignedByte.x22);
+		log.freqHi3().write(UnsignedByte.x33);
 
 		assertEquals(
 				" 1   | FreqHi1=#$11 ($D401=#$11)\n"
@@ -79,9 +79,9 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void pwLo() {
-		log.pwLo1().write(UnsignedByte.$11);
-		log.pwLo2().write(UnsignedByte.$22);
-		log.pwLo3().write(UnsignedByte.$33);
+		log.pwLo1().write(UnsignedByte.x11);
+		log.pwLo2().write(UnsignedByte.x22);
+		log.pwLo3().write(UnsignedByte.x33);
 
 		assertEquals(
 				" 1   | PwLo1=#$11 ($D402=#$11)\n"
@@ -92,9 +92,9 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void pwHi() {
-		log.pwHi1().write(UnsignedByte.$11);
-		log.pwHi2().write(UnsignedByte.$22);
-		log.pwHi3().write(UnsignedByte.$33);
+		log.pwHi1().write(UnsignedByte.x11);
+		log.pwHi2().write(UnsignedByte.x22);
+		log.pwHi3().write(UnsignedByte.x33);
 
 		assertEquals(
 				" 1   | PwHi1=#$11 ($D403=#$11)\n"
@@ -105,9 +105,9 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void ad() {
-		log.ad1().write(UnsignedByte.$11);
-		log.ad2().write(UnsignedByte.$22);
-		log.ad3().write(UnsignedByte.$33);
+		log.ad1().write(UnsignedByte.x11);
+		log.ad2().write(UnsignedByte.x22);
+		log.ad3().write(UnsignedByte.x33);
 
 		assertEquals(
 				" 1   | AD1=01 01 ($D405=#$11)\n"
@@ -118,9 +118,9 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void sr() {
-		log.sr1().write(UnsignedByte.$11);
-		log.sr2().write(UnsignedByte.$22);
-		log.sr3().write(UnsignedByte.$33);
+		log.sr1().write(UnsignedByte.x11);
+		log.sr2().write(UnsignedByte.x22);
+		log.sr3().write(UnsignedByte.x33);
 
 		assertEquals(
 				" 1   | SR1=01 01 ($D406=#$11)\n"
@@ -131,8 +131,8 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void fcLoAndHi() {
-		log.fcLo().write(UnsignedByte.$11);
-		log.fcHi().write(UnsignedByte.$22);
+		log.fcLo().write(UnsignedByte.x11);
+		log.fcHi().write(UnsignedByte.x22);
 
 		assertEquals(
 				"     | FcLo=#$11 ($D415=#$11)\n"
@@ -142,10 +142,10 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void modeVolVolume() {
-		log.modeVol().write(UnsignedByte.$00);
-		log.modeVol().write(UnsignedByte.$01);
-		log.modeVol().write(UnsignedByte.$0E);
-		log.modeVol().write(UnsignedByte.$0F);
+		log.modeVol().write(UnsignedByte.x00);
+		log.modeVol().write(UnsignedByte.x01);
+		log.modeVol().write(UnsignedByte.x0E);
+		log.modeVol().write(UnsignedByte.x0F);
 
 		assertEquals(
 				"     | ModeVol=||||vol=#$00 ($D418=#$00)\n"
@@ -157,12 +157,12 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void modeVolBitField() {
-		log.modeVol().write(UnsignedByte.$0F);
-		log.modeVol().write(UnsignedByte.$1F);
-		log.modeVol().write(UnsignedByte.$2F);
-		log.modeVol().write(UnsignedByte.$4F);
-		log.modeVol().write(UnsignedByte.$8F);
-		log.modeVol().write(UnsignedByte.$FF);
+		log.modeVol().write(UnsignedByte.x0F);
+		log.modeVol().write(UnsignedByte.x1F);
+		log.modeVol().write(UnsignedByte.x2F);
+		log.modeVol().write(UnsignedByte.x4F);
+		log.modeVol().write(UnsignedByte.x8F);
+		log.modeVol().write(UnsignedByte.xFF);
 
 		assertEquals("     | ModeVol=||||vol=#$0F ($D418=#$0F)\n"
 				+ "     | ModeVol=|||LOWPASS|vol=#$0F ($D418=#$1F)\n"
@@ -175,10 +175,10 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void resFiltResonance() {
-		log.resFilt().write(UnsignedByte.$00);
-		log.resFilt().write(UnsignedByte.$10);
-		log.resFilt().write(UnsignedByte.$E0);
-		log.resFilt().write(UnsignedByte.$F0);
+		log.resFilt().write(UnsignedByte.x00);
+		log.resFilt().write(UnsignedByte.x10);
+		log.resFilt().write(UnsignedByte.xE0);
+		log.resFilt().write(UnsignedByte.xF0);
 
 		assertEquals(
 				"     | ResFilt=res=#$00|||| ($D417=#$00)\n"
@@ -190,11 +190,11 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void resFiltBits() {
-		log.resFilt().write(UnsignedByte.$00);
-		log.resFilt().write(UnsignedByte.$01);
-		log.resFilt().write(UnsignedByte.$02);
-		log.resFilt().write(UnsignedByte.$04);
-		log.resFilt().write(UnsignedByte.$08);
+		log.resFilt().write(UnsignedByte.x00);
+		log.resFilt().write(UnsignedByte.x01);
+		log.resFilt().write(UnsignedByte.x02);
+		log.resFilt().write(UnsignedByte.x04);
+		log.resFilt().write(UnsignedByte.x08);
 
 		assertEquals("     | ResFilt=res=#$00|||| ($D417=#$00)\n"
 				+ "     | ResFilt=res=#$00||||FILT_1 ($D417=#$01)\n"
@@ -206,11 +206,11 @@ public class SidWritePrettyLoggerTest {
 
 	@Test
 	public void playCallStarts() {
-		log.ad1().write(UnsignedByte.$01);
+		log.ad1().write(UnsignedByte.x01);
 		log.playCallStarting();
-		log.ad1().write(UnsignedByte.$02);
+		log.ad1().write(UnsignedByte.x02);
 		log.playCallStarting();
-		log.ad1().write(UnsignedByte.$03);
+		log.ad1().write(UnsignedByte.x03);
 
 		assertEquals(
 				" 1   | AD1=00 01 ($D405=#$01)\n" + "=== Frame 0\n"

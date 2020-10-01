@@ -17,17 +17,17 @@ public class Codebase64PalNoteFreqsTest {
 
 	@Test
 	public void someValues() {
-		assertEquals(UnsignedByte.$17, freqs.lo(Codebase64PalNote.C__1));
-		assertEquals(UnsignedByte.$01, freqs.hi(Codebase64PalNote.C__1));
+		assertEquals(UnsignedByte.x17, freqs.lo(Codebase64PalNote.C__1));
+		assertEquals(UnsignedByte.x01, freqs.hi(Codebase64PalNote.C__1));
 
-		assertEquals(UnsignedByte.$43, freqs.lo(Codebase64PalNote.G__2));
-		assertEquals(UnsignedByte.$03, freqs.hi(Codebase64PalNote.G__2));
+		assertEquals(UnsignedByte.x43, freqs.lo(Codebase64PalNote.G__2));
+		assertEquals(UnsignedByte.x03, freqs.hi(Codebase64PalNote.G__2));
 
-		assertEquals(UnsignedByte.$A3, freqs.lo(Codebase64PalNote.A__4));
-		assertEquals(UnsignedByte.$0E, freqs.hi(Codebase64PalNote.A__4));
+		assertEquals(UnsignedByte.xA3, freqs.lo(Codebase64PalNote.A__4));
+		assertEquals(UnsignedByte.x0E, freqs.hi(Codebase64PalNote.A__4));
 
-		assertEquals(UnsignedByte.$82, freqs.lo(Codebase64PalNote.Ais4));
-		assertEquals(UnsignedByte.$0F, freqs.hi(Codebase64PalNote.Ais4));
+		assertEquals(UnsignedByte.x82, freqs.lo(Codebase64PalNote.Ais4));
+		assertEquals(UnsignedByte.x0F, freqs.hi(Codebase64PalNote.Ais4));
 	}
 
 }

@@ -12,8 +12,8 @@ public class Codebase64PalNoteTest {
 
 	@Test
 	public void someValues() {
-		assertEquals(UnsignedByte.$2D, Codebase64PalNote.A__4.value());
-		assertEquals(UnsignedByte.$2E, Codebase64PalNote.Ais4.value());
+		assertEquals(UnsignedByte.x2D, Codebase64PalNote.A__4.value());
+		assertEquals(UnsignedByte.x2E, Codebase64PalNote.Ais4.value());
 	}
 
 	@Ignore

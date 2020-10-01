@@ -6,7 +6,7 @@ public class StatusRegister extends Register {
 
 	public StatusRegister(RegisterWriteListener listener) {
 		super("SR", listener);
-		set(UnsignedByte.$20);
+		set(UnsignedByte.x20);
 	}
 
 	public int carryAsZeroOrOne() {
