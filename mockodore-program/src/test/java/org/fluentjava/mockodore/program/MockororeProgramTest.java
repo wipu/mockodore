@@ -103,26 +103,26 @@ public class MockororeProgramTest {
 
 	@Test
 	public void ldaZeropageFB() {
-		p.lda(ZeroPage.$FB);
+		p.lda(ZeroPage.xFB);
 		assertBytes("A5 FB");
 		assertAssy("lda $FB\n");
-		assertJava("lda(ZeroPage.$FB);\n");
+		assertJava("lda(ZeroPage.xFB);\n");
 	}
 
 	@Test
 	public void lsrZeropage() {
-		p.lsr(ZeroPage.$FB);
+		p.lsr(ZeroPage.xFB);
 		assertBytes("46 FB");
 		assertAssy("lsr $FB\n");
-		assertJava("lsr(ZeroPage.$FB);\n");
+		assertJava("lsr(ZeroPage.xFB);\n");
 	}
 
 	@Test
 	public void rorZeropage() {
-		p.ror(ZeroPage.$FB);
+		p.ror(ZeroPage.xFB);
 		assertBytes("66 FB");
 		assertAssy("ror $FB\n");
-		assertJava("ror(ZeroPage.$FB);\n");
+		assertJava("ror(ZeroPage.xFB);\n");
 	}
 
 	@Test
@@ -156,18 +156,18 @@ public class MockororeProgramTest {
 
 	@Test
 	public void ldxZeropageFB() {
-		p.ldx(ZeroPage.$FB);
+		p.ldx(ZeroPage.xFB);
 		assertBytes("A6 FB");
 		assertAssy("ldx $FB\n");
-		assertJava("ldx(ZeroPage.$FB);\n");
+		assertJava("ldx(ZeroPage.xFB);\n");
 	}
 
 	@Test
 	public void ldyZeropageFB() {
-		p.ldy(ZeroPage.$FB);
+		p.ldy(ZeroPage.xFB);
 		assertBytes("A4 FB");
 		assertAssy("ldy $FB\n");
-		assertJava("ldy(ZeroPage.$FB);\n");
+		assertJava("ldy(ZeroPage.xFB);\n");
 	}
 
 	@Test
@@ -246,7 +246,7 @@ public class MockororeProgramTest {
 	@Test
 	public void cmpZpX() {
 		p.startAddress(address$1000);
-		p.cmp(ZeroPage.$FB.plusX());
+		p.cmp(ZeroPage.xFB.plusX());
 		assertBytes("D5 FB");
 		assertAssy("cmp $FB,X\n");
 	}
@@ -316,7 +316,7 @@ public class MockororeProgramTest {
 	@Test
 	public void oraZp() {
 		p.startAddress(address$1000);
-		p.ora(ZeroPage.$FB);
+		p.ora(ZeroPage.xFB);
 		assertBytes("05 FB");
 		assertAssy("ora $FB\n");
 	}
@@ -607,7 +607,7 @@ public class MockororeProgramTest {
 		Label label = Label.named("label");
 		p.startAddress(address$1000);
 		p.label(label);
-		p.stx(ZeroPage.$01);
+		p.stx(ZeroPage.x01);
 
 		assertBytes("86 01");
 		assertAssy("label:\nstx $01\n");
@@ -627,7 +627,7 @@ public class MockororeProgramTest {
 	@Test
 	public void styZp() {
 		p.startAddress(address$1000);
-		p.sty(ZeroPage.$FB);
+		p.sty(ZeroPage.xFB);
 
 		assertBytes("84 FB");
 		assertAssy("sty $FB\n");
@@ -666,45 +666,45 @@ public class MockororeProgramTest {
 
 	@Test
 	public void staZeroPage() {
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		assertBytes("85 FB");
 		assertAssy("sta $FB\n");
 	}
 
 	@Test
 	public void rolZeroPage() {
-		p.rol(ZeroPage.$FB);
+		p.rol(ZeroPage.xFB);
 		assertBytes("26 FB");
 		assertAssy("rol $FB\n");
 	}
 
 	@Test
 	public void staZeroPagePlusX() {
-		p.sta(ZeroPage.$FB.plusX());
+		p.sta(ZeroPage.xFB.plusX());
 		assertBytes("95 FB");
 		assertAssy("sta $FB,X\n");
-		assertJava("sta(ZeroPage.$FB.plusX());\n");
+		assertJava("sta(ZeroPage.xFB.plusX());\n");
 	}
 
 	@Test
 	public void staZeroPagePlusXIndirect() {
-		p.sta(ZeroPage.$FB.plusXIndirect());
+		p.sta(ZeroPage.xFB.plusXIndirect());
 		assertBytes("81 FB");
 		assertAssy("sta ($FB,X)\n");
-		assertJava("sta(ZeroPage.$FB.plusXIndirect());\n");
+		assertJava("sta(ZeroPage.xFB.plusXIndirect());\n");
 	}
 
 	@Test
 	public void staZeroPageIndirectPlusY() {
-		p.sta(ZeroPage.$FB.indirectPlusY());
+		p.sta(ZeroPage.xFB.indirectPlusY());
 		assertBytes("91 FB");
 		assertAssy("sta ($FB),Y\n");
-		assertJava("sta(ZeroPage.$FB.indirectPlusY());\n");
+		assertJava("sta(ZeroPage.xFB.indirectPlusY());\n");
 	}
 
 	@Test
 	public void sloZeroPageIndirectPlusY() {
-		p.slo(ZeroPage.$FB.indirectPlusY());
+		p.slo(ZeroPage.xFB.indirectPlusY());
 		assertBytes("13 FB");
 		assertAssy("slo ($FB),Y\n");
 	}
@@ -991,7 +991,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void ldaZeroPagePlusX() {
-		ZeroPage zp = ZeroPage.$FB;
+		ZeroPage zp = ZeroPage.xFB;
 		p.startAddress(address$1000);
 		p.lda(zp.plusX());
 		assertBytes("B5 FB");
@@ -1000,7 +1000,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void ldyZeroPagePlusX() {
-		ZeroPage zp = ZeroPage.$FB;
+		ZeroPage zp = ZeroPage.xFB;
 		p.startAddress(address$1000);
 		p.ldy(zp.plusX());
 		assertBytes("B4 FB");
@@ -1009,7 +1009,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void ldaZeroPageIndirectPlusY() {
-		ZeroPage zp = ZeroPage.$FB;
+		ZeroPage zp = ZeroPage.xFB;
 		p.startAddress(address$1000);
 		p.lda(zp.indirectPlusY());
 		assertBytes("B1 FB");
@@ -1133,7 +1133,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void adcZp() {
-		p.adc(ZeroPage.$FB);
+		p.adc(ZeroPage.xFB);
 
 		assertBytes("65 FB");
 		assertAssy("adc $FB\n");
@@ -1141,7 +1141,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void adcZpX() {
-		p.adc(ZeroPage.$FB.plusX());
+		p.adc(ZeroPage.xFB.plusX());
 
 		assertBytes("75 FB");
 		assertAssy("adc $FB,X\n");
@@ -1149,7 +1149,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void sbcZp() {
-		p.sbc(ZeroPage.$FB);
+		p.sbc(ZeroPage.xFB);
 
 		assertBytes("E5 FB");
 		assertAssy("sbc $FB\n");
@@ -1157,7 +1157,7 @@ public class MockororeProgramTest {
 
 	@Test
 	public void sbcZpX() {
-		p.sbc(ZeroPage.$FB.plusX());
+		p.sbc(ZeroPage.xFB.plusX());
 
 		assertBytes("F5 FB");
 		assertAssy("sbc $FB,X\n");
@@ -1250,7 +1250,7 @@ public class MockororeProgramTest {
 	@Test
 	public void incZp() {
 		p.startAddress(address$1000);
-		p.inc(ZeroPage.$01);
+		p.inc(ZeroPage.x01);
 		assertBytes("E6 01");
 		assertAssy("inc $01\n");
 	}
@@ -1258,7 +1258,7 @@ public class MockororeProgramTest {
 	@Test
 	public void decZp() {
 		p.startAddress(address$1000);
-		p.dec(ZeroPage.$01);
+		p.dec(ZeroPage.x01);
 		assertBytes("C6 01");
 		assertAssy("dec $01\n");
 	}
@@ -1266,7 +1266,7 @@ public class MockororeProgramTest {
 	@Test
 	public void decZpX() {
 		p.startAddress(address$1000);
-		p.dec(ZeroPage.$01.plusX());
+		p.dec(ZeroPage.x01.plusX());
 		assertBytes("D6 01");
 		assertAssy("dec $01,X\n");
 	}
@@ -1441,7 +1441,7 @@ public class MockororeProgramTest {
 	@Test
 	public void aslZp() {
 		p.startAddress(address$1000);
-		p.asl(ZeroPage.$FB);
+		p.asl(ZeroPage.xFB);
 
 		assertBytes("06 FB");
 		assertAssy("asl $FB\n");

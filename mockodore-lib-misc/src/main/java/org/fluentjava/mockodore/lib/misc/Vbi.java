@@ -30,7 +30,7 @@ public class Vbi {
 
 			lda(vbiHandler.lsb()).sta(raw(0x0314));
 			lda(vbiHandler.msb()).sta(raw(0x0315));
-			lda(vbiRasterLine).sta(raw(0xd012)).sta(ZeroPage.$02).lda(0x01)
+			lda(vbiRasterLine).sta(raw(0xd012)).sta(ZeroPage.x02).lda(0x01)
 					.sta(raw(0xd01a)).cli();
 			return __();
 		}

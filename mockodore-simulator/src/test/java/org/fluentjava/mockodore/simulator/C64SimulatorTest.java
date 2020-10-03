@@ -323,13 +323,13 @@ public class C64SimulatorTest {
 	public void styZp() {
 		p.startAddress(address$1000);
 		p.ldy(0x01);
-		p.sty(ZeroPage.$FB);
+		p.sty(ZeroPage.xFB);
 		p.rts();
 
 		sim.load(p.end());
 		sim.simpleSysAndAutoTick(address$1000);
 
-		assertEquals("01", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("01", sim.hexDump(ZeroPage.xFB, 1));
 	}
 
 	@Test
@@ -476,9 +476,9 @@ public class C64SimulatorTest {
 	@Test
 	public void oraZp() {
 		p.startAddress(address$1000);
-		p.lda(0x01).sta(ZeroPage.$FB);
+		p.lda(0x01).sta(ZeroPage.xFB);
 		p.lda(0x80);
-		p.ora(ZeroPage.$FB);
+		p.ora(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
@@ -791,8 +791,8 @@ public class C64SimulatorTest {
 	@Test
 	public void ldyZpWritesToY() {
 		p.startAddress(address$1000);
-		p.lda(0x02).sta(ZeroPage.$FB);
-		p.ldy(ZeroPage.$FB);
+		p.lda(0x02).sta(ZeroPage.xFB);
+		p.ldy(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
@@ -870,10 +870,10 @@ public class C64SimulatorTest {
 	@Test
 	public void cmpZpXSetsN() {
 		p.startAddress(address$1000);
-		p.lda(0x05).sta(ZeroPage.$FB.plus(1));
+		p.lda(0x05).sta(ZeroPage.xFB.plus(1));
 		p.ldx(1);
 		p.lda(0x04);
-		p.cmp(ZeroPage.$FB.plusX());
+		p.cmp(ZeroPage.xFB.plusX());
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
@@ -1030,42 +1030,42 @@ public class C64SimulatorTest {
 	public void staZeroPage() {
 		p.startAddress(address$1000);
 		p.lda(0x01);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.rts();
 
 		sim.load(p.end());
 
-		assertEquals("00", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("00", sim.hexDump(ZeroPage.xFB, 1));
 		sim.simpleSysAndAutoTick();
-		assertEquals("01", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("01", sim.hexDump(ZeroPage.xFB, 1));
 	}
 
 	@Test
 	public void stxZeroPage() {
 		p.startAddress(address$1000);
 		p.ldx(0x01);
-		p.stx(ZeroPage.$FB);
+		p.stx(ZeroPage.xFB);
 		p.rts();
 
 		sim.load(p.end());
 
-		assertEquals("00", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("00", sim.hexDump(ZeroPage.xFB, 1));
 		sim.simpleSysAndAutoTick();
-		assertEquals("01", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("01", sim.hexDump(ZeroPage.xFB, 1));
 	}
 
 	@Test
 	public void rolZeroPageNoReadCarryAndSetCarry() {
 		p.startAddress(address$1000);
 		p.lda(0xA1);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.lda(0x00); // unset N
-		p.rol(ZeroPage.$FB);
+		p.rol(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("42", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("42", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizC", sim.sr().toString());
 	}
 
@@ -1073,14 +1073,14 @@ public class C64SimulatorTest {
 	public void rorZPNoReadCarry() {
 		p.startAddress(address$1000);
 		p.lda(0x42);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.clc();
-		p.ror(ZeroPage.$FB);
+		p.ror(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("21", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("21", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizc", sim.sr().toString());
 	}
 
@@ -1088,14 +1088,14 @@ public class C64SimulatorTest {
 	public void rorZPReadsCarry() {
 		p.startAddress(address$1000);
 		p.lda(0x42);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.sec();
-		p.ror(ZeroPage.$FB);
+		p.ror(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("A1", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("A1", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("Nv-bdizc", sim.sr().toString());
 	}
 
@@ -1103,14 +1103,14 @@ public class C64SimulatorTest {
 	public void rorZPSetsCarry() {
 		p.startAddress(address$1000);
 		p.lda(0x01);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.clc();
-		p.ror(ZeroPage.$FB);
+		p.ror(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("00", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("00", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdiZC", sim.sr().toString());
 	}
 
@@ -1118,14 +1118,14 @@ public class C64SimulatorTest {
 	public void rorZPUnsetsCarry() {
 		p.startAddress(address$1000);
 		p.lda(0x02);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.sec();
-		p.ror(ZeroPage.$FB);
+		p.ror(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("81", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("81", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("Nv-bdizc", sim.sr().toString());
 	}
 
@@ -1133,13 +1133,13 @@ public class C64SimulatorTest {
 	public void rorZPSetsZero() {
 		p.startAddress(address$1000);
 		p.lda(0x01);
-		p.sta(ZeroPage.$FB);
-		p.ror(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
+		p.ror(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("00", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("00", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdiZC", sim.sr().toString());
 	}
 
@@ -1189,14 +1189,14 @@ public class C64SimulatorTest {
 	public void rorZPSetsNegative() {
 		p.startAddress(address$1000);
 		p.lda(0x00);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.sec();
-		p.ror(ZeroPage.$FB);
+		p.ror(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("80", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("80", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("Nv-bdizc", sim.sr().toString());
 	}
 
@@ -1204,14 +1204,14 @@ public class C64SimulatorTest {
 	public void rorZPUnsetsNegative() {
 		p.startAddress(address$1000);
 		p.lda(0x80);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.lda(0xFF); // set N
-		p.ror(ZeroPage.$FB);
+		p.ror(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("40", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("40", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizc", sim.sr().toString());
 	}
 
@@ -1219,14 +1219,14 @@ public class C64SimulatorTest {
 	public void lsrZeroPageThatSetsCarry() {
 		p.startAddress(address$1000);
 		p.lda(0xA1);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.clc();
-		p.lsr(ZeroPage.$FB);
+		p.lsr(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("50", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("50", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizC", sim.sr().toString());
 	}
 
@@ -1234,14 +1234,14 @@ public class C64SimulatorTest {
 	public void lsrZeroPageThatUnsetsCarry() {
 		p.startAddress(address$1000);
 		p.lda(0xA0);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.sec();
-		p.lsr(ZeroPage.$FB);
+		p.lsr(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("50", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("50", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizc", sim.sr().toString());
 	}
 
@@ -1249,14 +1249,14 @@ public class C64SimulatorTest {
 	public void lsrZeroPageThatSetsZero() {
 		p.startAddress(address$1000);
 		p.lda(0x01);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.lda(0x01); // unset Z
-		p.lsr(ZeroPage.$FB);
+		p.lsr(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("00", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("00", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdiZC", sim.sr().toString());
 	}
 
@@ -1264,14 +1264,14 @@ public class C64SimulatorTest {
 	public void lsrZeroPageThatUnsetsNegative() {
 		p.startAddress(address$1000);
 		p.lda(0xFF);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.lda(0xFF); // set N
-		p.lsr(ZeroPage.$FB);
+		p.lsr(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("7F", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("7F", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizC", sim.sr().toString());
 	}
 
@@ -1279,14 +1279,14 @@ public class C64SimulatorTest {
 	public void rolZeroPageNoReadCarryAndSetNegative() {
 		p.startAddress(address$1000);
 		p.lda(0x41);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.lda(0x00); // unset N
-		p.rol(ZeroPage.$FB);
+		p.rol(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("82", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("82", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("Nv-bdizc", sim.sr().toString());
 	}
 
@@ -1294,15 +1294,15 @@ public class C64SimulatorTest {
 	public void rolZeroPageReadCarryAndUnsetCarryAndNegative() {
 		p.startAddress(address$1000);
 		p.lda(0x31);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.sec(); // set C and
 		p.lda(0xFF); // set N
-		p.rol(ZeroPage.$FB);
+		p.rol(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("63", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("63", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizc", sim.sr().toString());
 	}
 
@@ -1310,14 +1310,14 @@ public class C64SimulatorTest {
 	public void rolZeroPageSetsZero() {
 		p.startAddress(address$1000);
 		p.lda(0x00);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.lda(0x01); // unset Z
-		p.rol(ZeroPage.$FB);
+		p.rol(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("00", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("00", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdiZc", sim.sr().toString());
 	}
 
@@ -1338,11 +1338,11 @@ public class C64SimulatorTest {
 	public void staZeroPageIndirectPlusY() {
 		Label array = Label.named("array");
 		p.startAddress(address$1000);
-		p.lda(array.lsb()).sta(ZeroPage.$FB);
-		p.lda(array.msb()).sta(ZeroPage.$FB.plus(1));
+		p.lda(array.lsb()).sta(ZeroPage.xFB);
+		p.lda(array.msb()).sta(ZeroPage.xFB.plus(1));
 		p.ldy(0x01);
 		p.lda(0xFF);
-		p.sta(ZeroPage.$FB.indirectPlusY());
+		p.sta(ZeroPage.xFB.indirectPlusY());
 		p.rts();
 		p.label(array).data(0x01, 0x02, 0x03);
 
@@ -1356,11 +1356,11 @@ public class C64SimulatorTest {
 	public void sloZeroPageIndirectPlusY() {
 		Label array = Label.named("array");
 		p.startAddress(address$1000);
-		p.lda(array.lsb()).sta(ZeroPage.$FB);
-		p.lda(array.msb()).sta(ZeroPage.$FB.plus(1));
+		p.lda(array.lsb()).sta(ZeroPage.xFB);
+		p.lda(array.msb()).sta(ZeroPage.xFB.plus(1));
 		p.ldy(0x01);
 		p.lda(0x80);
-		p.slo(ZeroPage.$FB.indirectPlusY());
+		p.slo(ZeroPage.xFB.indirectPlusY());
 		p.rts();
 		p.label(array).data(0x01, 0x02, 0x03);
 
@@ -1375,20 +1375,20 @@ public class C64SimulatorTest {
 	public void ldaZeroPage() {
 		p.startAddress(address$1000);
 		p.lda(0x01);
-		p.sta(ZeroPage.$FB);
+		p.sta(ZeroPage.xFB);
 		p.lda(0x00);
-		p.lda(ZeroPage.$FB);
+		p.lda(ZeroPage.xFB);
 		p.rts();
 
 		sim.load(p.end());
 
-		assertEquals("00", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("00", sim.hexDump(ZeroPage.xFB, 1));
 		sim.simpleSys(address$1000);
 		sim.tick(Op.LDA_IMMEDIATE, Op.STA_ZEROPAGE, Op.LDA_IMMEDIATE);
 		assertEquals(
 				"(0 SR:=$20 [nv-bdizc])(0 SP=$FF)(0 loadPrg $1000 9)(0 simpleSys $1000)(0 $1000 lda #$01)(2 A=$01)(2 SR:=$20 [nv-bdizc])(2 SR:=$20 [nv-bdizc])(2 $1002 sta $FB)(5 $FB:=#$01)(5 $1004 lda #$00)(7 A=$00)(7 SR:=$22 [nv-bdiZc])(7 SR:=$22 [nv-bdiZc])(7 $1006 lda $FB)",
 				sim.recentEventLog());
-		assertEquals("01", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("01", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals(0x00, sim.a().uInt());
 
 		sim.tick(Op.LDA_ZEROPAGE, Op.RTS);
@@ -1402,11 +1402,11 @@ public class C64SimulatorTest {
 	public void ldaZeroPageIndirectPlusY() {
 		Label array = Label.named("array");
 		p.startAddress(address$1000);
-		p.lda(array.lsb()).sta(ZeroPage.$FB);
-		p.lda(array.msb()).sta(ZeroPage.$FB.plus(1));
+		p.lda(array.lsb()).sta(ZeroPage.xFB);
+		p.lda(array.msb()).sta(ZeroPage.xFB.plus(1));
 		p.lda(0x00);
 		p.ldy(0x02);
-		p.lda(ZeroPage.$FB.indirectPlusY());
+		p.lda(ZeroPage.xFB.indirectPlusY());
 		p.rts();
 		p.label(array).data(0x10, 0x11, 0x12, 0x13);
 
@@ -1483,39 +1483,39 @@ public class C64SimulatorTest {
 	@Test
 	public void adcZp() {
 		p.startAddress(address$1000);
-		p.lda(0x02).sta(ZeroPage.$FB);
+		p.lda(0x02).sta(ZeroPage.xFB);
 		p.lda(0x03);
-		p.adc(ZeroPage.$FB);
+		p.adc(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
 		assertEquals(0x05, sim.a().uInt());
-		assertEquals("02", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("02", sim.hexDump(ZeroPage.xFB, 1));
 	}
 
 	@Test
 	public void adcZpX() {
 		p.startAddress(address$1000);
-		p.lda(0x02).sta(ZeroPage.$FB.plus(1));
+		p.lda(0x02).sta(ZeroPage.xFB.plus(1));
 		p.ldx(1);
 		p.lda(0x03);
-		p.adc(ZeroPage.$FB.plusX());
+		p.adc(ZeroPage.xFB.plusX());
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
 		assertEquals(0x05, sim.a().uInt());
-		assertEquals("00 02", sim.hexDump(ZeroPage.$FB, 2));
+		assertEquals("00 02", sim.hexDump(ZeroPage.xFB, 2));
 	}
 
 	@Test
 	public void sbcZp() {
 		p.startAddress(address$1000);
-		p.lda(0x03).sta(ZeroPage.$FB);
+		p.lda(0x03).sta(ZeroPage.xFB);
 		p.lda(0x02);
 		p.sec();
-		p.sbc(ZeroPage.$FB);
+		p.sbc(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
@@ -1527,11 +1527,11 @@ public class C64SimulatorTest {
 	@Test
 	public void sbcZpX() {
 		p.startAddress(address$1000);
-		p.lda(0x03).sta(ZeroPage.$FB.plus(1));
+		p.lda(0x03).sta(ZeroPage.xFB.plus(1));
 		p.lda(0x02);
 		p.ldx(1);
 		p.sec();
-		p.sbc(ZeroPage.$FB.plusX());
+		p.sbc(ZeroPage.xFB.plusX());
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
@@ -1632,7 +1632,7 @@ public class C64SimulatorTest {
 
 	@Test
 	public void staZeroPagePlusXWithXValue0() {
-		ZeroPage zp0 = ZeroPage.$FB;
+		ZeroPage zp0 = ZeroPage.xFB;
 
 		p.startAddress(address$1000);
 		p.ldx(0x00);
@@ -1647,7 +1647,7 @@ public class C64SimulatorTest {
 
 	@Test
 	public void staZeroPagePlusXWithXValue2() {
-		ZeroPage zp0 = ZeroPage.$FB;
+		ZeroPage zp0 = ZeroPage.xFB;
 
 		p.startAddress(address$1000);
 		p.ldx(0x02);
@@ -1662,7 +1662,7 @@ public class C64SimulatorTest {
 
 	@Test
 	public void ldaZeroPagePlusXWithXValue2() {
-		ZeroPage zp0 = ZeroPage.$FB;
+		ZeroPage zp0 = ZeroPage.xFB;
 
 		p.startAddress(address$1000);
 		// init data:
@@ -1681,7 +1681,7 @@ public class C64SimulatorTest {
 
 	@Test
 	public void ldyZeroPagePlusXWithXValue2() {
-		ZeroPage zp0 = ZeroPage.$FB;
+		ZeroPage zp0 = ZeroPage.xFB;
 
 		p.startAddress(address$1000);
 		// init data:
@@ -1762,7 +1762,7 @@ public class C64SimulatorTest {
 
 	@Test
 	public void incZpSetsNegative() {
-		ZeroPage ZP1 = ZeroPage.$01;
+		ZeroPage ZP1 = ZeroPage.x01;
 
 		p.startAddress(address$1000);
 		p.lda(0x7F);
@@ -1778,7 +1778,7 @@ public class C64SimulatorTest {
 
 	@Test
 	public void decZpSetsZero() {
-		ZeroPage ZP1 = ZeroPage.$01;
+		ZeroPage ZP1 = ZeroPage.x01;
 
 		p.startAddress(address$1000);
 		p.lda(0x01);
@@ -1794,7 +1794,7 @@ public class C64SimulatorTest {
 
 	@Test
 	public void decZpXSetsZero() {
-		ZeroPage ZP1 = ZeroPage.$01;
+		ZeroPage ZP1 = ZeroPage.x01;
 
 		p.startAddress(address$1000);
 		// init zp data
@@ -1887,13 +1887,13 @@ public class C64SimulatorTest {
 	@Test
 	public void aslZpThatSetsCarry() {
 		p.startAddress(address$1000);
-		p.lda(0x81).sta(ZeroPage.$FB);
-		p.asl(ZeroPage.$FB);
+		p.lda(0x81).sta(ZeroPage.xFB);
+		p.asl(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 
-		assertEquals("02", sim.hexDump(ZeroPage.$FB, 1));
+		assertEquals("02", sim.hexDump(ZeroPage.xFB, 1));
 		assertEquals("nv-bdizC", sim.sr().toString());
 	}
 
@@ -2115,8 +2115,8 @@ public class C64SimulatorTest {
 	@Test
 	public void ldxZpSetsNegative() {
 		p.startAddress(address$1000);
-		p.lda(-1).sta(ZeroPage.$FB);
-		p.ldx(ZeroPage.$FB);
+		p.lda(-1).sta(ZeroPage.xFB);
+		p.ldx(ZeroPage.xFB);
 		p.rts();
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
