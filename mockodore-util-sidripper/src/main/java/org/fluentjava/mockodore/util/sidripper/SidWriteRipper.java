@@ -16,6 +16,7 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 	private final SidWriteVisualizer visualizer;
 	private final SidWritesToMidiSysex toMidi;
 	private final SidWriteHtmlWriter htmlWriter;
+	private final FullFrameHexDumper fullFrameHexDumper;
 
 	public static SidWriteRipper using(C64SimulatorEventListener delegate,
 			int frameCount) {
@@ -27,25 +28,27 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 		StringBuilder sidWriteLog = new StringBuilder();
 		SidWritePrettyLogger prettyLogger = new SidWritePrettyLogger(
 				sidWriteLog);
+		FullFrameHexDumper fullFrameHexDumper = new FullFrameHexDumper();
 		SidWritesToMidiSysex toMidi = new SidWritesToMidiSysex();
 		SidWriteListener sid = SidWriteListenerHub.delegatingTo(visualizer,
-				prettyLogger, toMidi, htmlWriter);
+				prettyLogger, toMidi, htmlWriter, fullFrameHexDumper);
 		SidWriteDelegator sidDelegator = new SidWriteDelegator(mem, sid);
 		return new SidWriteRipper(sidDelegator, sid, sidWriteLog, visualizer,
-				toMidi, htmlWriter);
+				toMidi, htmlWriter, fullFrameHexDumper);
 	}
 
-	public SidWriteRipper(C64SimulatorEventListener delegate,
+	private SidWriteRipper(C64SimulatorEventListener delegate,
 			SidWriteListener sid, StringBuilder sidWriteLog,
 			SidWriteVisualizer visualizer, SidWritesToMidiSysex toMidi,
-			SidWriteHtmlWriter htmlWriter) {
+			SidWriteHtmlWriter htmlWriter,
+			FullFrameHexDumper fullFrameHexDumper) {
 		super(delegate);
 		this.sid = sid;
 		this.sidWriteLog = sidWriteLog;
 		this.visualizer = visualizer;
 		this.toMidi = toMidi;
 		this.htmlWriter = htmlWriter;
-
+		this.fullFrameHexDumper = fullFrameHexDumper;
 	}
 
 	public void playCallStarting() {
@@ -54,6 +57,10 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 
 	public String sidWriteLog() {
 		return sidWriteLog.toString();
+	}
+
+	public String fullFrameHexDump() {
+		return fullFrameHexDumper.toString();
 	}
 
 	public void writeGifTo(File file) throws IOException {
