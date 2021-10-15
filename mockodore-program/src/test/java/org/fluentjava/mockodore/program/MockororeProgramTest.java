@@ -1162,6 +1162,15 @@ public class MockororeProgramTest {
 	}
 
 	@Test
+	public void adcZpIndirectPlusY() {
+		p.adc(ZeroPage.xFB.indirectPlusY());
+
+		assertBytes("71 FB");
+		assertAssy("adc ($FB),Y\n");
+		assertJava("adc(ZeroPage.xFB.indirectPlusY());\n");
+	}
+
+	@Test
 	public void adcZp() {
 		p.adc(ZeroPage.xFB);
 

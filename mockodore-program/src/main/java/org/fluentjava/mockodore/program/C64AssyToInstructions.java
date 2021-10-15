@@ -401,6 +401,11 @@ public class C64AssyToInstructions<T, END> extends
 	}
 
 	@Override
+	public T adc(ZeroPageIndirectPlusY address) {
+		return i(Op.ADC_ZP_INDIRECT_PLUS_Y, address);
+	}
+
+	@Override
 	public T adc(ZeroPagePlusX address) {
 		return i(Op.ADC_ZP_X, address);
 	}

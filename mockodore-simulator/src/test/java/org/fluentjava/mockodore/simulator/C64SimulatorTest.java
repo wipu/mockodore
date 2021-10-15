@@ -1539,6 +1539,23 @@ public class C64SimulatorTest {
 	}
 
 	@Test
+	public void adcZpIndirectPlusY() {
+		Label array = Label.named("array");
+		p.startAddress(address$1000);
+		p.lda(array.lsb()).sta(ZeroPage.xFB);
+		p.lda(array.msb()).sta(ZeroPage.xFB.plus(1));
+		p.lda(0x11);
+		p.ldy(0x02);
+		p.adc(ZeroPage.xFB.indirectPlusY());
+		p.rts();
+		p.label(array).data(0x10, 0x11, 0x12, 0x13);
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+
+		assertEquals(0x23, sim.a().signedByte());
+	}
+
+	@Test
 	public void adcZpX() {
 		p.startAddress(address$1000);
 		p.lda(0x02).sta(ZeroPage.xFB.plus(1));

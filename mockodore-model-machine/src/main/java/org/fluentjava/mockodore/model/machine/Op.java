@@ -16,6 +16,8 @@ public abstract class Op {
 			absYNamed("ADC").byteValue(0x79).cyclesWithoutPageBoundary(4));
 	public static final ImmediateOp ADC_IMMEDIATE = adc(
 			immediateNamed("ADC").byteValue(0x69).cycles(2));
+	public static final ZeroPageIndirectPlusYOp ADC_ZP_INDIRECT_PLUS_Y = adc(
+			zeropageIndirectPlusYNamed("ADC").byteValue(0x71).cycles(5));
 	public static final ZeropageOp ADC_ZP = adc(
 			zeropageNamed("ADC").byteValue(0x65).cycles(3));
 	public static final ZeropageXOp ADC_ZP_X = adc(

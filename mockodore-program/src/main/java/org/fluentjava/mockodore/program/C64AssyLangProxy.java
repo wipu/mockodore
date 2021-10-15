@@ -362,6 +362,11 @@ public class C64AssyLangProxy<T, END> implements C64AssyLangOf<T, END> {
 	}
 
 	@Override
+	public T adc(ZeroPageIndirectPlusY address) {
+		return __(out.adc(address));
+	}
+
+	@Override
 	public T adc(ZeroPagePlusX address) {
 		return __(out.adc(address));
 	}

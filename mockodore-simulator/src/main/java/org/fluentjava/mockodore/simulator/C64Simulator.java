@@ -86,6 +86,7 @@ public class C64Simulator {
 		opImpl(new AdcAbsPlusY());
 		opImpl(new AdcImmediate());
 		opImpl(new AdcZp());
+		opImpl(new AdcZpIndirectPlusY());
 		opImpl(new AdcZpX());
 		opImpl(new AndAbs());
 		opImpl(new AndAbsPlusX());
@@ -1806,6 +1807,20 @@ public class C64Simulator {
 
 		AdcZp() {
 			super(Op.ADC_ZP);
+		}
+
+		@Override
+		void result() {
+			UnsignedByte term = readMem(operand());
+			addToAcc(term, true);
+		}
+
+	}
+
+	private class AdcZpIndirectPlusY extends ZeroPageIndirectPlusYInstr {
+
+		AdcZpIndirectPlusY() {
+			super(Op.ADC_ZP_INDIRECT_PLUS_Y);
 		}
 
 		@Override

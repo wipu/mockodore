@@ -27,6 +27,8 @@ public interface C64AssyLangOf<T, END> extends LabeledBytesLang<T, END> {
 
 	T adc(ZeroPage address);
 
+	T adc(ZeroPageIndirectPlusY address);
+
 	T adc(ZeroPagePlusX address);
 
 	T and(AbsRef address);
