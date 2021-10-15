@@ -486,10 +486,10 @@ public class C64Simulator {
 
 	}
 
-	private abstract class ZeropageInstr
+	private abstract class ZeroPageInstr
 			extends InstrInstance<ZeropageOp, ZeroPage> {
 
-		ZeropageInstr(ZeropageOp op) {
+		ZeroPageInstr(ZeropageOp op) {
 			super(op);
 		}
 
@@ -939,7 +939,7 @@ public class C64Simulator {
 
 	}
 
-	private class LdaZp extends ZeropageInstr {
+	private class LdaZp extends ZeroPageInstr {
 
 		LdaZp() {
 			super(Op.LDA_ZEROPAGE);
@@ -953,7 +953,7 @@ public class C64Simulator {
 
 	}
 
-	private class LdxZp extends ZeropageInstr {
+	private class LdxZp extends ZeroPageInstr {
 
 		LdxZp() {
 			super(Op.LDX_ZEROPAGE);
@@ -967,7 +967,7 @@ public class C64Simulator {
 
 	}
 
-	private class LdyZp extends ZeropageInstr {
+	private class LdyZp extends ZeroPageInstr {
 
 		LdyZp() {
 			super(Op.LDY_ZEROPAGE);
@@ -1274,7 +1274,7 @@ public class C64Simulator {
 
 	}
 
-	private class IncZp extends ZeropageInstr {
+	private class IncZp extends ZeroPageInstr {
 
 		IncZp() {
 			super(Op.INC_ZP);
@@ -1292,7 +1292,7 @@ public class C64Simulator {
 
 	}
 
-	private class DecZp extends ZeropageInstr {
+	private class DecZp extends ZeroPageInstr {
 
 		DecZp() {
 			super(Op.DEC_ZP);
@@ -1354,7 +1354,7 @@ public class C64Simulator {
 
 	}
 
-	private class StyZp extends ZeropageInstr {
+	private class StyZp extends ZeroPageInstr {
 
 		StyZp() {
 			super(Op.STY_ZP);
@@ -1407,7 +1407,7 @@ public class C64Simulator {
 
 	}
 
-	private class CmpZp extends ZeropageInstr {
+	private class CmpZp extends ZeroPageInstr {
 
 		CmpZp() {
 			super(Op.CMP_ZP);
@@ -1628,7 +1628,7 @@ public class C64Simulator {
 
 	}
 
-	private class OraZp extends ZeropageInstr {
+	private class OraZp extends ZeroPageInstr {
 
 		OraZp() {
 			super(Op.ORA_ZP);
@@ -1728,7 +1728,7 @@ public class C64Simulator {
 
 	}
 
-	private class StaZp extends ZeropageInstr {
+	private class StaZp extends ZeroPageInstr {
 
 		StaZp() {
 			super(Op.STA_ZEROPAGE);
@@ -1741,7 +1741,7 @@ public class C64Simulator {
 
 	}
 
-	private class StxZp extends ZeropageInstr {
+	private class StxZp extends ZeroPageInstr {
 
 		StxZp() {
 			super(Op.STX_ZEROPAGE);
@@ -1775,7 +1775,7 @@ public class C64Simulator {
 		return result;
 	}
 
-	private class LsrZp extends ZeropageInstr {
+	private class LsrZp extends ZeroPageInstr {
 
 		LsrZp() {
 			super(Op.LSR_ZEROPAGE);
@@ -1802,7 +1802,7 @@ public class C64Simulator {
 		}
 	}
 
-	private class AdcZp extends ZeropageInstr {
+	private class AdcZp extends ZeroPageInstr {
 
 		AdcZp() {
 			super(Op.ADC_ZP);
@@ -1830,7 +1830,7 @@ public class C64Simulator {
 
 	}
 
-	private class SbcZp extends ZeropageInstr {
+	private class SbcZp extends ZeroPageInstr {
 
 		SbcZp() {
 			super(Op.SBC_ZP);
@@ -1881,7 +1881,7 @@ public class C64Simulator {
 		return newByte;
 	}
 
-	private class RolZp extends ZeropageInstr {
+	private class RolZp extends ZeroPageInstr {
 
 		RolZp() {
 			super(Op.ROL_ZEROPAGE);
@@ -1918,7 +1918,7 @@ public class C64Simulator {
 		return newByte;
 	}
 
-	private class RorZp extends ZeropageInstr {
+	private class RorZp extends ZeroPageInstr {
 
 		RorZp() {
 			super(Op.ROR_ZEROPAGE);
@@ -2053,7 +2053,7 @@ public class C64Simulator {
 
 	}
 
-	private class AslZp extends ZeropageInstr {
+	private class AslZp extends ZeroPageInstr {
 
 		AslZp() {
 			super(Op.ASL_ZP);
