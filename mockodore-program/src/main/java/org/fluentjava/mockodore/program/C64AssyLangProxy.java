@@ -227,6 +227,16 @@ public class C64AssyLangProxy<T, END> implements C64AssyLangOf<T, END> {
 	}
 
 	@Override
+	public T cmp(ZeroPage address) {
+		return __(out.cmp(address));
+	}
+
+	@Override
+	public T cmp(ZeroPageIndirectPlusY address) {
+		return __(out.cmp(address));
+	}
+
+	@Override
 	public T cmp(ZeroPagePlusX address) {
 		return __(out.cmp(address));
 	}
@@ -479,6 +489,11 @@ public class C64AssyLangProxy<T, END> implements C64AssyLangOf<T, END> {
 	@Override
 	public T cmp(UnsignedByte immediateValue) {
 		return __(out.cmp(immediateValue));
+	}
+
+	@Override
+	public T cpx(AbsRef address) {
+		return __(out.cpx(address));
 	}
 
 	@Override

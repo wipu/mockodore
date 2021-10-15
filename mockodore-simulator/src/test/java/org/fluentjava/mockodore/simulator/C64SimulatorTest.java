@@ -868,6 +868,37 @@ public class C64SimulatorTest {
 	}
 
 	@Test
+	public void cmpZpSetsN() {
+		p.startAddress(address$1000);
+		p.lda(0x05).sta(ZeroPage.xFB);
+		p.lda(0x04);
+		p.cmp(ZeroPage.xFB);
+		p.rts();
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+		assertEquals("Nv-bdizc", sim.sr().toString());
+	}
+
+	@Test
+	public void cmpZpIndirectPlusYSetsZC() {
+		Label array = Label.named("array");
+		p.startAddress(address$1000);
+		p.lda(array.lsb()).sta(ZeroPage.xFB);
+		p.lda(array.msb()).sta(ZeroPage.xFB.plus(1));
+
+		p.ldy(0x01);
+		p.lda(0x03);
+		p.cmp(ZeroPage.xFB.indirectPlusY());
+		p.rts();
+		p.label(array).data(0x01, 0x03, 0x01);
+
+		sim.load(p.end());
+
+		sim.simpleSysAndAutoTick();
+		assertEquals("nv-bdiZC", sim.sr().toString());
+	}
+
+	@Test
 	public void cmpZpXSetsN() {
 		p.startAddress(address$1000);
 		p.lda(0x05).sta(ZeroPage.xFB.plus(1));
@@ -973,6 +1004,19 @@ public class C64SimulatorTest {
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 		assertTrue(sim.sr().zero());
+	}
+
+	@Test
+	public void cpxAbsSetsZ() {
+		Label array = Label.named("array");
+		p.startAddress(address$1000);
+		p.ldx(0x04);
+		p.cpx(array);
+		p.rts();
+		p.label(array).data(0x05);
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+		assertEquals("Nv-bdizc", sim.sr().toString());
 	}
 
 	@Test

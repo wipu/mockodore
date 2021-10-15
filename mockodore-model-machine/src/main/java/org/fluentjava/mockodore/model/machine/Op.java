@@ -94,9 +94,15 @@ public abstract class Op {
 			absYNamed("CMP").byteValue(0xD9).cyclesWithoutPageBoundary(4));
 	public static final ImmediateOp CMP_IMMEDIATE = cmp(
 			immediateNamed("CMP").byteValue(0xC9).cycles(2));
+	public static final ZeroPageIndirectPlusYOp CMP_ZP_IND_Y = cmp(
+			zeropageIndirectPlusYNamed("CMP").byteValue(0xD1).cycles(5));
+	public static final ZeropageOp CMP_ZP = cmp(
+			zeropageNamed("CMP").byteValue(0xC5).cycles(3));
 	public static final ZeropageXOp CMP_ZP_X = cmp(
 			zeropageXNamed("CMP").byteValue(0xD5).cycles(4));
 
+	public static final AbsOp CPX_ABS = absNamed("CPX").writesC().writesN()
+			.writesZ().byteValue(0xEC).cycles(4).end();
 	public static final ImmediateOp CPX_IMMEDIATE = immediateNamed("CPX")
 			.writesC().writesN().writesZ().byteValue(0xE0).cycles(2).end();
 

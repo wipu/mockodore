@@ -266,6 +266,16 @@ public class C64AssyToInstructions<T, END> extends
 	}
 
 	@Override
+	public T cmp(ZeroPage address) {
+		return i(Op.CMP_ZP, address);
+	}
+
+	@Override
+	public T cmp(ZeroPageIndirectPlusY address) {
+		return i(Op.CMP_ZP_IND_Y, address);
+	}
+
+	@Override
 	public T cmp(ZeroPagePlusX address) {
 		return i(Op.CMP_ZP_X, address);
 	}
@@ -520,6 +530,11 @@ public class C64AssyToInstructions<T, END> extends
 	@Override
 	public T cmp(UnsignedByte immediateValue) {
 		return i(Op.CMP_IMMEDIATE, immediateValue);
+	}
+
+	@Override
+	public T cpx(AbsRef address) {
+		return i(Op.CPX_ABS, address);
 	}
 
 	@Override

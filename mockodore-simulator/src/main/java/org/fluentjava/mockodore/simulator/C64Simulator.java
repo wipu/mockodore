@@ -110,7 +110,10 @@ public class C64Simulator {
 		opImpl(new CmpAbsPlusX());
 		opImpl(new CmpAbsPlusY());
 		opImpl(new CmpImm());
+		opImpl(new CmpZp());
+		opImpl(new CmpZpIndirectPlusY());
 		opImpl(new CmpZpX());
+		opImpl(new CpxAbs());
 		opImpl(new CpxImm());
 		opImpl(new CpyImm());
 		opImpl(new DecAbs());
@@ -1072,6 +1075,20 @@ public class C64Simulator {
 
 	}
 
+	private class CpxAbs extends AbsInstrInstance {
+
+		CpxAbs() {
+			super(Op.CPX_ABS);
+		}
+
+		@Override
+		void result() {
+			UnsignedByte termValue = readMem(operand());
+			compare(x(), termValue);
+		}
+
+	}
+
 	private class CpxImm extends ImmediateInstrInstance {
 
 		CpxImm() {
@@ -1380,6 +1397,34 @@ public class C64Simulator {
 
 		CmpAbs() {
 			super(Op.CMP_ABS);
+		}
+
+		@Override
+		void result() {
+			UnsignedByte value = readMem(operand());
+			compare(a(), value);
+		}
+
+	}
+
+	private class CmpZp extends ZeropageInstr {
+
+		CmpZp() {
+			super(Op.CMP_ZP);
+		}
+
+		@Override
+		void result() {
+			UnsignedByte value = readMem(operand());
+			compare(a(), value);
+		}
+
+	}
+
+	private class CmpZpIndirectPlusY extends ZeroPageIndirectPlusYInstr {
+
+		CmpZpIndirectPlusY() {
+			super(Op.CMP_ZP_IND_Y);
 		}
 
 		@Override

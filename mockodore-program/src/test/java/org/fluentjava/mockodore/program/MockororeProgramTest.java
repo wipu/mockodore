@@ -244,6 +244,24 @@ public class MockororeProgramTest {
 	}
 
 	@Test
+	public void cmpZp() {
+		p.startAddress(address$1000);
+		p.cmp(ZeroPage.xFB);
+		assertBytes("C5 FB");
+		assertAssy("cmp $FB\n");
+		assertJava("cmp(ZeroPage.xFB);\n");
+	}
+
+	@Test
+	public void cmpZpInderectPlusY() {
+		p.startAddress(address$1000);
+		p.cmp(ZeroPage.xFB.indirectPlusY());
+		assertBytes("D1 FB");
+		assertAssy("cmp ($FB),Y\n");
+		assertJava("cmp(ZeroPage.xFB.indirectPlusY());\n");
+	}
+
+	@Test
 	public void cmpZpX() {
 		p.startAddress(address$1000);
 		p.cmp(ZeroPage.xFB.plusX());
@@ -340,6 +358,18 @@ public class MockororeProgramTest {
 		assertBytes("C9 01");
 		assertAssy("cmp #$01\n");
 		assertJava("cmp(0x01);\n");
+	}
+
+	@Test
+	public void cpxLabel() {
+		Label label = Label.named("label");
+		p.startAddress(address$1000);
+		p.label(label);
+		p.cpx(label);
+		assertBytes("EC 00 10");
+		assertAssy("label:\ncpx label\n");
+		assertJava("Label label = Label.named(\"label\");\n" + "label(label);\n"
+				+ "cpx(label);\n" + "");
 	}
 
 	@Test

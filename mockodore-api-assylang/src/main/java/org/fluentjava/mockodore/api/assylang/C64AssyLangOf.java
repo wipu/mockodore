@@ -79,11 +79,17 @@ public interface C64AssyLangOf<T, END> extends LabeledBytesLang<T, END> {
 
 	T cmp(UnsignedByte immediateValue);
 
+	T cmp(ZeroPage address);
+
+	T cmp(ZeroPageIndirectPlusY address);
+
 	T cmp(ZeroPagePlusX address);
 
 	T commentLine(String comment);
 
 	T cpx(UnsignedByte immediateValue);
+
+	T cpx(AbsRef address);
 
 	T cpx(int immediateValue);
 
