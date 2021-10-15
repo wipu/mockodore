@@ -19,15 +19,20 @@ public class SidWriteVisualizer implements SidWriteListener {
 	private static final int[] CYAN_LIGHT = new int[] { 200, 255, 255 };
 	private static final int[] GRAY_DARK = new int[] { 100, 100, 100 };
 	private static final int[] GRAY_LIGHT = new int[] { 210, 210, 210 };
-	private static final int[] GRAY_LIGHTEST = new int[] { 240, 240, 240 };
+	private static final int[] BG_GOLOUR_FRAMESTART = new int[] { 35, 35, 35 };
 	private static final int[] GREEN = new int[] { 0, 255, 0 };
 	private static final int[] RED = new int[] { 255, 50, 50 };
+	private static final int[] PINK = new int[] { 255, 150, 150 };
 	private static final int[] WHITE = new int[] { 255, 255, 255 };
+
+	private static final int[] BG_COLOUR = BLACK;
+	private static final int[] FG_COLOUR = WHITE;
+	private static final Color AWT_COLOR_TIME = Color.LIGHT_GRAY;
 
 	private static final int[] SYNC = RED;
 	private static final int[] UNKNOWN = GRAY_LIGHT;
 	private static final int[] NOISE_COLOR = GRAY_DARK;
-	private static final int[] SAW_COLOR = RED;
+	private static final int[] SAW_COLOR = PINK;
 	private static final int[] TRIANGLE_COLOR = GREEN;
 
 	private static final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 10);
@@ -63,16 +68,16 @@ public class SidWriteVisualizer implements SidWriteListener {
 		image = new BufferedImage(WIDTH, height, BufferedImage.TYPE_INT_RGB);
 		raster = image.getRaster();
 		for (int y = 0; y < height; y++) {
-			int[] rowColor = WHITE;
+			int[] rowColor = BG_COLOUR;
 			if (y % 50 == 0) {
-				rowColor = GRAY_LIGHTEST;
+				rowColor = BG_GOLOUR_FRAMESTART;
 			}
 			for (int x = 0; x < WIDTH; x++) {
 				raster.setPixel(x, y, rowColor);
 			}
 		}
 		Graphics g2d = image.getGraphics();
-		g2d.setColor(Color.BLACK);
+		g2d.setColor(AWT_COLOR_TIME);
 		g2d.setFont(FONT);
 		for (int y = 0; y < height; y += 50) {
 			int seconds = y / 50;
@@ -264,7 +269,7 @@ public class SidWriteVisualizer implements SidWriteListener {
 
 	private void plotGateIfNeeded(int y, int osc) {
 		if (gate[osc] && !prevGate[osc]) {
-			raster.setPixel(xminus(oscFreqAsXCoord(osc), 1), y, BLACK);
+			raster.setPixel(xminus(oscFreqAsXCoord(osc), 1), y, FG_COLOUR);
 		} else if (!gate[osc] && prevGate[osc]) {
 			raster.setPixel(xminus(oscFreqAsXCoord(osc), 1), y, GRAY_LIGHT);
 		}
