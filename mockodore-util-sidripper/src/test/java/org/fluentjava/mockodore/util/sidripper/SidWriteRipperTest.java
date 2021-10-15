@@ -1,6 +1,7 @@
 package org.fluentjava.mockodore.util.sidripper;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -27,7 +28,7 @@ public class SidWriteRipperTest {
 	public void allWantedOutputIsGottenAndWritesArePassedToDelegate()
 			throws IOException {
 		C64SimulatorLineLogger delegate = new C64SimulatorLineLogger();
-		SidWriteRipper ripper = SidWriteRipper.using(delegate, 10);
+		SidWriteRipper ripper = SidWriteRipper.using(delegate, 0, 10);
 
 		ripper.playCallStarting();
 		// first a non-sid event, to be delegated
@@ -72,6 +73,62 @@ public class SidWriteRipperTest {
 		String html = ripper.toHtml(gif);
 		assertTrue(html.contains("<html>"));
 		assertTrue(html.contains("<img src=\"sid-writes.gif\""));
+	}
+
+	@Test
+	public void skippedFramesAreExecutedForEffectButNotReported()
+			throws IOException {
+		C64SimulatorLineLogger delegate = new C64SimulatorLineLogger();
+		SidWriteRipper ripper = SidWriteRipper.using(delegate, 1, 4);
+
+		// frame 0, write first reg for effect
+		ripper.playCallStarting();
+		ripper.writeMem(SidRegisterAddress.FREQ_LO_1.address().value(),
+				UnsignedByte.x01);
+
+		// frame 1, first frame to be reported
+		ripper.playCallStarting();
+		ripper.writeMem(SidRegisterAddress.FREQ_HI_1.address().value(),
+				UnsignedByte.x02);
+
+		// frame 2, second frame to be reported
+		ripper.playCallStarting();
+		ripper.writeMem(SidRegisterAddress.PW_LO_1.address().value(),
+				UnsignedByte.x03);
+		// TODO don't write these, now we are preventing a npe in html
+		// generator:
+		ripper.writeMem(SidRegisterAddress.CR_1.address().value(),
+				UnsignedByte.x02);
+		ripper.writeMem(SidRegisterAddress.CR_2.address().value(),
+				UnsignedByte.x02);
+		ripper.writeMem(SidRegisterAddress.CR_3.address().value(),
+				UnsignedByte.x02);
+
+		// frame 3, to be reported, but see problem below:
+		ripper.playCallStarting();
+		ripper.writeMem(SidRegisterAddress.PW_HI_1.address().value(),
+				UnsignedByte.x04);
+
+		// NOTE: this doesn't show the last frame, it only appends at every
+		// frame start:
+		// But in this test the point is that the first "01" only frame is not
+		// reported:
+		String fullFrameHexDump = ripper.fullFrameHexDump();
+		assertEquals("00000000000000000000000000000000000000000000000000\n"
+				+ "01020000000000000000000000000000000000000000000000\n"
+				+ "01020300020000000000000200000000000002000000000000\n" + "",
+				fullFrameHexDump);
+
+		File gif = new File(tmpDir.getRoot(), "sid-writes.gif");
+		ripper.writeGifTo(gif);
+		assertTrue(gif.exists());
+
+		String html = ripper.toHtml(gif);
+		// html contains only frames 0-1 (it counts from zero):
+		assertTrue(html.contains("0 OSC_1"));
+		assertTrue(html.contains("1 OSC_1"));
+		// but not frame 2:
+		assertFalse(html.contains("2 OSC_1"));
 	}
 
 }

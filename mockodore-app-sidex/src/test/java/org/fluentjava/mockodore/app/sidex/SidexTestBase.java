@@ -37,7 +37,7 @@ public abstract class SidexTestBase {
 		}
 		MockodoreProgram prg = p.end();
 		logger = new C64SimulatorLineLogger(prg.labelMap());
-		sidWriteLogger = SidWriteRipper.using(logger, 100);
+		sidWriteLogger = SidWriteRipper.using(logger, 0, 100);
 		sim = new C64Simulator(sidWriteLogger, mem());
 		sim.load(prg);
 		return sim;

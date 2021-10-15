@@ -118,7 +118,67 @@ public class SidWriteVisualizer implements SidWriteListener {
 
 	@Override
 	public SidRegWriteListener reg(SidRegisterAddress reg) {
-		throw new UnsupportedOperationException("TODO test and implement");
+		// TODO argh, sidwritelistener interface needs to be simplified
+		// (and/or we should just have a reg->value map in this class)
+		switch (reg.offsetInSid()) {
+
+		case 0:
+			return freqLo(OscName.OSC_1);
+		case 1:
+			return freqHi(OscName.OSC_1);
+		case 2:
+			return pwLo(OscName.OSC_1);
+		case 3:
+			return pwHi(OscName.OSC_1);
+		case 4:
+			return cr(OscName.OSC_1);
+		case 5:
+			return ad(OscName.OSC_1);
+		case 6:
+			return sr(OscName.OSC_1);
+
+		case 7:
+			return freqLo(OscName.OSC_2);
+		case 8:
+			return freqHi(OscName.OSC_2);
+		case 9:
+			return pwLo(OscName.OSC_2);
+		case 10:
+			return pwHi(OscName.OSC_2);
+		case 11:
+			return cr(OscName.OSC_2);
+		case 12:
+			return ad(OscName.OSC_2);
+		case 13:
+			return sr(OscName.OSC_2);
+
+		case 14:
+			return freqLo(OscName.OSC_3);
+		case 15:
+			return freqHi(OscName.OSC_3);
+		case 16:
+			return pwLo(OscName.OSC_3);
+		case 17:
+			return pwHi(OscName.OSC_3);
+		case 18:
+			return cr(OscName.OSC_3);
+		case 19:
+			return ad(OscName.OSC_3);
+		case 20:
+			return sr(OscName.OSC_3);
+
+		case 21:
+			return fcLo();
+		case 22:
+			return fcHi();
+		case 23:
+			return resFilt();
+		case 24:
+			return modeVol();
+
+		default:
+			throw new UnsupportedOperationException("TODO test and implement");
+		}
 	}
 
 	@Override

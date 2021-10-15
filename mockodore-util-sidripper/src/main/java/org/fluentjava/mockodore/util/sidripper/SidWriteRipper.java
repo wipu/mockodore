@@ -19,12 +19,12 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 	private final FullFrameHexDumper fullFrameHexDumper;
 
 	public static SidWriteRipper using(C64SimulatorEventListener delegate,
-			int frameCount) {
+			int framesToSkip, int frameCount) {
 		C64SimulatorEventListener mem = new ReadBeforeWriterWarner(delegate);
 		mem = new StatusRegisterUpdateChecker(mem);
 		SidWriteHtmlWriter htmlWriter = new SidWriteHtmlWriter();
-		SidWriteVisualizer visualizer = new SidWriteVisualizer(frameCount,
-				htmlWriter);
+		SidWriteVisualizer visualizer = new SidWriteVisualizer(
+				frameCount - framesToSkip, htmlWriter);
 		StringBuilder sidWriteLog = new StringBuilder();
 		SidWritePrettyLogger prettyLogger = new SidWritePrettyLogger(
 				sidWriteLog);
@@ -32,6 +32,7 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 		SidWritesToMidiSysex toMidi = new SidWritesToMidiSysex();
 		SidWriteListener sid = SidWriteListenerHub.delegatingTo(visualizer,
 				prettyLogger, toMidi, htmlWriter, fullFrameHexDumper);
+		sid = new SidWriteFrameSkipper(sid, framesToSkip);
 		SidWriteDelegator sidDelegator = new SidWriteDelegator(mem, sid);
 		return new SidWriteRipper(sidDelegator, sid, sidWriteLog, visualizer,
 				toMidi, htmlWriter, fullFrameHexDumper);
