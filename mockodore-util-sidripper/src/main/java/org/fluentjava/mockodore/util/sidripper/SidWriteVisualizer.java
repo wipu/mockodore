@@ -16,6 +16,20 @@ import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
 
 public class SidWriteVisualizer implements SidWriteListener {
 
+	private static final int LOWEST_FREQ;
+	private static final double LOG_RATIO_OF_FULL_NOTE_RANGE;
+
+	static {
+		Codebase64PalNoteFreqs freqs = new Codebase64PalNoteFreqs();
+		Codebase64PalNote lowestNote = Codebase64PalNote.C__1;
+		Codebase64PalNote highestNote = Codebase64PalNote.B__8;
+		LOWEST_FREQ = intFromLsbMsb(freqs.lo(lowestNote), freqs.hi(lowestNote));
+		int highestFreq = intFromLsbMsb(freqs.lo(highestNote),
+				freqs.hi(highestNote));
+		double fullFreqRatio = ((double) highestFreq) / ((double) LOWEST_FREQ);
+		LOG_RATIO_OF_FULL_NOTE_RANGE = log2(fullFreqRatio);
+	}
+
 	private static final int[] BLACK = new int[] { 0, 0, 0 };
 	@SuppressWarnings("unused")
 	private static final int[] CYAN_LIGHT = new int[] { 200, 255, 255 };
@@ -333,20 +347,12 @@ public class SidWriteVisualizer implements SidWriteListener {
 		if (freq <= 0) {
 			return 0;
 		}
-		Codebase64PalNoteFreqs freqs = new Codebase64PalNoteFreqs();
-		Codebase64PalNote lowestNote = Codebase64PalNote.C__1;
-		Codebase64PalNote highestNote = Codebase64PalNote.B__8;
-		int lowestFreq = intFromLsbMsb(freqs.lo(lowestNote),
-				freqs.hi(lowestNote));
-		int highestFreq = intFromLsbMsb(freqs.lo(highestNote),
-				freqs.hi(highestNote));
-		double fullFreqRatio = ((double) highestFreq) / ((double) lowestFreq);
-		double fullFreqRatioLog = log2(fullFreqRatio);
 
-		double ratioToLowest = ((double) freq) / ((double) lowestFreq);
+		double ratioToLowest = ((double) freq) / LOWEST_FREQ;
 		double ratioToLowestLog = log2(ratioToLowest);
 
-		double noteLogRatioToFull = ratioToLowestLog / fullFreqRatioLog;
+		double noteLogRatioToFull = ratioToLowestLog
+				/ LOG_RATIO_OF_FULL_NOTE_RANGE;
 		if (noteLogRatioToFull < 0) {
 			return 0;
 		}
