@@ -8,6 +8,8 @@ import java.awt.image.WritableRaster;
 import java.util.Arrays;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
+import org.fluentjava.mockodore.model.sid.Codebase64PalNote;
+import org.fluentjava.mockodore.model.sid.Codebase64PalNoteFreqs;
 import org.fluentjava.mockodore.model.sid.ControlRegister;
 import org.fluentjava.mockodore.model.sid.OscName;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
@@ -331,9 +333,24 @@ public class SidWriteVisualizer implements SidWriteListener {
 		if (freq <= 0) {
 			return 0;
 		}
-		double logFreq = log2(freq + 1);
-		double relFreq = logFreq / 16D;
-		double x = WIDTH * relFreq;
+		Codebase64PalNoteFreqs freqs = new Codebase64PalNoteFreqs();
+		Codebase64PalNote lowestNote = Codebase64PalNote.C__1;
+		Codebase64PalNote highestNote = Codebase64PalNote.B__8;
+		int lowestFreq = intFromLsbMsb(freqs.lo(lowestNote),
+				freqs.hi(lowestNote));
+		int highestFreq = intFromLsbMsb(freqs.lo(highestNote),
+				freqs.hi(highestNote));
+		double fullFreqRatio = ((double) highestFreq) / ((double) lowestFreq);
+		double fullFreqRatioLog = log2(fullFreqRatio);
+
+		double ratioToLowest = ((double) freq) / ((double) lowestFreq);
+		double ratioToLowestLog = log2(ratioToLowest);
+
+		double noteLogRatioToFull = ratioToLowestLog / fullFreqRatioLog;
+		if (noteLogRatioToFull < 0) {
+			return 0;
+		}
+		double x = WIDTH * noteLogRatioToFull;
 		int xInt = (int) x;
 		return Math.min(xInt, WIDTH - 1);
 	}
