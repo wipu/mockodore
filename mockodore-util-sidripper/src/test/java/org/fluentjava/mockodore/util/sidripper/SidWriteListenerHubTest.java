@@ -1,9 +1,19 @@
 package org.fluentjava.mockodore.util.sidripper;
 
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.AD_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.CR_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FCHI;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FCLO;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_HI_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_LO_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.MODE_VOL;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_HI_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_LO_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.RES_FILT;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_1;
 import static org.junit.Assert.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
-import org.fluentjava.mockodore.model.sid.OscName;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,18 +32,18 @@ public class SidWriteListenerHubTest {
 
 	@Test
 	public void allCallsAreDelegatedToAllDelegates() {
-		hub.ad(OscName.OSC_1).write(UnsignedByte.x01);
+		hub.reg(AD_1).write(UnsignedByte.x01);
 		hub.playCallStarting();
-		hub.cr(OscName.OSC_1).write(UnsignedByte.x02);
-		hub.fcHi().write(UnsignedByte.x03);
-		hub.fcLo().write(UnsignedByte.x04);
-		hub.freqHi(OscName.OSC_1).write(UnsignedByte.x05);
-		hub.freqLo(OscName.OSC_1).write(UnsignedByte.x06);
-		hub.modeVol().write(UnsignedByte.x07);
-		hub.pwHi(OscName.OSC_1).write(UnsignedByte.x08);
-		hub.pwLo(OscName.OSC_1).write(UnsignedByte.x09);
-		hub.resFilt().write(UnsignedByte.x0A);
-		hub.sr(OscName.OSC_1).write(UnsignedByte.x0B);
+		hub.reg(CR_1).write(UnsignedByte.x02);
+		hub.reg(FCHI).write(UnsignedByte.x03);
+		hub.reg(FCLO).write(UnsignedByte.x04);
+		hub.reg(FREQ_HI_1).write(UnsignedByte.x05);
+		hub.reg(FREQ_LO_1).write(UnsignedByte.x06);
+		hub.reg(MODE_VOL).write(UnsignedByte.x07);
+		hub.reg(PW_HI_1).write(UnsignedByte.x08);
+		hub.reg(PW_LO_1).write(UnsignedByte.x09);
+		hub.reg(RES_FILT).write(UnsignedByte.x0A);
+		hub.reg(SR_1).write(UnsignedByte.x0B);
 
 		assertEquals("05=01 \n"
 				+ "04=02 16=03 15=04 01=05 00=06 18=07 03=08 02=09 17=0A 06=0B ",

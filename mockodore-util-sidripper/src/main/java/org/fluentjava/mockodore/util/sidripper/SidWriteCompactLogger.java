@@ -1,8 +1,6 @@
 package org.fluentjava.mockodore.util.sidripper;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
-import org.fluentjava.mockodore.model.sid.OscName;
-import org.fluentjava.mockodore.model.sid.OscRegisterName;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
 
 public class SidWriteCompactLogger implements SidWriteListener {
@@ -42,61 +40,6 @@ public class SidWriteCompactLogger implements SidWriteListener {
 	@Override
 	public void playCallStarting() {
 		log.append("\n");
-	}
-
-	@Override
-	public SidRegWriteListener cr(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.CR));
-	}
-
-	@Override
-	public SidRegWriteListener freqLo(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.FREQ_LO));
-	}
-
-	@Override
-	public SidRegWriteListener freqHi(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.FREQ_HI));
-	}
-
-	@Override
-	public SidRegWriteListener pwLo(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.PW_LO));
-	}
-
-	@Override
-	public SidRegWriteListener pwHi(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.PW_HI));
-	}
-
-	@Override
-	public SidRegWriteListener ad(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.AD));
-	}
-
-	@Override
-	public SidRegWriteListener sr(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.SR));
-	}
-
-	@Override
-	public SidRegWriteListener fcLo() {
-		return reg(SidRegisterAddress.FCLO);
-	}
-
-	@Override
-	public SidRegWriteListener fcHi() {
-		return reg(SidRegisterAddress.FCHI);
-	}
-
-	@Override
-	public SidRegWriteListener modeVol() {
-		return reg(SidRegisterAddress.MODE_VOL);
-	}
-
-	@Override
-	public SidRegWriteListener resFilt() {
-		return reg(SidRegisterAddress.RES_FILT);
 	}
 
 }

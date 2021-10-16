@@ -139,8 +139,7 @@ public class SidWriteVisualizer implements SidWriteListener {
 
 	@Override
 	public SidRegWriteListener reg(SidRegisterAddress reg) {
-		// TODO argh, sidwritelistener interface needs to be simplified
-		// (and/or we should just have a reg->value map in this class)
+		// TODO we should just have a reg->value map in this class
 		switch (reg.offsetInSid()) {
 
 		case 0:
@@ -154,9 +153,11 @@ public class SidWriteVisualizer implements SidWriteListener {
 		case 4:
 			return cr(OscName.OSC_1);
 		case 5:
-			return ad(OscName.OSC_1);
+			// AD_1
+			return notVisualizing();
 		case 6:
-			return sr(OscName.OSC_1);
+			// SR_1
+			return notVisualizing();
 
 		case 7:
 			return freqLo(OscName.OSC_2);
@@ -169,9 +170,11 @@ public class SidWriteVisualizer implements SidWriteListener {
 		case 11:
 			return cr(OscName.OSC_2);
 		case 12:
-			return ad(OscName.OSC_2);
+			// AD_2
+			return notVisualizing();
 		case 13:
-			return sr(OscName.OSC_2);
+			// SR_2
+			return notVisualizing();
 
 		case 14:
 			return freqLo(OscName.OSC_3);
@@ -184,57 +187,51 @@ public class SidWriteVisualizer implements SidWriteListener {
 		case 18:
 			return cr(OscName.OSC_3);
 		case 19:
-			return ad(OscName.OSC_3);
+			// AD_3
+			return notVisualizing();
 		case 20:
-			return sr(OscName.OSC_3);
+			// SR_3
+			return notVisualizing();
 
 		case 21:
-			return fcLo();
+			// FCLO
+			return notVisualizing();
 		case 22:
-			return fcHi();
+			// FCHI
+			return notVisualizing();
 		case 23:
-			return resFilt();
+			// RES_FILT
+			return notVisualizing();
 		case 24:
-			return modeVol();
+			// MODE_VOL
+			return notVisualizing();
 
 		default:
 			throw new UnsupportedOperationException("TODO test and implement");
 		}
 	}
 
-	@Override
-	public SidRegWriteListener cr(OscName osc) {
+	private SidRegWriteListener cr(OscName osc) {
 		return (v) -> cr(osc, v);
 	}
 
-	@Override
-	public SidRegWriteListener freqLo(OscName osc) {
+	private SidRegWriteListener freqLo(OscName osc) {
 		return (v) -> freqLo[osc.ordinal()] = v;
 	}
 
-	@Override
-	public SidRegWriteListener freqHi(OscName osc) {
+	private SidRegWriteListener freqHi(OscName osc) {
 		return (v) -> freqHi[osc.ordinal()] = v;
 	}
 
-	@Override
-	public SidRegWriteListener pwLo(OscName osc) {
+	private SidRegWriteListener pwLo(OscName osc) {
 		return (v) -> pwLo[osc.ordinal()] = v;
 	}
 
-	@Override
-	public SidRegWriteListener pwHi(OscName osc) {
+	private SidRegWriteListener pwHi(OscName osc) {
 		return (v) -> pwHi[osc.ordinal()] = v;
 	}
 
-	@Override
-	public SidRegWriteListener ad(OscName osc) {
-		return (v) -> {/* not visualized */
-		};
-	}
-
-	@Override
-	public SidRegWriteListener sr(OscName osc) {
+	private static SidRegWriteListener notVisualizing() {
 		return (v) -> {/* not visualized */
 		};
 	}
@@ -251,30 +248,6 @@ public class SidWriteVisualizer implements SidWriteListener {
 
 	private static ControlRegister cr(UnsignedByte value) {
 		return ControlRegister.from(value);
-	}
-
-	@Override
-	public SidRegWriteListener fcHi() {
-		return (v) -> {/* not visualized */
-		};
-	}
-
-	@Override
-	public SidRegWriteListener fcLo() {
-		return (v) -> {/* not visualized */
-		};
-	}
-
-	@Override
-	public SidRegWriteListener resFilt() {
-		return (v) -> {/* not visualized */
-		};
-	}
-
-	@Override
-	public SidRegWriteListener modeVol() {
-		return (v) -> {/* not visualized */
-		};
 	}
 
 	private void plotSyncIfNeeded(int y, int osc) {

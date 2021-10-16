@@ -3,7 +3,6 @@ package org.fluentjava.mockodore.util.sidripper;
 import java.util.List;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
-import org.fluentjava.mockodore.model.sid.OscName;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
 
 public class SidWriteFrameSkipper implements SidWriteListener {
@@ -51,61 +50,6 @@ public class SidWriteFrameSkipper implements SidWriteListener {
 	@Override
 	public SidRegWriteListener reg(SidRegisterAddress reg) {
 		return d.reg(reg);
-	}
-
-	@Override
-	public SidRegWriteListener ad(OscName osc) {
-		return d.ad(osc);
-	}
-
-	@Override
-	public SidRegWriteListener sr(OscName osc) {
-		return d.sr(osc);
-	}
-
-	@Override
-	public SidRegWriteListener cr(OscName osc) {
-		return d.cr(osc);
-	}
-
-	@Override
-	public SidRegWriteListener fcLo() {
-		return d.fcLo();
-	}
-
-	@Override
-	public SidRegWriteListener fcHi() {
-		return d.fcHi();
-	}
-
-	@Override
-	public SidRegWriteListener freqLo(OscName osc) {
-		return d.freqLo(osc);
-	}
-
-	@Override
-	public SidRegWriteListener freqHi(OscName osc) {
-		return d.freqHi(osc);
-	}
-
-	@Override
-	public SidRegWriteListener modeVol() {
-		return d.modeVol();
-	}
-
-	@Override
-	public SidRegWriteListener pwLo(OscName osc) {
-		return d.pwLo(osc);
-	}
-
-	@Override
-	public SidRegWriteListener pwHi(OscName osc) {
-		return d.pwHi(osc);
-	}
-
-	@Override
-	public SidRegWriteListener resFilt() {
-		return d.resFilt();
 	}
 
 }

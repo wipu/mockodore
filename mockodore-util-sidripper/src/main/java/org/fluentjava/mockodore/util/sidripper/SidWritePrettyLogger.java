@@ -31,48 +31,105 @@ public class SidWritePrettyLogger implements SidWriteListener {
 		sidWriteLog.append("=== Frame " + frameNumber + "\n");
 	}
 
-	@Override
-	public SidRegWriteListener cr(OscName osc) {
+	private SidRegWriteListener cr(OscName osc) {
 		return (v) -> cr(osc, v);
 	}
 
 	private void cr(OscName osc, UnsignedByte newValue) {
-		reg(SidRegisterAddress.of(osc, OscRegisterName.CR), newValue,
+		regWrite(SidRegisterAddress.of(osc, OscRegisterName.CR), newValue,
 				sidControlRegisterString(newValue));
 	}
 
 	@Override
 	public SidRegWriteListener reg(SidRegisterAddress reg) {
-		return (v) -> reg(reg, v);
+		switch (reg.offsetInSid()) {
+
+		case 0:
+			return freqLo(OscName.OSC_1);
+		case 1:
+			return freqHi(OscName.OSC_1);
+		case 2:
+			return pwLo(OscName.OSC_1);
+		case 3:
+			return pwHi(OscName.OSC_1);
+		case 4:
+			return cr(OscName.OSC_1);
+		case 5:
+			return ad(OscName.OSC_1);
+		case 6:
+			return sr(OscName.OSC_1);
+
+		case 7:
+			return freqLo(OscName.OSC_2);
+		case 8:
+			return freqHi(OscName.OSC_2);
+		case 9:
+			return pwLo(OscName.OSC_2);
+		case 10:
+			return pwHi(OscName.OSC_2);
+		case 11:
+			return cr(OscName.OSC_2);
+		case 12:
+			return ad(OscName.OSC_2);
+		case 13:
+			return sr(OscName.OSC_2);
+
+		case 14:
+			return freqLo(OscName.OSC_3);
+		case 15:
+			return freqHi(OscName.OSC_3);
+		case 16:
+			return pwLo(OscName.OSC_3);
+		case 17:
+			return pwHi(OscName.OSC_3);
+		case 18:
+			return cr(OscName.OSC_3);
+		case 19:
+			return ad(OscName.OSC_3);
+		case 20:
+			return sr(OscName.OSC_3);
+
+		case 21:
+			return fcLo();
+		case 22:
+			return fcHi();
+		case 23:
+			return resFilt();
+		case 24:
+			return modeVol();
+
+		default:
+			throw new UnsupportedOperationException(
+					"Unsupported register: " + reg);
+		}
 	}
 
-	@Override
-	public SidRegWriteListener freqLo(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.FREQ_LO));
+	private SidRegWriteListener freqLo(OscName osc) {
+		return (v) -> regWrite(
+				SidRegisterAddress.of(osc, OscRegisterName.FREQ_LO), v);
 	}
 
-	@Override
-	public SidRegWriteListener freqHi(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.FREQ_HI));
+	private SidRegWriteListener freqHi(OscName osc) {
+		return (v) -> regWrite(
+				SidRegisterAddress.of(osc, OscRegisterName.FREQ_HI), v);
 	}
 
-	@Override
-	public SidRegWriteListener pwLo(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.PW_LO));
+	private SidRegWriteListener pwLo(OscName osc) {
+		return (v) -> regWrite(
+				SidRegisterAddress.of(osc, OscRegisterName.PW_LO), v);
 	}
 
-	@Override
-	public SidRegWriteListener pwHi(OscName osc) {
-		return reg(SidRegisterAddress.of(osc, OscRegisterName.PW_HI));
+	private SidRegWriteListener pwHi(OscName osc) {
+		return (v) -> regWrite(
+				SidRegisterAddress.of(osc, OscRegisterName.PW_HI), v);
 	}
 
-	@Override
-	public SidRegWriteListener ad(OscName osc) {
+	private SidRegWriteListener ad(OscName osc) {
 		return (v) -> ad(osc, v);
 	}
 
 	private void ad(OscName osc, UnsignedByte newValue) {
-		reg(SidRegisterAddress.of(osc, OscRegisterName.AD), newValue,
+		regWrite(SidRegisterAddress.of(osc, OscRegisterName.AD), newValue,
 				envByteString(newValue));
 	}
 
@@ -83,17 +140,16 @@ public class SidWritePrettyLogger implements SidWriteListener {
 				(byte) decay);
 	}
 
-	@Override
-	public SidRegWriteListener sr(OscName osc) {
+	private SidRegWriteListener sr(OscName osc) {
 		return (v) -> sr(osc, v);
 	}
 
 	private void sr(OscName osc, UnsignedByte newValue) {
-		reg(SidRegisterAddress.of(osc, OscRegisterName.SR), newValue,
+		regWrite(SidRegisterAddress.of(osc, OscRegisterName.SR), newValue,
 				envByteString(newValue));
 	}
 
-	private void reg(SidRegisterAddress reg, UnsignedByte newValue,
+	private void regWrite(SidRegisterAddress reg, UnsignedByte newValue,
 			String newValuePrettyPrinted) {
 		String sidDebugLine = indentation(reg.osc()) + reg + "="
 				+ newValuePrettyPrinted + " (" + reg.address() + "=" + newValue
@@ -101,8 +157,8 @@ public class SidWritePrettyLogger implements SidWriteListener {
 		sidWriteLog.append(sidDebugLine);
 	}
 
-	private void reg(SidRegisterAddress reg, UnsignedByte newValue) {
-		reg(reg, newValue, newValue.toString());
+	private void regWrite(SidRegisterAddress reg, UnsignedByte newValue) {
+		regWrite(reg, newValue, newValue.toString());
 	}
 
 	public static String sidControlRegisterString(UnsignedByte newValue) {
@@ -177,19 +233,17 @@ public class SidWritePrettyLogger implements SidWriteListener {
 		}
 	}
 
-	@Override
-	public SidRegWriteListener fcLo() {
-		return (v) -> reg(SidRegisterAddress.FCLO, v);
+	private SidRegWriteListener fcLo() {
+		return (v) -> regWrite(SidRegisterAddress.FCLO, v);
 	}
 
-	@Override
-	public SidRegWriteListener fcHi() {
-		return (v) -> reg(SidRegisterAddress.FCHI, v);
+	private SidRegWriteListener fcHi() {
+		return (v) -> regWrite(SidRegisterAddress.FCHI, v);
 	}
 
-	@Override
-	public SidRegWriteListener modeVol() {
-		return (v) -> reg(SidRegisterAddress.MODE_VOL, v, modeVolString(v));
+	private SidRegWriteListener modeVol() {
+		return (v) -> regWrite(SidRegisterAddress.MODE_VOL, v,
+				modeVolString(v));
 	}
 
 	private static String modeVolString(UnsignedByte newValue) {
@@ -217,9 +271,9 @@ public class SidWritePrettyLogger implements SidWriteListener {
 		return b.toString();
 	}
 
-	@Override
-	public SidRegWriteListener resFilt() {
-		return (v) -> reg(SidRegisterAddress.RES_FILT, v, resFiltString(v));
+	private SidRegWriteListener resFilt() {
+		return (v) -> regWrite(SidRegisterAddress.RES_FILT, v,
+				resFiltString(v));
 	}
 
 	private static String resFiltString(UnsignedByte newValue) {

@@ -1,5 +1,30 @@
 package org.fluentjava.mockodore.util.sidripper;
 
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.AD_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.AD_2;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.AD_3;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.CR_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.CR_2;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.CR_3;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FCHI;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FCLO;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_HI_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_HI_2;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_HI_3;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_LO_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_LO_2;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.FREQ_LO_3;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.MODE_VOL;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_HI_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_HI_2;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_HI_3;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_LO_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_LO_2;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_LO_3;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.RES_FILT;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_1;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_2;
+import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_3;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -7,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
-import org.fluentjava.mockodore.model.sid.OscName;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,58 +92,58 @@ public class FullFrameHexDumperTest {
 	@Test
 	public void oneNewRegisterValuePerFrame() {
 		log.playCallStarting();
-		log.freqLo(OscName.OSC_1).write(UnsignedByte.x01);
+		log.reg(FREQ_LO_1).write(UnsignedByte.x01);
 		log.playCallStarting();
-		log.freqHi(OscName.OSC_1).write(UnsignedByte.x02);
+		log.reg(FREQ_HI_1).write(UnsignedByte.x02);
 		log.playCallStarting();
-		log.pwLo(OscName.OSC_1).write(UnsignedByte.x03);
+		log.reg(PW_LO_1).write(UnsignedByte.x03);
 		log.playCallStarting();
-		log.pwHi(OscName.OSC_1).write(UnsignedByte.x04);
+		log.reg(PW_HI_1).write(UnsignedByte.x04);
 		log.playCallStarting();
-		log.cr(OscName.OSC_1).write(UnsignedByte.x05);
+		log.reg(CR_1).write(UnsignedByte.x05);
 		log.playCallStarting();
-		log.ad(OscName.OSC_1).write(UnsignedByte.x06);
+		log.reg(AD_1).write(UnsignedByte.x06);
 		log.playCallStarting();
-		log.sr(OscName.OSC_1).write(UnsignedByte.x07);
+		log.reg(SR_1).write(UnsignedByte.x07);
 
 		log.playCallStarting();
-		log.freqLo(OscName.OSC_2).write(UnsignedByte.x08);
+		log.reg(FREQ_LO_2).write(UnsignedByte.x08);
 		log.playCallStarting();
-		log.freqHi(OscName.OSC_2).write(UnsignedByte.x09);
+		log.reg(FREQ_HI_2).write(UnsignedByte.x09);
 		log.playCallStarting();
-		log.pwLo(OscName.OSC_2).write(UnsignedByte.x0A);
+		log.reg(PW_LO_2).write(UnsignedByte.x0A);
 		log.playCallStarting();
-		log.pwHi(OscName.OSC_2).write(UnsignedByte.x0B);
+		log.reg(PW_HI_2).write(UnsignedByte.x0B);
 		log.playCallStarting();
-		log.cr(OscName.OSC_2).write(UnsignedByte.x0C);
+		log.reg(CR_2).write(UnsignedByte.x0C);
 		log.playCallStarting();
-		log.ad(OscName.OSC_2).write(UnsignedByte.x0D);
+		log.reg(AD_2).write(UnsignedByte.x0D);
 		log.playCallStarting();
-		log.sr(OscName.OSC_2).write(UnsignedByte.x0E);
+		log.reg(SR_2).write(UnsignedByte.x0E);
 
 		log.playCallStarting();
-		log.freqLo(OscName.OSC_3).write(UnsignedByte.x0F);
+		log.reg(FREQ_LO_3).write(UnsignedByte.x0F);
 		log.playCallStarting();
-		log.freqHi(OscName.OSC_3).write(UnsignedByte.x10);
+		log.reg(FREQ_HI_3).write(UnsignedByte.x10);
 		log.playCallStarting();
-		log.pwLo(OscName.OSC_3).write(UnsignedByte.x11);
+		log.reg(PW_LO_3).write(UnsignedByte.x11);
 		log.playCallStarting();
-		log.pwHi(OscName.OSC_3).write(UnsignedByte.x12);
+		log.reg(PW_HI_3).write(UnsignedByte.x12);
 		log.playCallStarting();
-		log.cr(OscName.OSC_3).write(UnsignedByte.x13);
+		log.reg(CR_3).write(UnsignedByte.x13);
 		log.playCallStarting();
-		log.ad(OscName.OSC_3).write(UnsignedByte.x14);
+		log.reg(AD_3).write(UnsignedByte.x14);
 		log.playCallStarting();
-		log.sr(OscName.OSC_3).write(UnsignedByte.x15);
+		log.reg(SR_3).write(UnsignedByte.x15);
 
 		log.playCallStarting();
-		log.fcLo().write(UnsignedByte.x16);
+		log.reg(FCLO).write(UnsignedByte.x16);
 		log.playCallStarting();
-		log.fcHi().write(UnsignedByte.x17);
+		log.reg(FCHI).write(UnsignedByte.x17);
 		log.playCallStarting();
-		log.resFilt().write(UnsignedByte.x18);
+		log.reg(RES_FILT).write(UnsignedByte.x18);
 		log.playCallStarting();
-		log.modeVol().write(UnsignedByte.x19);
+		log.reg(MODE_VOL).write(UnsignedByte.x19);
 
 		// A small ugliness: you need to make one more call to save the effects
 		// of the last frame, too:

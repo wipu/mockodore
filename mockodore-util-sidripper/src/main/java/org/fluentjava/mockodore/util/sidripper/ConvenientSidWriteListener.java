@@ -1,6 +1,5 @@
 package org.fluentjava.mockodore.util.sidripper;
 
-import org.fluentjava.mockodore.model.sid.OscName;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
 
 public class ConvenientSidWriteListener implements SidWriteListener {
@@ -21,24 +20,20 @@ public class ConvenientSidWriteListener implements SidWriteListener {
 		return d.reg(reg);
 	}
 
-	@Override
 	public SidRegWriteListener fcLo() {
-		return d.fcLo();
+		return reg(SidRegisterAddress.FCLO);
 	}
 
-	@Override
 	public SidRegWriteListener fcHi() {
-		return d.fcHi();
+		return reg(SidRegisterAddress.FCHI);
 	}
 
-	@Override
 	public SidRegWriteListener modeVol() {
-		return d.modeVol();
+		return reg(SidRegisterAddress.MODE_VOL);
 	}
 
-	@Override
 	public SidRegWriteListener resFilt() {
-		return d.resFilt();
+		return reg(SidRegisterAddress.RES_FILT);
 	}
 
 	@Override
@@ -47,122 +42,87 @@ public class ConvenientSidWriteListener implements SidWriteListener {
 	}
 
 	public SidRegWriteListener cr1() {
-		return cr(OscName.OSC_1);
+		return reg(SidRegisterAddress.CR_1);
 	}
 
 	public SidRegWriteListener cr2() {
-		return cr(OscName.OSC_2);
+		return reg(SidRegisterAddress.CR_2);
 	}
 
 	public SidRegWriteListener cr3() {
-		return cr(OscName.OSC_3);
-	}
-
-	@Override
-	public SidRegWriteListener cr(OscName osc) {
-		return d.cr(osc);
-	}
-
-	@Override
-	public SidRegWriteListener freqLo(OscName osc) {
-		return d.freqLo(osc);
+		return reg(SidRegisterAddress.CR_3);
 	}
 
 	public SidRegWriteListener freqLo1() {
-		return freqLo(OscName.OSC_1);
+		return reg(SidRegisterAddress.FREQ_LO_1);
 	}
 
 	public SidRegWriteListener freqLo2() {
-		return freqLo(OscName.OSC_2);
+		return reg(SidRegisterAddress.FREQ_LO_2);
 	}
 
 	public SidRegWriteListener freqLo3() {
-		return freqLo(OscName.OSC_3);
-	}
-
-	@Override
-	public SidRegWriteListener freqHi(OscName osc) {
-		return d.freqHi(osc);
+		return reg(SidRegisterAddress.FREQ_LO_3);
 	}
 
 	public SidRegWriteListener freqHi1() {
-		return freqHi(OscName.OSC_1);
+		return reg(SidRegisterAddress.FREQ_HI_1);
 	}
 
 	public SidRegWriteListener freqHi2() {
-		return freqHi(OscName.OSC_2);
+		return reg(SidRegisterAddress.FREQ_HI_2);
 	}
 
 	public SidRegWriteListener freqHi3() {
-		return freqHi(OscName.OSC_3);
-	}
-
-	@Override
-	public SidRegWriteListener pwLo(OscName osc) {
-		return d.pwLo(osc);
+		return reg(SidRegisterAddress.FREQ_HI_3);
 	}
 
 	public SidRegWriteListener pwLo1() {
-		return pwLo(OscName.OSC_1);
+		return reg(SidRegisterAddress.PW_LO_1);
 	}
 
 	public SidRegWriteListener pwLo2() {
-		return pwLo(OscName.OSC_2);
+		return reg(SidRegisterAddress.PW_LO_2);
 	}
 
 	public SidRegWriteListener pwLo3() {
-		return pwLo(OscName.OSC_3);
-	}
-
-	@Override
-	public SidRegWriteListener pwHi(OscName osc) {
-		return d.pwHi(osc);
+		return reg(SidRegisterAddress.PW_LO_3);
 	}
 
 	public SidRegWriteListener pwHi1() {
-		return pwHi(OscName.OSC_1);
+		return reg(SidRegisterAddress.PW_HI_1);
 	}
 
 	public SidRegWriteListener pwHi2() {
-		return pwHi(OscName.OSC_2);
+		return reg(SidRegisterAddress.PW_HI_2);
 	}
 
 	public SidRegWriteListener pwHi3() {
-		return pwHi(OscName.OSC_3);
-	}
-
-	@Override
-	public SidRegWriteListener ad(OscName osc) {
-		return d.ad(osc);
+		return reg(SidRegisterAddress.PW_HI_3);
 	}
 
 	public SidRegWriteListener ad1() {
-		return ad(OscName.OSC_1);
+		return reg(SidRegisterAddress.AD_1);
 	}
 
 	public SidRegWriteListener ad2() {
-		return ad(OscName.OSC_2);
+		return reg(SidRegisterAddress.AD_2);
 	}
 
 	public SidRegWriteListener ad3() {
-		return ad(OscName.OSC_3);
-	}
-
-	@Override
-	public SidRegWriteListener sr(OscName osc) {
-		return d.sr(osc);
+		return reg(SidRegisterAddress.AD_3);
 	}
 
 	public SidRegWriteListener sr1() {
-		return sr(OscName.OSC_1);
+		return reg(SidRegisterAddress.SR_1);
 	}
 
 	public SidRegWriteListener sr2() {
-		return sr(OscName.OSC_2);
+		return reg(SidRegisterAddress.SR_2);
 	}
 
 	public SidRegWriteListener sr3() {
-		return sr(OscName.OSC_3);
+		return reg(SidRegisterAddress.SR_3);
 	}
 
 }
