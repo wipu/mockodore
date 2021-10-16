@@ -3094,6 +3094,39 @@ public class C64SimulatorTest {
 		assertEquals("nv-bdiZc", sim.sr().toString());
 	}
 
+	@Test
+	public void cldDoesNothing() {
+		p.startAddress(address$1000);
+		p.cld();
+		p.rts();
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+		// that's it, no exception, no status change:
+		assertEquals("nv-bdizc", sim.sr().toString());
+	}
+
+	@Test
+	public void cliDoesNothing() {
+		p.startAddress(address$1000);
+		p.cli();
+		p.rts();
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+		// that's it, no exception, no status change:
+		assertEquals("nv-bdizc", sim.sr().toString());
+	}
+
+	@Test
+	public void seiDoesNothing() {
+		p.startAddress(address$1000);
+		p.sei();
+		p.rts();
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+		// that's it, no exception, no status change:
+		assertEquals("nv-bdizc", sim.sr().toString());
+	}
+
 	/**
 	 * Getting some coverage for the empty listener
 	 */

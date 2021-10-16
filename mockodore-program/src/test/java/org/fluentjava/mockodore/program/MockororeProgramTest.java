@@ -1091,6 +1091,7 @@ public class MockororeProgramTest {
 		p.cld();
 		assertBytes("D8");
 		assertAssy("cld\n");
+		assertJava("cld();\n");
 	}
 
 	@Test
@@ -1259,6 +1260,7 @@ public class MockororeProgramTest {
 		p.sei();
 		assertBytes("78");
 		assertAssy("sei\n");
+		assertJava("sei();\n");
 	}
 
 	@Test
@@ -1266,6 +1268,7 @@ public class MockororeProgramTest {
 		p.cli();
 		assertBytes("58");
 		assertAssy("cli\n");
+		assertJava("cli();\n");
 	}
 
 	@Test

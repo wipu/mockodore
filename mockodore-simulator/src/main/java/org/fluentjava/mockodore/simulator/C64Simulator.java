@@ -107,6 +107,7 @@ public class C64Simulator {
 		opImpl(new Bvs());
 		opImpl(new Clc());
 		opImpl(new Cld());
+		opImpl(new Cli());
 		opImpl(new CmpAbs());
 		opImpl(new CmpAbsPlusX());
 		opImpl(new CmpAbsPlusY());
@@ -823,6 +824,19 @@ public class C64Simulator {
 		@Override
 		void result() {
 			System.err.println("Warning: ignoring CLD");
+		}
+
+	}
+
+	private class Cli extends ImpliedInstrInstance {
+
+		Cli() {
+			super(Op.CLI);
+		}
+
+		@Override
+		void result() {
+			System.err.println("Warning: ignoring CLI");
 		}
 
 	}
