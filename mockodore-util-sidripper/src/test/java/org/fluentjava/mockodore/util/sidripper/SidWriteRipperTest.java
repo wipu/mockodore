@@ -40,8 +40,10 @@ public class SidWriteRipperTest {
 		}
 
 		ripper.playCallStarting();
-		// and another frame with a sid write
+		// and another frame with some sid writes
 		ripper.writeMem(SidRegisterAddress.AD_1.address().value(),
+				UnsignedByte.x03);
+		ripper.writeMem(SidRegisterAddress.SR_1.address().value(),
 				UnsignedByte.x03);
 
 		// assert results:
@@ -73,6 +75,8 @@ public class SidWriteRipperTest {
 		String html = ripper.toHtml(gif);
 		assertTrue(html.contains("<html>"));
 		assertTrue(html.contains("<img src=\"sid-writes.gif\""));
+
+		assertEquals("[AD1, SR1]", ripper.sidWriteOrderAnalysis());
 	}
 
 	@Test

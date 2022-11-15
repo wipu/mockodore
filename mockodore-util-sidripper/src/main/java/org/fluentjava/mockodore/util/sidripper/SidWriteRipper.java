@@ -17,6 +17,7 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 	private final SidWritesToMidiSysex toMidi;
 	private final SidWriteHtmlWriter htmlWriter;
 	private final FullFrameHexDumper fullFrameHexDumper;
+	private final SidRegisterWriteOrderAnalyzer writeOrderAnalyzer;
 
 	public static SidWriteRipper using(C64SimulatorEventListener delegate,
 			int framesToSkip, int frameCount) {
@@ -30,19 +31,28 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 				sidWriteLog);
 		FullFrameHexDumper fullFrameHexDumper = new FullFrameHexDumper();
 		SidWritesToMidiSysex toMidi = new SidWritesToMidiSysex();
+
+		// the frame skipper will dump all registers, which would confuse the
+		// write order analyzer, so let it skip that frame:
+		int numberOfInitialFramesToIgnoreWhenAnalyzingWriteOrder = 1;
+		SidRegisterWriteOrderAnalyzer writeOrderAnalyzer = new SidRegisterWriteOrderAnalyzer(
+				numberOfInitialFramesToIgnoreWhenAnalyzingWriteOrder);
+
 		SidWriteListener sid = SidWriteListenerHub.delegatingTo(visualizer,
-				prettyLogger, toMidi, htmlWriter, fullFrameHexDumper);
+				prettyLogger, toMidi, htmlWriter, fullFrameHexDumper,
+				writeOrderAnalyzer);
 		sid = new SidWriteFrameSkipper(sid, framesToSkip);
 		SidWriteDelegator sidDelegator = new SidWriteDelegator(mem, sid);
 		return new SidWriteRipper(sidDelegator, sid, sidWriteLog, visualizer,
-				toMidi, htmlWriter, fullFrameHexDumper);
+				toMidi, htmlWriter, fullFrameHexDumper, writeOrderAnalyzer);
 	}
 
 	private SidWriteRipper(C64SimulatorEventListener delegate,
 			SidWriteListener sid, StringBuilder sidWriteLog,
 			SidWriteVisualizer visualizer, SidWritesToMidiSysex toMidi,
 			SidWriteHtmlWriter htmlWriter,
-			FullFrameHexDumper fullFrameHexDumper) {
+			FullFrameHexDumper fullFrameHexDumper,
+			SidRegisterWriteOrderAnalyzer writeOrderAnalyzer) {
 		super(delegate);
 		this.sid = sid;
 		this.sidWriteLog = sidWriteLog;
@@ -50,6 +60,7 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 		this.toMidi = toMidi;
 		this.htmlWriter = htmlWriter;
 		this.fullFrameHexDumper = fullFrameHexDumper;
+		this.writeOrderAnalyzer = writeOrderAnalyzer;
 	}
 
 	public void playCallStarting() {
@@ -77,6 +88,13 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 
 	public byte[] toMidiSysex() {
 		return toMidi.toMidiseq().asBytes();
+	}
+
+	public String sidWriteOrderAnalysis() {
+		if (writeOrderAnalyzer.hasContradictingWriteOrderFrames()) {
+			return "conflicts";
+		}
+		return writeOrderAnalyzer.commonOrderOfRegisters().toString();
 	}
 
 }
