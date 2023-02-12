@@ -21,6 +21,7 @@ public class SidRegisterWriteOrderAnalyzer implements SidWriteListener {
 	private final Map<String, HappensBefore> happensBeforeByToString = new HashMap<>();
 	private final SortedSet<HappensBefore> allPlayFrameHappensBefores = new TreeSet<>();
 	private Frame currentFrame;
+	private final SortedSet<String> registerRewriteWarnings = new TreeSet<>();
 
 	public SidRegisterWriteOrderAnalyzer(int numberOfInitialFramesToIgnore) {
 		this.numberOfInitialFramesToIgnore = numberOfInitialFramesToIgnore;
@@ -57,17 +58,19 @@ public class SidRegisterWriteOrderAnalyzer implements SidWriteListener {
 		return Collections.unmodifiableSortedSet(allPlayFrameHappensBefores);
 	}
 
-	public boolean hasContradictingWriteOrderFrames() {
+	public SortedSet<String> contradictions() {
+		SortedSet<String> contradictions = new TreeSet<>();
 		SortedSet<HappensBefore> prevs = new TreeSet<>();
 		for (HappensBefore curr : allPlayFrameHappensBefores) {
 			for (HappensBefore prev : prevs) {
 				if (curr.contradicts(prev)) {
-					return true;
+					contradictions.add(curr + " contradicts " + prev);
 				}
 			}
 			prevs.add(curr);
 		}
-		return false;
+		contradictions.addAll(registerRewriteWarnings);
+		return contradictions;
 	}
 
 	public class Frame {
@@ -102,10 +105,6 @@ public class SidRegisterWriteOrderAnalyzer implements SidWriteListener {
 		private final SidRegisterAddress after;
 
 		HappensBefore(SidRegisterAddress before, SidRegisterAddress after) {
-			if (before.offsetInSid() == after.offsetInSid()) {
-				throw new IllegalArgumentException(
-						"Register happens before itself: " + before);
-			}
 			this.before = before;
 			this.after = after;
 		}
@@ -149,12 +148,15 @@ public class SidRegisterWriteOrderAnalyzer implements SidWriteListener {
 		if (o == null) {
 			o = new HappensBefore(before, after);
 			happensBeforeByToString.put(key, o);
+			if (before.offsetInSid() == after.offsetInSid()) {
+				registerRewriteWarnings.add(before + " written many times");
+			}
 		}
 		return o;
 	}
 
 	public List<SidRegisterAddress> commonOrderOfRegisters() {
-		if (hasContradictingWriteOrderFrames()) {
+		if (!contradictions().isEmpty()) {
 			throw new IllegalStateException(
 					"No common order of register writes");
 		}

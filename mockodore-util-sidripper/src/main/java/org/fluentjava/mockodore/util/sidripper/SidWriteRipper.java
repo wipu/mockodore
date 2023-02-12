@@ -3,6 +3,7 @@ package org.fluentjava.mockodore.util.sidripper;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.SortedSet;
 
 import javax.imageio.ImageIO;
 
@@ -91,8 +92,9 @@ public class SidWriteRipper extends C64SimulatorEventListenerProxy {
 	}
 
 	public String sidWriteOrderAnalysis() {
-		if (writeOrderAnalyzer.hasContradictingWriteOrderFrames()) {
-			return "conflicts";
+		SortedSet<String> contradictions = writeOrderAnalyzer.contradictions();
+		if (!contradictions.isEmpty()) {
+			return "contradictions: " + contradictions;
 		}
 		return writeOrderAnalyzer.commonOrderOfRegisters().toString();
 	}

@@ -1,7 +1,6 @@
 package org.fluentjava.mockodore.util.sidripper;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -50,7 +49,7 @@ public class SidRegisterWriteOrderAnalyzerTest {
 
 		assertEquals("[]", o.playFrames().toString());
 		assertEquals("[]", o.allPlayFrameHappensBefores().toString());
-		assertFalse(o.hasContradictingWriteOrderFrames());
+		assertEquals("[]", o.contradictions().toString());
 	}
 
 	@Test
@@ -59,7 +58,7 @@ public class SidRegisterWriteOrderAnalyzerTest {
 
 		assertEquals("[]", o.playFrames().toString());
 		assertEquals("[]", o.allPlayFrameHappensBefores().toString());
-		assertFalse(o.hasContradictingWriteOrderFrames());
+		assertEquals("[]", o.contradictions().toString());
 	}
 
 	@Test
@@ -70,7 +69,7 @@ public class SidRegisterWriteOrderAnalyzerTest {
 
 		assertEquals("[0:[], 1:[]]", o.playFrames().toString());
 		assertEquals("[]", o.allPlayFrameHappensBefores().toString());
-		assertFalse(o.hasContradictingWriteOrderFrames());
+		assertEquals("[]", o.contradictions().toString());
 	}
 
 	@Test
@@ -83,7 +82,7 @@ public class SidRegisterWriteOrderAnalyzerTest {
 
 		assertEquals("[0:[AD1], 1:[AD1]]", o.playFrames().toString());
 		assertEquals("[]", o.allPlayFrameHappensBefores().toString());
-		assertFalse(o.hasContradictingWriteOrderFrames());
+		assertEquals("[]", o.contradictions().toString());
 	}
 
 	@Test
@@ -98,7 +97,7 @@ public class SidRegisterWriteOrderAnalyzerTest {
 
 		assertEquals("[0:[AD1, SR1], 1:[AD1, SR1]]", o.playFrames().toString());
 		assertEquals("[AD1 < SR1]", o.allPlayFrameHappensBefores().toString());
-		assertFalse(o.hasContradictingWriteOrderFrames());
+		assertEquals("[]", o.contradictions().toString());
 		assertEquals("[AD1, SR1]", o.commonOrderOfRegisters().toString());
 	}
 
@@ -115,7 +114,7 @@ public class SidRegisterWriteOrderAnalyzerTest {
 
 		assertEquals("[1:[AD1, SR1]]", o.playFrames().toString());
 		assertEquals("[AD1 < SR1]", o.allPlayFrameHappensBefores().toString());
-		assertFalse(o.hasContradictingWriteOrderFrames());
+		assertEquals("[]", o.contradictions().toString());
 		assertEquals("[AD1, SR1]", o.commonOrderOfRegisters().toString());
 	}
 
@@ -132,7 +131,8 @@ public class SidRegisterWriteOrderAnalyzerTest {
 		assertEquals("[0:[AD1, SR1], 1:[SR1, AD1]]", o.playFrames().toString());
 		assertEquals("[AD1 < SR1, SR1 < AD1]",
 				o.allPlayFrameHappensBefores().toString());
-		assertTrue(o.hasContradictingWriteOrderFrames());
+		assertEquals("[SR1 < AD1 contradicts AD1 < SR1]",
+				o.contradictions().toString());
 		try {
 			o.commonOrderOfRegisters();
 			fail();
@@ -186,8 +186,34 @@ public class SidRegisterWriteOrderAnalyzerTest {
 				o.playFrames().toString());
 		assertEquals("[AD1 < CR1, AD1 < SR1, SR1 < CR1]",
 				o.allPlayFrameHappensBefores().toString());
-		assertFalse(o.hasContradictingWriteOrderFrames());
+		assertEquals("[]", o.contradictions().toString());
 		assertEquals("[AD1, SR1, CR1]", o.commonOrderOfRegisters().toString());
+	}
+
+	@Test
+	public void initIteratesInRegOrderAndOtherwiseGoodButOneRegIsWrittenTwiceDuringFrame() {
+		initInRegOrder();
+		o.playCallStarting();
+		write(SidRegisterAddress.AD_1);
+		write(SidRegisterAddress.SR_1);
+		o.playCallStarting();
+		write(SidRegisterAddress.AD_1);
+		write(SidRegisterAddress.SR_1);
+		write(SidRegisterAddress.AD_1);
+
+		assertEquals("[0:[AD1, SR1], 1:[AD1, SR1, AD1]]",
+				o.playFrames().toString());
+		assertEquals("[AD1 < AD1, AD1 < SR1, SR1 < AD1]",
+				o.allPlayFrameHappensBefores().toString());
+		assertEquals(
+				"[AD1 written many times, SR1 < AD1 contradicts AD1 < SR1]",
+				o.contradictions().toString());
+		try {
+			o.commonOrderOfRegisters();
+			fail();
+		} catch (IllegalStateException e) {
+			assertEquals("No common order of register writes", e.getMessage());
+		}
 	}
 
 }
