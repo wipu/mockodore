@@ -46,8 +46,9 @@ public class SidWriteHtmlWriter
 				SidRegisterAddress cr = SidRegisterAddress.of(osc,
 						OscRegisterName.CR);
 				UnsignedByte crValue = regValues.get(cr);
-				String crString = SidWritePrettyLogger
-						.sidControlRegisterString(crValue);
+				String crString = crValue == null ? "-"
+						: SidWritePrettyLogger
+								.sidControlRegisterString(crValue);
 				return y + " " + osc.name() + ":" + crString;
 			}
 
