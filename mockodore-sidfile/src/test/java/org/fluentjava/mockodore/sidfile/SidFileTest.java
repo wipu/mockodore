@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.sidfile;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
@@ -12,9 +12,9 @@ import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.model.machine.PrgBytesWithLoadAddress;
 import org.fluentjava.mockodore.program.MockodoreProgram;
 import org.fluentjava.mockodore.program.MockodoreProgram.C64AssyLangForProgram;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SidFileTest {
 
@@ -22,7 +22,7 @@ public class SidFileTest {
 
 	private SidFile sidFile;
 
-	@BeforeClass
+	@BeforeAll
 	public static void beforeClass() throws IOException {
 		sidBytes = IOUtils
 				.toByteArray(SidFileTest.class.getResource("/ekakoe.sid"));
@@ -41,7 +41,7 @@ public class SidFileTest {
 		System.err.println(b);
 	}
 
-	@Before
+	@BeforeEach
 	public void before() {
 		sidFile = new SidFile(sidBytes);
 	}

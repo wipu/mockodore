@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.app.sidex;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.lib.basicloader.BasicLoader;
 import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CLabMidiHelloworldTest extends SidexTestBase {
 

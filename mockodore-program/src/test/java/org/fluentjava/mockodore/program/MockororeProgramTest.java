@@ -1,8 +1,8 @@
 package org.fluentjava.mockodore.program;
 
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x01;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.fluentjava.joulu.unsignedbyte.ByteArrayPrettyPrinter;
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
@@ -13,8 +13,8 @@ import org.fluentjava.mockodore.model.addressing.ZeroPage;
 import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.model.labels.Labeled;
 import org.fluentjava.mockodore.model.machine.Op;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class MockororeProgramTest {
 
@@ -29,7 +29,7 @@ public class MockororeProgramTest {
 		}
 	}
 
-	@Before
+	@BeforeEach
 	public void before() {
 		p = new ProxyForTestingProxying(MockodoreProgram.with());
 	}

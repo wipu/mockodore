@@ -1,11 +1,11 @@
 package org.fluentjava.mockodore.lib.misc;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.program.MockodoreProgram;
 import org.fluentjava.mockodore.program.MockodoreProgram.C64AssyLangForProgram;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class VbiTest {
 

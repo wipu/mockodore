@@ -15,6 +15,7 @@ import org.fluentjava.iwant.api.model.Target;
 import org.fluentjava.iwant.api.wsdef.SideEffectDefinitionContext;
 import org.fluentjava.iwant.api.wsdef.TargetDefinitionContext;
 import org.fluentjava.iwant.api.wsdef.Workspace;
+import org.fluentjava.iwant.api.wsdef.WorkspaceContext;
 import org.fluentjava.iwant.core.download.TestedIwantDependencies;
 import org.fluentjava.iwant.eclipsesettings.EclipseSettings;
 import org.fluentjava.iwant.plugin.jacoco.JacocoDistribution;
@@ -22,7 +23,11 @@ import org.fluentjava.iwant.plugin.jacoco.JacocoTargetsOfJavaModules;
 
 public class MockodoreWorkspace implements Workspace {
 
-	private final MockodoreModules modules = new MockodoreModules();
+	private final MockodoreModules modules;
+
+	public MockodoreWorkspace(WorkspaceContext ctx) {
+		this.modules = new MockodoreModules(ctx);
+	}
 
 	@Override
 	public List<? extends Target> targets(TargetDefinitionContext ctx) {

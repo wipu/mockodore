@@ -1,13 +1,13 @@
 package org.fluentjava.mockodore.program;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.mockodore.api.assylang.C64AssyLangOf;
 import org.fluentjava.mockodore.model.addressing.AbsRef;
 import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.program.MockodoreProgram.C64AssyLangForProgram;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CustomLanguageDemonstrationTest {
 

@@ -17,12 +17,12 @@ import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xE1;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xE8;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xFE;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xFF;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.model.sid.Codebase64PalNote;
 import org.fluentjava.mockodore.model.sid.Codebase64PalNoteFreqs;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SidWriteVisualizerTest {
 

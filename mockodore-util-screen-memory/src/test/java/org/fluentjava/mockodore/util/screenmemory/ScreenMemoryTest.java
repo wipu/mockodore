@@ -5,8 +5,8 @@ import org.fluentjava.mockodore.model.machine.C64SimulatorLineLogger;
 import org.fluentjava.mockodore.program.MockodoreProgram;
 import org.fluentjava.mockodore.program.MockodoreProgram.C64AssyLangForProgram;
 import org.fluentjava.mockodore.simulator.C64Simulator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ScreenMemoryTest {
 
@@ -18,7 +18,7 @@ public class ScreenMemoryTest {
 	private C64Simulator sim;
 	private StringBuilder b;
 
-	@Before
+	@BeforeEach
 	public final void before() {
 		p = MockodoreProgram.with();
 		p.startAddress(startAddress);

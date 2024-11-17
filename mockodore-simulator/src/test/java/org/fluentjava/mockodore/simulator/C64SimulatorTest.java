@@ -1,9 +1,9 @@
 package org.fluentjava.mockodore.simulator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,8 +19,8 @@ import org.fluentjava.mockodore.model.labels.Labeled;
 import org.fluentjava.mockodore.model.machine.Op;
 import org.fluentjava.mockodore.program.MockodoreProgram;
 import org.fluentjava.mockodore.program.MockodoreProgram.C64AssyLangForProgram;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class C64SimulatorTest {
 
@@ -29,7 +29,7 @@ public class C64SimulatorTest {
 	private C64AssyLangForProgram p;
 	private C64Simulator sim;
 
-	@Before
+	@BeforeEach
 	public void before() {
 		p = MockodoreProgram.with();
 		sim = new C64Simulator();

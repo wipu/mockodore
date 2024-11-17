@@ -6,8 +6,8 @@ import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x11;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.x81;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xF0;
 import static org.fluentjava.joulu.unsignedbyte.UnsignedByte.xFF;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,7 +35,7 @@ import org.fluentjava.mockodore.simulator.Memory;
 import org.fluentjava.mockodore.simulator.RawMemory;
 import org.fluentjava.mockodore.util.sidripper.SidWritesToMidiSysex;
 import org.fluentjava.mockodore.util.sysex.SysexEncoder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MidiTestAppsTest extends SidexTestBase {
 

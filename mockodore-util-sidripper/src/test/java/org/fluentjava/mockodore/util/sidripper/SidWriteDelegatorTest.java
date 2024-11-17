@@ -1,13 +1,13 @@
 package org.fluentjava.mockodore.util.sidripper;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.model.machine.C64SimulatorEventListener;
 import org.fluentjava.mockodore.model.machine.C64SimulatorLineLogger;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SidWriteDelegatorTest {
 
@@ -15,7 +15,7 @@ public class SidWriteDelegatorTest {
 	private C64SimulatorEventListener delegator;
 	private SidWriteCompactLogger sid;
 
-	@Before
+	@BeforeEach
 	public void before() {
 		mem = new C64SimulatorLineLogger();
 		sid = new SidWriteCompactLogger(" ");

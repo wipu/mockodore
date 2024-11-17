@@ -19,17 +19,17 @@ import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.PW_LO_2;
 import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.RES_FILT;
 import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_1;
 import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_2;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SidWriteCompactLoggerTest {
 
 	private SidWriteCompactLogger log;
 
-	@Before
+	@BeforeEach
 	public void before() {
 		log = new SidWriteCompactLogger();
 	}

@@ -1,12 +1,12 @@
 package org.fluentjava.mockodore.model.sid;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class Codebase64PalNoteTest {
 
@@ -16,7 +16,7 @@ public class Codebase64PalNoteTest {
 		assertEquals(UnsignedByte.x2E, Codebase64PalNote.Ais4.value());
 	}
 
-	@Ignore
+	@Disabled
 	@Test
 	public void unignoreMeToGenerateTheNoteConstants() {
 		String s = "is";

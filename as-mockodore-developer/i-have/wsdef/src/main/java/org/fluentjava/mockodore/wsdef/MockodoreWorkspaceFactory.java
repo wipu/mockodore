@@ -8,7 +8,7 @@ public class MockodoreWorkspaceFactory implements WorkspaceFactory {
 
 	@Override
 	public Workspace workspace(WorkspaceContext ctx) {
-		return new MockodoreWorkspace();
+		return new MockodoreWorkspace(ctx);
 	}
 
 }

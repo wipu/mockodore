@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.app.sidex;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.ByteArrayPrettyPrinter;
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
@@ -9,7 +9,7 @@ import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.simulator.Memory;
 import org.fluentjava.mockodore.simulator.RawMemory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MidiAndRasterPollerTest extends SidexTestBase {
 

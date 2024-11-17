@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.app.sidex;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.machine.C64SimulatorLineLogger;
@@ -10,7 +10,7 @@ import org.fluentjava.mockodore.simulator.C64Simulator;
 import org.fluentjava.mockodore.simulator.Memory;
 import org.fluentjava.mockodore.simulator.RawMemory;
 import org.fluentjava.mockodore.util.sidripper.SidWriteRipper;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 public abstract class SidexTestBase {
 
@@ -21,7 +21,7 @@ public abstract class SidexTestBase {
 	protected SidWriteRipper sidWriteLogger;
 	private C64Simulator sim;
 
-	@Before
+	@BeforeEach
 	public final void before() {
 		p = MockodoreProgram.with();
 		p.startAddress(startAddress);
@@ -62,11 +62,11 @@ public abstract class SidexTestBase {
 	private static void assertSizeOrPerf(String type, int expected,
 			int actual) {
 		if (actual > expected) {
-			assertEquals(type + " increased!", expected, actual);
+			assertEquals(expected, actual, type + " increased!");
 		}
 		if (actual < expected) {
-			assertEquals("Happy failure: " + type + " decreased!", expected,
-					actual);
+			assertEquals(expected, actual,
+					"Happy failure: " + type + " decreased!");
 		}
 	}
 

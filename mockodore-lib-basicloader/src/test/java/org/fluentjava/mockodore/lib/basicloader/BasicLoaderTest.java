@@ -1,11 +1,11 @@
 package org.fluentjava.mockodore.lib.basicloader;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.ByteArrayPrettyPrinter;
 import org.fluentjava.mockodore.program.MockodoreProgram;
 import org.fluentjava.mockodore.program.MockodoreProgram.C64AssyLangForProgram;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BasicLoaderTest {
 

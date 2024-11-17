@@ -1,20 +1,20 @@
 package org.fluentjava.mockodore.util.sidripper;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
 import org.fluentjava.mockodore.util.sidripper.SidRegisterWriteOrderAnalyzer.HappensBefore;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class SidRegisterWriteOrderAnalyzerTest {
 
 	private SidRegisterWriteOrderAnalyzer o;
 
-	@Before
+	@BeforeEach
 	public void before() {
 		o = new SidRegisterWriteOrderAnalyzer(0);
 	}

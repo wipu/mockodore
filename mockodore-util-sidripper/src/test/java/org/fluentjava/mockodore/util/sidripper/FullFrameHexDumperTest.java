@@ -25,23 +25,23 @@ import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.RES_FILT;
 import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_1;
 import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_2;
 import static org.fluentjava.mockodore.model.sid.SidRegisterAddress.SR_3;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class FullFrameHexDumperTest {
 
 	private List<UnsignedByte> sid;
 	private FullFrameHexDumper log;
 
-	@Before
+	@BeforeEach
 	public void before() {
 		sid = new ArrayList<>();
 		for (int i = 0; i < SidRegisterAddress.all().size(); i++) {

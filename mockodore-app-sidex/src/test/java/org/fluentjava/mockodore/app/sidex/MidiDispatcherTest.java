@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.app.sidex;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.model.machine.Op;
 import org.fluentjava.mockodore.util.sysex.SysexEncoder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MidiDispatcherTest extends SidexTestBase {
 

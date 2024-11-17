@@ -1,5 +1,7 @@
 package org.fluentjava.mockodore.wsdef;
 
+import java.util.Set;
+
 import org.fluentjava.iwant.api.core.SubPath;
 import org.fluentjava.iwant.api.javamodules.JavaBinModule;
 import org.fluentjava.iwant.api.javamodules.JavaClasses;
@@ -7,6 +9,7 @@ import org.fluentjava.iwant.api.javamodules.JavaClasses.JavaClassesSpex;
 import org.fluentjava.iwant.api.javamodules.JavaModule;
 import org.fluentjava.iwant.api.javamodules.JavaSrcModule;
 import org.fluentjava.iwant.api.model.Path;
+import org.fluentjava.iwant.api.wsdef.WorkspaceContext;
 import org.fluentjava.iwant.api.zip.Jar;
 import org.fluentjava.iwant.api.zip.Unzipped;
 import org.fluentjava.iwant.core.download.Downloaded;
@@ -23,13 +26,22 @@ public class MockodoreModules extends JavaModules {
 			"guava", "18.0");
 	private static final JavaBinModule guavaTestlib = binModule(
 			"com.google.guava", "guava-testlib", "18.0", guava);
-	private static final JavaBinModule hamcrestCore = binModule("org/hamcrest",
-			"hamcrest-core", "1.3");
-	private static final JavaBinModule junit = binModule("junit", "junit",
-			"4.11", hamcrestCore);
 
 	private static final JavaBinModule hvsc = JavaBinModule
 			.providing(hvscC64MusicZip()).end();
+	private final Set<JavaModule> junit5runnerMods;
+
+	public MockodoreModules(WorkspaceContext ctx) {
+		this.junit5runnerMods = ctx.iwantPlugin().junit5runner()
+				.withDependencies();
+		dependencyRoots();
+	}
+
+	private void dependencyRoots() {
+		mockodoreLibSidplayer();
+		mockodoreUtilScreenMemory();
+		mockodoreAppSidex();
+	}
 
 	private static Path hvscC64MusicZip() {
 		String name = "C64Music.zip";
@@ -74,111 +86,138 @@ public class MockodoreModules extends JavaModules {
 		return jouluModule("midievents", commonsCodec, jouluUnsignedByte());
 	}
 
-	final JavaSrcModule mockodoreModelAddressing = srcModule(
-			"mockodore-model-addressing").noMainResources().noTestResources()
-					.mainDeps(jouluUnsignedByte()).testDeps(junit).end();
+	private JavaSrcModule mockodoreModelAddressing() {
+		return lazy(
+				() -> srcModule("mockodore-model-addressing").noMainResources()
+						.noTestResources().mainDeps(jouluUnsignedByte())
+						.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreModelLabels = srcModule(
-			"mockodore-model-labels").noMainResources().noTestResources()
-					.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing)
-					.testDeps(junit).end();
+	private JavaSrcModule mockodoreModelLabels() {
+		return lazy(() -> srcModule("mockodore-model-labels").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing())
+				.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreModelMachine = srcModule(
-			"mockodore-model-machine")
-					.noMainResources().noTestResources()
-					.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing,
-							mockodoreModelLabels)
-					.testDeps(guavaTestlib, junit).end();
+	private JavaSrcModule mockodoreModelMachine() {
+		return lazy(() -> srcModule("mockodore-model-machine").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing(),
+						mockodoreModelLabels())
+				.testDeps(guavaTestlib).testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreApiAssylang = srcModule(
-			"mockodore-api-assylang").noMainResources().noTestJava()
-					.noTestResources()
-					.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing,
-							mockodoreModelMachine, mockodoreModelLabels)
-					.end();
+	private JavaSrcModule mockodoreApiAssylang() {
+		return lazy(() -> srcModule("mockodore-api-assylang").noMainResources()
+				.noTestJava().noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing(),
+						mockodoreModelMachine(), mockodoreModelLabels())
+				.end());
+	}
 
-	final JavaSrcModule mockodoreModelSid = srcModule("mockodore-model-sid")
-			.noMainResources().noTestResources()
-			.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing,
-					mockodoreModelLabels, mockodoreModelMachine)
-			.testDeps(junit).end();
+	private JavaSrcModule mockodoreModelSid() {
+		return lazy(() -> srcModule("mockodore-model-sid").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing(),
+						mockodoreModelLabels(), mockodoreModelMachine())
+				.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreProgram = srcModule("mockodore-program")
-			.noMainResources().noTestResources()
-			.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang,
-					mockodoreApiAssylang, mockodoreModelAddressing,
-					mockodoreModelLabels, mockodoreModelMachine)
-			.testDeps(junit).end();
+	private JavaSrcModule mockodoreProgram() {
+		return lazy(() -> srcModule("mockodore-program").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang(),
+						mockodoreApiAssylang(), mockodoreModelAddressing(),
+						mockodoreModelLabels(), mockodoreModelMachine())
+				.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreUtilSysex = srcModule("mockodore-util-sysex")
-			.noMainResources().noTestResources().mainDeps(jouluUnsignedByte())
-			.testDeps(junit).end();
+	private JavaSrcModule mockodoreUtilSysex() {
+		return lazy(() -> srcModule("mockodore-util-sysex").noMainResources()
+				.noTestResources().mainDeps(jouluUnsignedByte())
+				.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreLibBasicloader = srcModule(
-			"mockodore-lib-basicloader")
-					.noMainResources().noTestResources()
-					.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang,
-							mockodoreModelAddressing, mockodoreModelLabels,
-							mockodoreModelMachine, mockodoreProgram)
-					.testDeps(junit).end();
+	private JavaSrcModule mockodoreLibBasicloader() {
+		return lazy(() -> srcModule("mockodore-lib-basicloader")
+				.noMainResources().noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang(),
+						mockodoreModelAddressing(), mockodoreModelLabels(),
+						mockodoreModelMachine(), mockodoreProgram())
+				.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreSidfile = srcModule("mockodore-sidfile")
-			.noMainResources()
-			.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang,
-					mockodoreModelAddressing, mockodoreModelLabels,
-					mockodoreModelMachine, mockodoreProgram)
-			.testDeps(commonsIo, hvsc, junit).end();
+	private JavaSrcModule mockodoreSidfile() {
+		return lazy(() -> srcModule("mockodore-sidfile").noMainResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang(),
+						mockodoreModelAddressing(), mockodoreModelLabels(),
+						mockodoreModelMachine(), mockodoreProgram())
+				.testDeps(commonsIo, hvsc).testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreLibMisc = srcModule("mockodore-lib-misc")
-			.noMainResources().noTestResources()
-			.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang,
-					mockodoreLibBasicloader, mockodoreModelAddressing,
-					mockodoreModelLabels, mockodoreModelMachine,
-					mockodoreProgram, mockodoreSidfile)
-			.testDeps(commonsIo, junit).end();
+	private JavaSrcModule mockodoreLibMisc() {
+		return lazy(() -> srcModule("mockodore-lib-misc").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang(),
+						mockodoreLibBasicloader(), mockodoreModelAddressing(),
+						mockodoreModelLabels(), mockodoreModelMachine(),
+						mockodoreProgram(), mockodoreSidfile())
+				.testDeps(commonsIo).testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreLibSidplayer = srcModule(
-			"mockodore-lib-sidplayer")
-					.noMainResources().noTestResources()
-					.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang,
-							mockodoreLibBasicloader, mockodoreLibMisc,
-							mockodoreModelAddressing, mockodoreModelLabels,
-							mockodoreModelMachine, mockodoreProgram,
-							mockodoreSidfile)
-					.testDeps(commonsIo, hvsc, junit).end();
+	private JavaSrcModule mockodoreLibSidplayer() {
+		return lazy(() -> srcModule("mockodore-lib-sidplayer").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang(),
+						mockodoreLibBasicloader(), mockodoreLibMisc(),
+						mockodoreModelAddressing(), mockodoreModelLabels(),
+						mockodoreModelMachine(), mockodoreProgram(),
+						mockodoreSidfile())
+				.testDeps(commonsIo, hvsc).testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreSimulator = srcModule("mockodore-simulator")
-			.noMainResources().noTestResources()
-			.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang,
-					mockodoreModelAddressing, mockodoreModelLabels,
-					mockodoreModelMachine, mockodoreProgram)
-			.testDeps(junit).end();
+	private JavaSrcModule mockodoreSimulator() {
+		return lazy(() -> srcModule("mockodore-simulator").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreApiAssylang(),
+						mockodoreModelAddressing(), mockodoreModelLabels(),
+						mockodoreModelMachine(), mockodoreProgram())
+				.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreUtilScreenMemory = srcModule(
-			"mockodore-util-screen-memory")
-					.noMainResources().noTestResources()
-					.mainDeps(jouluUnsignedByte(), junit,
-							mockodoreModelAddressing, mockodoreModelLabels,
-							mockodoreModelMachine, mockodoreSimulator)
-					.testDeps(mockodoreApiAssylang, mockodoreProgram).end();
+	// TODO don't depend on the whole junit5runner, only junit modules
+	private JavaSrcModule mockodoreUtilScreenMemory() {
+		return lazy(() -> srcModule("mockodore-util-screen-memory")
+				.noMainResources().noTestResources()
+				.mainDeps(jouluUnsignedByte(), mockodoreModelAddressing(),
+						mockodoreModelLabels(), mockodoreModelMachine(),
+						mockodoreSimulator())
+				.mainDeps(junit5runnerMods)
+				.testDeps(mockodoreApiAssylang(), mockodoreProgram()).end());
+	}
 
-	final JavaSrcModule mockodoreUtilSidripper = srcModule(
-			"mockodore-util-sidripper")
-					.noMainResources().noTestResources()
-					.mainDeps(jouluMidievents(), jouluUnsignedByte(),
-							mockodoreModelAddressing, mockodoreModelLabels,
-							mockodoreModelMachine, mockodoreModelSid,
-							mockodoreUtilSysex)
-					.testDeps(junit).end();
+	private JavaSrcModule mockodoreUtilSidripper() {
+		return lazy(() -> srcModule("mockodore-util-sidripper")
+				.noMainResources().noTestResources()
+				.mainDeps(jouluMidievents(), jouluUnsignedByte(),
+						mockodoreModelAddressing(), mockodoreModelLabels(),
+						mockodoreModelMachine(), mockodoreModelSid(),
+						mockodoreUtilSysex())
+				.testDeps(junit5runnerMods).end());
+	}
 
-	final JavaSrcModule mockodoreAppSidex = srcModule("mockodore-app-sidex")
-			.noMainResources().noTestResources()
-			.mainDeps(jouluMidievents(), jouluUnsignedByte(),
-					mockodoreApiAssylang, mockodoreLibBasicloader,
-					mockodoreModelAddressing, mockodoreModelLabels,
-					mockodoreModelMachine, mockodoreModelSid, mockodoreProgram)
-			.testDeps(commonsIo, junit, mockodoreSimulator,
-					mockodoreUtilSidripper, mockodoreUtilSysex)
-			.end();
+	private JavaSrcModule mockodoreAppSidex() {
+		return lazy(() -> srcModule("mockodore-app-sidex").noMainResources()
+				.noTestResources()
+				.mainDeps(jouluMidievents(), jouluUnsignedByte(),
+						mockodoreApiAssylang(), mockodoreLibBasicloader(),
+						mockodoreModelAddressing(), mockodoreModelLabels(),
+						mockodoreModelMachine(), mockodoreModelSid(),
+						mockodoreProgram())
+				.testDeps(commonsIo, mockodoreSimulator(),
+						mockodoreUtilSidripper(), mockodoreUtilSysex())
+				.testDeps(junit5runnerMods).end());
+	}
 
 }

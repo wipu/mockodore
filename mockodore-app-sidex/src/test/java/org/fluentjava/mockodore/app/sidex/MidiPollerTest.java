@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.app.sidex;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.lib.basicloader.BasicLoader;
@@ -8,7 +8,7 @@ import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.labels.Label;
 import org.fluentjava.mockodore.simulator.Memory;
 import org.fluentjava.mockodore.simulator.RawMemory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * C64 library that polls midi and calls handler code for received bytes. It

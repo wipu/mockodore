@@ -1,8 +1,8 @@
 package org.fluentjava.mockodore.util.sidripper;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,14 +12,13 @@ import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 import org.fluentjava.mockodore.model.machine.Accumulator;
 import org.fluentjava.mockodore.model.machine.C64SimulatorLineLogger;
 import org.fluentjava.mockodore.model.sid.SidRegisterAddress;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class SidWriteRipperTest {
 
-	@Rule
-	public TemporaryFolder tmpDir = new TemporaryFolder();
+	@TempDir
+	public File tmpDir;
 
 	/**
 	 * Just a smoke test, details are tested in subcomponent tests
@@ -68,7 +67,7 @@ public class SidWriteRipperTest {
 		assertTrue(ByteArrayPrettyPrinter.spaceSeparatedHex(midiSysex)
 				.startsWith("4D 54 68 64 00 "));
 
-		File gif = new File(tmpDir.getRoot(), "sid-writes.gif");
+		File gif = new File(tmpDir, "sid-writes.gif");
 		ripper.writeGifTo(gif);
 		assertTrue(gif.exists());
 
@@ -123,7 +122,7 @@ public class SidWriteRipperTest {
 				+ "01020300020000000000000200000000000002000000000000\n" + "",
 				fullFrameHexDump);
 
-		File gif = new File(tmpDir.getRoot(), "sid-writes.gif");
+		File gif = new File(tmpDir, "sid-writes.gif");
 		ripper.writeGifTo(gif);
 		assertTrue(gif.exists());
 

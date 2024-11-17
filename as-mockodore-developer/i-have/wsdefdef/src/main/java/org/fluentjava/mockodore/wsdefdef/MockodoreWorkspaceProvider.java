@@ -15,7 +15,9 @@ public class MockodoreWorkspaceProvider implements WorkspaceModuleProvider {
 				.mainDeps(ctx.iwantPlugin().ant().withDependencies())
 				.mainDeps(ctx.iwantPlugin().findbugs().withDependencies())
 				.mainDeps(ctx.iwantPlugin().github().withDependencies())
-				.mainDeps(ctx.iwantPlugin().jacoco().withDependencies()).end();
+				.mainDeps(ctx.iwantPlugin().jacoco().withDependencies())
+				.mainDeps(ctx.iwantPlugin().junit5runner().withDependencies())
+				.end();
 	}
 
 	@Override

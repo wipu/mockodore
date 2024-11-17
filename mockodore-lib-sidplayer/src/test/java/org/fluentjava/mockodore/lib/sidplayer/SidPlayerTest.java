@@ -1,6 +1,6 @@
 package org.fluentjava.mockodore.lib.sidplayer;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import org.fluentjava.mockodore.model.addressing.RawAddress;
 import org.fluentjava.mockodore.model.machine.PrgBytesWithLoadAddress;
 import org.fluentjava.mockodore.program.MockodoreProgram;
 import org.fluentjava.mockodore.sidfile.SidFile;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SidPlayerTest {
 
