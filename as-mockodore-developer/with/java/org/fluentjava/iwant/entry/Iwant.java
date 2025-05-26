@@ -21,6 +21,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,14 @@ public class Iwant {
 
 	private static final boolean DEBUG_LOG = "a".contains("b");
 
+	private static final File SYSTEM_TMP_DIR = new File(
+			System.getProperty("java.io.tmpdir"));
+
+	private static final String USERNAME = System.getProperty("user.name");
+
+	public static final File IWANT_GLOBAL_TMP_DIR = new File(SYSTEM_TMP_DIR,
+			".org.fluentjava.iwant/" + USERNAME);
+
 	private static final File HOME = new File(System.getProperty("user.home"));
 
 	public static final File IWANT_USER_DIR = new File(HOME,
@@ -59,6 +68,7 @@ public class Iwant {
 			+ EXAMPLE_COMMIT + ".zip\n";
 
 	static {
+		mkdirs(IWANT_GLOBAL_TMP_DIR);
 		mkdirs(IWANT_USER_DIR);
 	}
 
@@ -336,7 +346,7 @@ public class Iwant {
 			mkdirs(iwantFromParent);
 		}
 		if (!iwantFrom.exists()) {
-			newTextFile(iwantFrom, EXAMPLE_IWANT_FROM_CONTENT);
+			textFileEnsuredToHaveContent(iwantFrom, EXAMPLE_IWANT_FROM_CONTENT);
 			throw new IwantException("I created " + iwantFrom
 					+ "\nPlease edit and uncomment the properties in it and rerun me.");
 		}
@@ -362,12 +372,34 @@ public class Iwant {
 		}
 	}
 
-	public static File newTextFile(File file, String content) {
+	public static File textFileEnsuredToHaveContentAndBeTouched(File file,
+			String content) {
 		try {
 			return tryToWriteTextFile(file, content);
 		} catch (IOException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	public static synchronized File textFileEnsuredToHaveContent(File file,
+			String content) {
+		try {
+			if (existsAndHasContent(file, content)) {
+				return file;
+			}
+			return tryToWriteTextFile(file, content);
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
+	private static boolean existsAndHasContent(File file, String content)
+			throws IOException {
+		if (!file.exists()) {
+			return false;
+		}
+		String currentContent = Files.readString(file.toPath());
+		return content.equals(currentContent);
 	}
 
 	private File iwantBootstrapperClasses(File iwantEssential) {
@@ -462,30 +494,30 @@ public class Iwant {
 			}
 			DiagnosticListener<? super JavaFileObject> diagnosticListener = null;
 			Locale locale = null;
-			StandardJavaFileManager fileManager = compiler
+			try (StandardJavaFileManager fileManager = compiler
 					.getStandardFileManager(diagnosticListener, locale,
-							encoding);
-			Iterable<? extends JavaFileObject> compilationUnits = fileManager
-					.getJavaFileObjectsFromFiles(src);
-			Writer compilerTaskOut = null;
-			Iterable<String> classes = null;
+							encoding)) {
+				Iterable<? extends JavaFileObject> compilationUnits = fileManager
+						.getJavaFileObjectsFromFiles(src);
+				Writer compilerTaskOut = null;
+				Iterable<String> classes = null;
 
-			List<String> options = new ArrayList<>();
-			options.addAll(javacOptions);
-			options.add("-d");
-			options.add(dest.getCanonicalPath());
-			options.add("-classpath");
-			options.add(classpath);
-			options.add("-encoding");
-			options.add(encoding.toString());
+				List<String> options = new ArrayList<>();
+				options.addAll(javacOptions);
+				options.add("-d");
+				options.add(dest.getCanonicalPath());
+				options.add("-classpath");
+				options.add(classpath);
+				options.add("-encoding");
+				options.add(encoding.toString());
 
-			CompilationTask compilerTask = compiler.getTask(compilerTaskOut,
-					fileManager, diagnosticListener, options, classes,
-					compilationUnits);
-			Boolean compilerTaskResult = compilerTask.call();
-			fileManager.close();
-			if (!compilerTaskResult) {
-				throw new IwantException("Compilation failed.");
+				CompilationTask compilerTask = compiler.getTask(compilerTaskOut,
+						fileManager, diagnosticListener, options, classes,
+						compilationUnits);
+				Boolean compilerTaskResult = compilerTask.call();
+				if (!compilerTaskResult) {
+					throw new IwantException("Compilation failed.");
+				}
 			}
 			return dest;
 		} catch (RuntimeException e) {
@@ -695,8 +727,8 @@ public class Iwant {
 	}
 
 	public static void fileLog(String msg) {
-		try (FileWriter fw = new FileWriter(new File(IWANT_USER_DIR, "log"),
-				true)) {
+		try (FileWriter fw = new FileWriter(
+				new File(IWANT_GLOBAL_TMP_DIR, "log"), true)) {
 			fw.append(new Date().toString()).append(" - ").append(msg)
 					.append("\n");
 		} catch (IOException e) {
@@ -769,9 +801,9 @@ public class Iwant {
 			debugLog("Downloading", "from " + from);
 			log("Downloading", to);
 			byte[] bytes = downloadBytes(from);
-			FileOutputStream cachedOut = new FileOutputStream(to);
-			cachedOut.write(bytes);
-			cachedOut.close();
+			try (FileOutputStream cachedOut = new FileOutputStream(to)) {
+				cachedOut.write(bytes);
+			}
 		} catch (RuntimeException e) {
 			throw e;
 		} catch (Exception e) {
@@ -798,10 +830,10 @@ public class Iwant {
 				return downloadBytes(new URL(location));
 			}
 		}
-		InputStream in = conn.getInputStream();
-		byte[] respBody = readBytes(in);
-		in.close();
-		return respBody;
+		try (InputStream in = conn.getInputStream()) {
+			byte[] respBody = readBytes(in);
+			return respBody;
+		}
 	}
 
 	private static boolean isRedirect(int status) {
@@ -855,32 +887,32 @@ public class Iwant {
 			File tmp = new File(dest + ".tmp");
 			del(tmp);
 			mkdirs(tmp);
-			ZipInputStream zip = new ZipInputStream(
-					src.location().openStream());
-			ZipEntry e = null;
-			byte[] buffer = new byte[32 * 1024];
-			boolean zipHasContent = false;
-			while ((e = zip.getNextEntry()) != null) {
-				zipHasContent = true;
-				File entryFile = new File(tmp, e.getName());
-				if (e.isDirectory()) {
-					mkdirs(entryFile);
-					continue;
-				}
-				OutputStream out = new FileOutputStream(entryFile);
-				while (true) {
-					int bytesRead = zip.read(buffer);
-					if (bytesRead <= 0) {
-						break;
+			try (ZipInputStream zip = new ZipInputStream(
+					src.location().openStream())) {
+				ZipEntry e = null;
+				byte[] buffer = new byte[32 * 1024];
+				boolean zipHasContent = false;
+				while ((e = zip.getNextEntry()) != null) {
+					zipHasContent = true;
+					File entryFile = new File(tmp, e.getName());
+					if (e.isDirectory()) {
+						mkdirs(entryFile);
+						continue;
 					}
-					out.write(buffer, 0, bytesRead);
+					try (OutputStream out = new FileOutputStream(entryFile)) {
+						while (true) {
+							int bytesRead = zip.read(buffer);
+							if (bytesRead <= 0) {
+								break;
+							}
+							out.write(buffer, 0, bytesRead);
+						}
+					}
 				}
-				out.close();
-			}
-			zip.close();
-			if (!zipHasContent) {
-				throw new IwantException(
-						"Corrupt (or empty, no way to tell): " + src);
+				if (!zipHasContent) {
+					throw new IwantException(
+							"Corrupt (or empty, no way to tell): " + src);
+				}
 			}
 			fileRenamedTo(tmp, dest);
 			return dest;

@@ -37,6 +37,8 @@ public interface C64AssyLangOf<T, END> extends LabeledBytesLang<T, END> {
 
 	T and(int immediateValue);
 
+	T and(ZeroPageIndirectPlusY address);
+
 	T asl();
 
 	T asl(AbsRef address);
@@ -219,7 +221,11 @@ public interface C64AssyLangOf<T, END> extends LabeledBytesLang<T, END> {
 
 	T pha();
 
+	T php();
+
 	T pla();
+
+	T plp();
 
 	T rol();
 

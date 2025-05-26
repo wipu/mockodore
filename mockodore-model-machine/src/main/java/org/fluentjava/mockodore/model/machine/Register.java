@@ -6,7 +6,7 @@ import org.fluentjava.joulu.unsignedbyte.UnsignedByte;
 public abstract class Register {
 
 	private final String name;
-	protected final RegisterWriteListener listener;
+	public final RegisterWriteListener listener;
 	private UnsignedByte value = UnsignedByte.from(0);
 
 	public Register(String name, RegisterWriteListener listener) {

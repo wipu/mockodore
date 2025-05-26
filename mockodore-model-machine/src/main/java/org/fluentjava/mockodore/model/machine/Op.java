@@ -34,6 +34,8 @@ public abstract class Op {
 			absXNamed("AND").byteValue(0x3D).cycles(4));
 	public static final ImmediateOp AND_IMMEDIATE = and(
 			immediateNamed("AND").byteValue(0x29).cycles(2));
+	public static final ZeroPageIndirectPlusYOp AND_ZP_IND_Y = and(
+			zeropageIndirectPlusYNamed("AND").byteValue(0x31).cycles(5));
 
 	private static <T extends Op> T asl(OpcodeSpex<T> op) {
 		return op.writesC().writesN().writesZ().end();
@@ -209,9 +211,13 @@ public abstract class Op {
 
 	public static final ImpliedOp PHA = impliedNamed("PHA").byteValue(0x48)
 			.cycles(3).end();
+	public static final ImpliedOp PHP = impliedNamed("PHP").byteValue(0x08)
+			.cycles(3).end();
 
 	public static final ImpliedOp PLA = impliedNamed("PLA").byteValue(0x68)
 			.cycles(4).writesN().writesZ().end();
+	public static final ImpliedOp PLP = impliedNamed("PLP").byteValue(0x28)
+			.cycles(4).writesC().writesN().writesV().writesZ().end();
 
 	public static final ImpliedOp ROL = impliedNamed("ROL").writesN().writesZ()
 			.writesC().byteValue(0x2A).cycles(2).end();

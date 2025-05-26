@@ -1353,10 +1353,26 @@ public class MockororeProgramTest {
 	}
 
 	@Test
+	public void php() {
+		p.php();
+		assertBytes("08");
+		assertAssy("php\n");
+		assertJava("php();\n");
+	}
+
+	@Test
 	public void pla() {
 		p.pla();
 		assertBytes("68");
 		assertAssy("pla\n");
+	}
+
+	@Test
+	public void plp() {
+		p.plp();
+		assertBytes("28");
+		assertAssy("plp\n");
+		assertJava("plp();\n");
 	}
 
 	// lsb, msb meaning bytes of 16bit addresses
@@ -1558,6 +1574,15 @@ public class MockororeProgramTest {
 		p.and(label);
 		assertBytes("2D 00 10");
 		assertAssy("label:\nand label\n");
+	}
+
+	@Test
+	public void andZpInderectPlusY() {
+		p.startAddress(address$1000);
+		p.and(ZeroPage.xFB.indirectPlusY());
+		assertBytes("31 FB");
+		assertAssy("and ($FB),Y\n");
+		assertJava("and(ZeroPage.xFB.indirectPlusY());\n");
 	}
 
 	@Test

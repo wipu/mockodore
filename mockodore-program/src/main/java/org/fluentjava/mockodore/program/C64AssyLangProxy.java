@@ -487,6 +487,11 @@ public class C64AssyLangProxy<T, END> implements C64AssyLangOf<T, END> {
 	}
 
 	@Override
+	public T and(ZeroPageIndirectPlusY address) {
+		return __(out.and(address));
+	}
+
+	@Override
 	public T cmp(int immediateValue) {
 		return __(out.cmp(immediateValue));
 	}
@@ -692,8 +697,18 @@ public class C64AssyLangProxy<T, END> implements C64AssyLangOf<T, END> {
 	}
 
 	@Override
+	public T php() {
+		return __(out.php());
+	}
+
+	@Override
 	public T pla() {
 		return __(out.pla());
+	}
+
+	@Override
+	public T plp() {
+		return __(out.plp());
 	}
 
 	@Override

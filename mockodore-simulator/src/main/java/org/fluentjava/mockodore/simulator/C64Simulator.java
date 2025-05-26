@@ -91,6 +91,7 @@ public class C64Simulator {
 		opImpl(new AndAbs());
 		opImpl(new AndAbsPlusX());
 		opImpl(new AndImm());
+		opImpl(new AndZpIndirectPlusY());
 		opImpl(new AslImplied());
 		opImpl(new AslAbs());
 		opImpl(new AslAbsX());
@@ -159,7 +160,9 @@ public class C64Simulator {
 		opImpl(new OraImm());
 		opImpl(new OraZp());
 		opImpl(new Pha());
+		opImpl(new Php());
 		opImpl(new Pla());
+		opImpl(new Plp());
 		opImpl(new Rol());
 		opImpl(new RolZp());
 		opImpl(new Ror());
@@ -1188,6 +1191,10 @@ public class C64Simulator {
 		writeReg(a(), newValue);
 	}
 
+	private void writeSr(UnsignedByte newValue) {
+		writeReg(sr(), newValue);
+	}
+
 	private void writeX(UnsignedByte newValue) {
 		writeReg(x(), newValue);
 	}
@@ -1518,6 +1525,21 @@ public class C64Simulator {
 
 		AndAbsPlusX() {
 			super(Op.AND_ABS_X);
+		}
+
+		@Override
+		void result() {
+			UnsignedByte memValue = readMem(operand());
+			UnsignedByte anded = a().value().and(memValue);
+			writeA(anded);
+		}
+
+	}
+
+	private class AndZpIndirectPlusY extends ZeroPageIndirectPlusYInstr {
+
+		AndZpIndirectPlusY() {
+			super(Op.AND_ZP_IND_Y);
 		}
 
 		@Override
@@ -2189,6 +2211,19 @@ public class C64Simulator {
 
 	}
 
+	private class Php extends ImpliedInstrInstance {
+
+		Php() {
+			super(Op.PHP);
+		}
+
+		@Override
+		void result() {
+			push(sr().value());
+		}
+
+	}
+
 	private class Pla extends ImpliedInstrInstance {
 
 		Pla() {
@@ -2198,6 +2233,24 @@ public class C64Simulator {
 		@Override
 		void result() {
 			writeA(popByte());
+		}
+
+	}
+
+	private class Plp extends ImpliedInstrInstance {
+
+		Plp() {
+			super(Op.PLP);
+		}
+
+		@Override
+		void result() {
+			writeSr(popByte());
+			// write to zero and negative were already notified by writeSr
+			// above, so let's notify the rest:
+			// (TODO Fix the design, we should not know about the listene here)
+			sr.listener.writeStatusC(sr, sr.carry());
+			sr.listener.writeStatusV(sr, sr.overflow());
 		}
 
 	}

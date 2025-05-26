@@ -197,6 +197,26 @@ public class C64SimulatorTest {
 	}
 
 	@Test
+	public void phpPushesSr() {
+		p.startAddress(address$2000);
+		p.sec();
+		p.php();
+		p.clc();
+		p.php();
+
+		sim.load(p.end());
+		sim.simpleSys(address$2000);
+		// we cannot run until rts since we have polluted the stack:
+		sim.tick(Op.SEC);
+		sim.tick(Op.PHP);
+		sim.tick(Op.CLC);
+		sim.tick(Op.PHP);
+
+		assertEquals(0xFD, sim.sp().uInt());
+		assertEquals("20 21 00", sim.hexDump(RawAddress.named(0x01FE), 3));
+	}
+
+	@Test
 	public void plaPullsAccAndWritesZ() {
 		p.startAddress(address$2000);
 		p.lda(0x80);
@@ -210,6 +230,26 @@ public class C64SimulatorTest {
 		assertEquals(0xFF, sim.sp().uInt());
 		assertEquals("00 80", sim.hexDump(RawAddress.named(0x01FE), 2));
 		assertEquals(0x80, sim.a().uInt());
+		assertTrue(sim.sr().negative());
+	}
+
+	@Test
+	public void plpPullsAccAndWritesThemToSr() {
+		p.startAddress(address$2000);
+		p.sec();
+		p.lda(0xFF);
+		p.php(); // stack now has SR with C and N
+		p.clc();
+		p.lda(0x00); // A now has no C nor N
+		p.plp(); // now A again has C and N
+		p.rts();
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+
+		assertEquals(0xFF, sim.sp().uInt());
+		assertEquals("00 A1", sim.hexDump(RawAddress.named(0x01FE), 2));
+		assertEquals(0xA1, sim.sr().uInt());
+		assertTrue(sim.sr().carry());
 		assertTrue(sim.sr().negative());
 	}
 
@@ -2568,6 +2608,22 @@ public class C64SimulatorTest {
 
 		sim.loadAndSimpleSysAndAutoTick(p.end());
 		assertEquals(0x13, sim.a().uInt());
+	}
+
+	@Test
+	public void andZpInderectPlusY() {
+		Label array = Label.named("array");
+		p.startAddress(address$1000);
+		p.lda(array.lsb()).sta(ZeroPage.xFB);
+		p.lda(array.msb()).sta(ZeroPage.xFB.plus(1));
+		p.lda(0x11);
+		p.ldy(0x02);
+		p.and(ZeroPage.xFB.indirectPlusY());
+		p.rts();
+		p.label(array).data(0x00, 0x00, 0x50, 0x00);
+
+		sim.loadAndSimpleSysAndAutoTick(p.end());
+		assertEquals(0x10, sim.a().signedByte());
 	}
 
 	@Test

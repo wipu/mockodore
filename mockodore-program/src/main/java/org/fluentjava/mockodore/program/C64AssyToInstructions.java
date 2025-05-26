@@ -528,6 +528,11 @@ public class C64AssyToInstructions<T, END> extends
 	}
 
 	@Override
+	public T and(ZeroPageIndirectPlusY address) {
+		return i(Op.AND_ZP_IND_Y, address);
+	}
+
+	@Override
 	public T cmp(int immediateValue) {
 		return i(Op.CMP_IMMEDIATE, immediateValue);
 	}
@@ -733,8 +738,18 @@ public class C64AssyToInstructions<T, END> extends
 	}
 
 	@Override
+	public T php() {
+		return i(Op.PHP);
+	}
+
+	@Override
 	public T pla() {
 		return i(Op.PLA);
+	}
+
+	@Override
+	public T plp() {
+		return i(Op.PLP);
 	}
 
 	@Override
